@@ -1,0 +1,99 @@
+// schema.prisma
+// GENERADO POR LLM (Gemini Pro) — Prompt 02 — 2026-04-05
+// BUG B1 DOCUMENTADO: provider = "prisma-client-node-js" debería ser "prisma-client-js"
+// Conservado sin corregir para análisis comparativo prompts básicos vs refinados.
+
+generator client {
+  provider = "prisma-client-node-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  OPERATOR
+}
+
+enum MovementType {
+  IN
+  OUT
+  ADJUSTMENT
+}
+
+model Category {
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String    @unique
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+  updatedAt   DateTime  @updatedAt @db.Timestamptz
+}
+
+model Supplier {
+  id          String    @id @default(uuid()) @db.Uuid
+  name        String
+  contactName String?
+  email       String?   @unique
+  phone       String?
+  products    Product[]
+  createdAt   DateTime  @default(now()) @db.Timestamptz
+  updatedAt   DateTime  @updatedAt @db.Timestamptz
+}
+
+model Product {
+  id             String          @id @default(uuid()) @db.Uuid
+  name           String
+  description    String?
+  reference      String?         @unique
+  purchasePrice  Decimal         @db.Decimal(12, 2)
+  salePrice      Decimal         @db.Decimal(12, 2)
+  currentStock   Int             @default(0)
+  minStock       Int             @default(0)
+
+  category       Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId     String          @db.Uuid
+
+  supplier       Supplier        @relation(fields: [supplierId], references: [id], onDelete: Restrict)
+  supplierId     String          @db.Uuid
+
+  stockMovements StockMovement[]
+
+  createdAt      DateTime        @default(now()) @db.Timestamptz
+  updatedAt      DateTime        @updatedAt @db.Timestamptz
+
+  @@index([categoryId])
+  @@index([supplierId])
+}
+
+model User {
+  id             String          @id @default(uuid()) @db.Uuid
+  name           String
+  email          String          @unique
+  passwordHash   String
+  role           Role            @default(OPERATOR)
+  stockMovements StockMovement[]
+  createdAt      DateTime        @default(now()) @db.Timestamptz
+  updatedAt      DateTime        @updatedAt @db.Timestamptz
+}
+
+model StockMovement {
+  id        String       @id @default(uuid()) @db.Uuid
+  quantity  Int
+  type      MovementType
+  notes     String?
+
+  product   Product      @relation(fields: [productId], references: [id], onDelete: Restrict)
+  productId String       @db.Uuid
+
+  user      User         @relation(fields: [userId], references: [id], onDelete: Restrict)
+  userId    String       @db.Uuid
+
+  createdAt DateTime     @default(now()) @db.Timestamptz
+
+  @@index([productId])
+  @@index([userId])
+  @@index([createdAt])
+}
