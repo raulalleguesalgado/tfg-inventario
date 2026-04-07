@@ -73,14 +73,30 @@ Tras generar los prompts refinados (auth, products, movements con componente `[R
 
 ---
 
-## Métricas adicionales SonarCloud
+## Métricas completas SonarCloud — Dashboard
 
-*(Completar con captura de pantalla del dashboard)*
+| Métrica | Valor | Rating |
+|---------|-------|--------|
+| **Quality Gate** | **Failed** (Sonar way — 2 condiciones fallidas en New Code) | — |
+| Security (vulnerabilities) | 0 issues abiertos | A |
+| Reliability (bugs) | 0 issues abiertos | A |
+| Maintainability (code smells) | 2 issues abiertos | A |
+| Security Hotspots | 1 | — |
+| Accepted Issues | 0 | — |
+| Coverage | 0.0% (353 líneas a cubrir) | Sin condición definida |
+| Duplications | 0.0% (967 líneas) | Sin condición definida |
 
-- Bugs: —
-- Vulnerabilities: —
-- Security Hotspots: 1
-- Code Smells: 2
-- Coverage: 0% (sin tests)
-- Duplications: —
-- Technical Debt: —
+### Quality Gate — Por qué falló
+
+El Quality Gate "Sonar way" falló con **2 condiciones fallidas en New Code**. Las condiciones del perfil Sonar way que pueden fallar sin tests son:
+
+- Cobertura de nuevo código < 80% → **0.0% (sin tests)**
+- Issues de seguridad o fiabilidad en nuevo código
+
+La ausencia total de tests unitarios es la causa directa del fallo del Quality Gate. El código LLM-generado (prompts básicos) no incluye ningún test — el LLM no los generó porque no se le pidieron.
+
+### Observación sobre ratings A en Security y Reliability
+
+SonarCloud asigna rating **A en Security** (0 vulnerabilities) a pesar de que el análisis manual identificó 5 vulnerabilidades de alta/media severidad. Esto se debe a que SonarCloud clasifica el CORS como "Security Hotspot" (a revisar) en lugar de "Vulnerability" (confirmada), y no detecta las vulnerabilidades de lógica de negocio (S1, S2, S3, S5).
+
+**Conclusión:** Un rating A en Security de SonarCloud no garantiza ausencia de vulnerabilidades de seguridad en código LLM-generado.
