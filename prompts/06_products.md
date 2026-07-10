@@ -247,18 +247,11 @@ export default router;
 - Valida `categoryId` y `supplierId` como UUIDs en Zod.
 - Precios validados como `number().positive()`.
 
-### Bug crítico
+### Nota sobre `prisma.product.fields.minStock`
 
-| ID | Severidad | Problema | Fichero | Línea |
-|----|-----------|----------|---------|-------|
-| B1 | Alta | `prisma.product.fields.minStock` — sintaxis inválida en la API de Prisma Client v5. Prisma no soporta comparación campo-a-campo en cláusulas `where`. `findLowStock` falla en runtime. El endpoint `/alerts` — funcionalidad central de la app — está roto. | product.repository.js | 14-16 |
+En el análisis inicial se clasificó `prisma.product.fields.minStock` como bug crítico (alucinación de API). Verificación posterior en runtime (2026-04-13) demostró que **la sintaxis es válida en Prisma Client v5** y el endpoint `GET /products/alerts` funciona correctamente: filtra productos con `currentStock < minStock` y excluye los que tienen stock suficiente.
 
-La query correcta en Prisma v5 requiere SQL raw o filtrado en JavaScript:
-```javascript
-// Solución correcta
-const products = await prisma.product.findMany({ include: { category: true, supplier: true } });
-return products.filter(p => p.currentStock <= p.minStock);
-```
+`prisma.product.fields` expone referencias de campo que Prisma resuelve como comparaciones de columna en la query SQL generada. No es alucinación — es una característica documentada de Prisma v5.
 
 ### Otros problemas
 
@@ -272,9 +265,9 @@ return products.filter(p => p.currentStock <= p.minStock);
 
 ### Observación metodológica
 
-B1 es el primer bug de lógica de negocio real del proyecto: el LLM generó una llamada a la API de Prisma que no existe. El modelo "sabe" que quiere comparar `currentStock <= minStock` pero desconoce la limitación de Prisma para comparación campo-a-campo, inventando una sintaxis plausible pero incorrecta. Este tipo de error — alucinación de API — es especialmente peligroso porque el código parece correcto a simple vista y solo falla en runtime.
+La clasificación inicial de `prisma.product.fields.minStock` como alucinación de API resultó ser incorrecta tras verificación en runtime (2026-04-13). El LLM generó sintaxis válida de Prisma v5 que funciona correctamente. Este caso ilustra un riesgo metodológico inverso: **clasificar como alucinación código que en realidad usa una característica menos conocida de la librería**. La verificación en runtime es imprescindible antes de documentar un bug como definitivo.
 
-Combinado con la inconsistencia de sistema de módulos (B2) y patrón de exportación (B3), este módulo ilustra un patrón recurrente: **el LLM toma decisiones de diseño de forma independiente en cada conversación**, acumulando inconsistencias que en un proyecto real requerirían refactorización.
+Combinado con la inconsistencia de sistema de módulos (B2) y patrón de exportación (B3), este módulo ilustra el patrón de que **el LLM toma decisiones de diseño de forma independiente en cada conversación**, acumulando inconsistencias que en un proyecto real requerirían refactorización.
 
 ---
 
