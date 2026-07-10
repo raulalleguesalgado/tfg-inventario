@@ -4,7 +4,7 @@
 // Conservado sin corregir para análisis comparativo prompts básicos vs refinados.
 
 generator client {
-  provider = "prisma-client-node-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {

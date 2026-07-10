@@ -1,6 +1,17 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
+// app.js — CORRECCIÓN MÍNIMA aplicada:
+// 1. Convertido a ES Modules (import/export) para unificar con el resto del proyecto (Patrón 1)
+// 2. Rutas registradas — el LLM generó app.js sin importar ninguna route (Patrón 8)
+// El resto del fichero es el output original del prompt 01.
+
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import authRoutes from './routes/auth.routes.js';
+import categoryRoutes from './routes/category.routes.js';
+import supplierRoutes from './routes/supplier.routes.js';
+import productRoutes from './routes/product.routes.js';
+import movementRoutes from './routes/movement.routes.js';
+import userRoutes from './routes/user.routes.js';
 
 const app = express();
 
@@ -9,6 +20,14 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/auth', authRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/suppliers', supplierRoutes);
+app.use('/products', productRoutes);
+app.use('/movements', movementRoutes);
+app.use('/users', userRoutes);
 
 // Health Check
 app.get('/health', (req, res) => {
@@ -25,4 +44,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-module.exports = app;
+export default app;
