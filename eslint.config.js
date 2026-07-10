@@ -1,0 +1,30 @@
+// eslint.config.js
+// Configuración para análisis estático de seguridad — Fase 4A.2
+// Corrección mínima aplicada: "type": "module" en package.json para resolver
+// la inconsistencia CommonJS/ES Modules del Patrón 1 (documentado en prompts/00_analisis_patrones_basicos.md)
+
+import pluginSecurity from 'eslint-plugin-security';
+import pluginN from 'eslint-plugin-n';
+
+export default [
+  {
+    files: ['src/**/*.js'],
+    plugins: {
+      security: pluginSecurity,
+      n: pluginN,
+    },
+    rules: {
+      ...pluginSecurity.configs.recommended.rules,
+      'n/no-process-exit': 'warn',
+      'n/no-sync': 'warn',
+    },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: {
+        process: 'readonly',
+        console: 'readonly',
+      },
+    },
+  },
+];
