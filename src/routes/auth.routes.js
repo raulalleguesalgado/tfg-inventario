@@ -4,14 +4,14 @@ import * as authController from '../controllers/auth.controller.js';
 
 const router = Router();
 
-const registerSchema = z.zod.object({
+const registerSchema = z.object({
   name: z.string().min(2),
   email: z.string().email(),
   password: z.string().min(6),
   role: z.enum(['ADMIN', 'OPERATOR']).optional(),
 });
 
-const loginSchema = z.zod.object({
+const loginSchema = z.object({
   email: z.string().email(),
   password: z.string(),
 });
