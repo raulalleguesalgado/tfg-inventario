@@ -48,6 +48,9 @@ que C1-C6: bugs de contexto, no de lógica de seguridad.
 | C8 | `src/App.jsx` | B2 (prompt 09B) — reescritura eliminó `AuthProvider`, `ProtectedRoute` y rutas de login/register | Restaurar estructura de `09_frontend_setup.md` integrando Navbar y nuevas rutas |
 | C9 | `src/services/auth.service.js` | B3 (prompt 09B) — `name` no incluido en payload JWT, `user?.name` en Navbar siempre undefined | Añadir `name` al `jwt.sign({ id, role, name }, ...)` |
 | C10 | `src/controllers/auth.controller.js`, `src/services/auth.service.js` | Hallazgo A2 (prompt 03_auth.md, ya documentado en el básico) — register/login no siguen el envelope `{success, data, error, message}` que sí usa `product.controller.js`; `login` solo devolvía `{ token }`, sin `user`. Bloqueaba el login real del frontend (`data.data.token` / `data.data.user` quedaban `undefined`). Detectado al materializar y probar el frontend en navegador (2026-07-10) | Envolver respuestas de register/login en el formato estándar; `login` ahora devuelve `{ token, user }` |
+| C11 | `frontend/src/components/ProductForm.jsx` | B2 (prompt 09C) — `purchasePrice`/`salePrice` se leen de `initialData` sin convertir a `Number`; la API serializa los campos `Decimal` de Prisma como string en el JSON, pero el backend exige `z.number()` en `PUT /products/:id`. Editar un producto sin tocar el precio habría fallado la validación | Envolver ambos campos en `Number(initialData.purchasePrice)` / `Number(initialData.salePrice)` al inicializar el formulario |
+| C12 | `frontend/src/App.jsx` | B1 (prompt 09C) — tercera reescritura consecutiva de `App.jsx` desde cero (Patrón 8), esta vez dejando solo la ruta `/products` y eliminando `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard` y el resto de placeholders | Conservar la estructura existente y sustituir únicamente el placeholder de `/products` por el componente real |
+| C13 | `frontend/src/App.jsx` | B1 (prompt 09D) — cuarta reescritura consecutiva de `App.jsx` desde cero (Patrón 8, n=4/4), dejando solo la ruta `/movements` | Conservar la estructura existente y sustituir únicamente el placeholder de `/movements` por el componente real |
 
 ---
 
@@ -63,6 +66,19 @@ Las siguientes vulnerabilidades se conservan para el análisis de pentesting (Fa
 | S4 | CORS abierto `cors()` sin configuración | `app.js` | A05 |
 | S5 | Rutas sin middleware de autenticación (categories, suppliers, products) | routes | A01 |
 | ~~B3~~ | ~~Alucinación de API — `prisma.product.fields.minStock`~~ | ~~`product.repository.js`~~ | Verificado 2026-04-13: sintaxis válida en Prisma v5, endpoint funciona correctamente. No es bug. |
+
+---
+
+## Hallazgos de calidad deliberadamente NO corregidos (Fase 4A)
+
+Bugs reales detectados al verificar en navegador que **no bloquean el flujo funcional**
+— se documentan tal cual para el análisis de calidad, no se corrigen junto con las
+correcciones mínimas de integración (criterio: solo se corrige lo estrictamente
+necesario para que la app arranque y funcione, ver cabecera de este documento).
+
+| ID | Fichero | Problema |
+|----|---------|----------|
+| Q1 | `movement.controller.js` | El catch de `registerMovement` hardcodea `message: 'Failed to record movement'` y solo pone el motivo real (p. ej. "Insufficient stock for this movement") en el campo `error`. El frontend (correctamente) muestra `message`, así que el usuario nunca ve el motivo real de ningún fallo de movimiento. Inconsistente con `auth.controller.js`/`product.controller.js`, que sí devuelven el motivo real en `message`. Detectado en `prompts/09_frontend_movements.md` al probar un OUT con stock insuficiente. |
 
 ---
 
