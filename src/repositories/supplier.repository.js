@@ -1,4 +1,5 @@
-const { PrismaClient } = require('@prisma/client');
+// CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 const findAll = async () => {
@@ -31,4 +32,4 @@ const remove = async (id) => {
   });
 };
 
-module.exports = { findAll, findById, create, update, remove };
+export { findAll, findById, create, update, remove };

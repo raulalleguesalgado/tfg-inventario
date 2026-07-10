@@ -1,4 +1,5 @@
-const supplierService = require('../services/supplier.service');
+// CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import * as supplierService from '../services/supplier.service.js';
 
 const getAllSuppliers = async (req, res, next) => {
   try {
@@ -45,4 +46,4 @@ const deleteSupplier = async (req, res, next) => {
   }
 };
 
-module.exports = { getAllSuppliers, getSupplierById, createSupplier, updateSupplier, deleteSupplier };
+export { getAllSuppliers, getSupplierById, createSupplier, updateSupplier, deleteSupplier };

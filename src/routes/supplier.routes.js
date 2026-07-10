@@ -1,7 +1,8 @@
-const express = require('express');
-const router = express.Router();
-const { z } = require('zod');
-const supplierController = require('../controllers/supplier.controller');
+// CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import { Router } from 'express';
+import { z } from 'zod';
+import * as supplierController from '../controllers/supplier.controller.js';
+const router = Router();
 
 const supplierSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -30,4 +31,4 @@ router.post('/', validate(supplierSchema), supplierController.createSupplier);
 router.put('/:id', validate(supplierSchema.partial()), supplierController.updateSupplier);
 router.delete('/:id', supplierController.deleteSupplier);
 
-module.exports = router;
+export default router;

@@ -1,4 +1,5 @@
-const supplierRepository = require('../repositories/supplier.repository');
+// CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import * as supplierRepository from '../repositories/supplier.repository.js';
 
 const getAll = async () => {
   return await supplierRepository.findAll();
@@ -29,4 +30,4 @@ const remove = async (id) => {
   return await supplierRepository.remove(id);
 };
 
-module.exports = { getAll, getById, create, update, remove };
+export { getAll, getById, create, update, remove };
