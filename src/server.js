@@ -1,6 +1,7 @@
-const app = require('./app');
-const env = require('./config/env');
-const { PrismaClient } = require('@prisma/client');
+// server.js — CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import app from './app.js';
+import env from './config/env.js';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 

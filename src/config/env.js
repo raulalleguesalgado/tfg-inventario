@@ -1,5 +1,6 @@
-const dotenv = require('dotenv');
-const { z } = require('zod');
+// env.js — CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+import dotenv from 'dotenv';
+import { z } from 'zod';
 
 dotenv.config();
 
@@ -17,4 +18,4 @@ if (!envVars.success) {
   process.exit(1);
 }
 
-module.exports = envVars.data;
+export default envVars.data;

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Inventory management system with Node.js, Express, and Prisma",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
@@ -20,7 +21,11 @@
     "zod": "^3.22.0"
   },
   "devDependencies": {
+    "eslint": "^10.2.0",
+    "eslint-plugin-n": "^17.24.0",
+    "eslint-plugin-security": "^4.0.0",
     "nodemon": "^3.0.1",
+    "pg": "^8.20.0",
     "prisma": "^5.0.0"
   }
 }
