@@ -11,6 +11,12 @@
 // una CUARTA vez seguida, dejando solo la ruta /movements (n=4/4 prompts que tocan
 // App.jsx, patrón completamente reproducible). Solo se sustituye el placeholder de
 // Movements por el componente real.
+// CORRECCIÓN MÍNIMA C14 aplicada: el prompt de Categories (09E) reescribió App.jsx
+// una QUINTA vez seguida, dejando solo la ruta /categories (n=5/5). Solo se sustituye
+// el placeholder de Categories por el componente real.
+// CORRECCIÓN MÍNIMA C16 aplicada: el prompt de Suppliers (09F) reescribió App.jsx
+// una SEXTA vez seguida, dejando solo la ruta /suppliers (n=6/6). Solo se sustituye
+// el placeholder de Suppliers por el componente real.
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
@@ -21,8 +27,8 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
 import Movements from './pages/Movements';
-
-const Placeholder = ({ title }) => <div style={{ padding: '2rem' }}><h1>{title}</h1></div>;
+import Categories from './pages/Categories';
+import Suppliers from './pages/Suppliers';
 
 function App() {
   return (
@@ -64,7 +70,7 @@ function App() {
               element={
                 <>
                   <Navbar />
-                  <Placeholder title="Categories" />
+                  <Categories />
                 </>
               }
             />
@@ -73,7 +79,7 @@ function App() {
               element={
                 <>
                   <Navbar />
-                  <Placeholder title="Suppliers" />
+                  <Suppliers />
                 </>
               }
             />
