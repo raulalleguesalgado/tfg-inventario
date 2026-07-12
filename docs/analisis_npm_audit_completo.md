@@ -6,6 +6,21 @@
 
 ---
 
+## Comandos ejecutados
+
+```bash
+# Backend — desde la raíz del repo (tfg-inventario/)
+npm audit
+
+# Comprobación de qué versión concreta resolvió cada paquete señalado por npm audit
+npm ls brace-expansion qs body-parser express
+
+# Frontend — desde tfg-inventario/frontend/
+npm audit
+```
+
+---
+
 ## Backend (raíz del repo)
 
 ```

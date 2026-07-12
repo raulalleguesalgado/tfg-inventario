@@ -22,6 +22,25 @@ segundo bloque de configuración para `frontend/src/**/*.jsx` y `frontend/src/**
 
 ---
 
+## Comandos ejecutados
+
+Desde la raíz del repo (`tfg-inventario/`):
+
+```bash
+# Análisis completo (backend + frontend), tal y como corre en local
+npx eslint . --no-error-on-unmatched-pattern
+
+# Verificación aislada de que frontend/src realmente se estaba procesando
+# (el comando anterior no imprime nada para ficheros sin issues, así que
+# se repitió apuntando solo al frontend para confirmar 0 issues, no "no analizado")
+npx eslint "frontend/src/**/*.jsx" "frontend/src/**/*.js"
+```
+
+No se ejecutó como parte de un script de `package.json` (no existe `npm run lint` a nivel
+de raíz) — invocación directa de `npx eslint`.
+
+---
+
 ## Resultados
 
 ### Resumen
