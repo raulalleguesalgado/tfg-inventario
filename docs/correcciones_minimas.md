@@ -83,6 +83,8 @@ necesario para que la app arranque y funcione, ver cabecera de este documento).
 | ID | Fichero | Problema |
 |----|---------|----------|
 | Q1 | `movement.controller.js` | El catch de `registerMovement` hardcodea `message: 'Failed to record movement'` y solo pone el motivo real (p. ej. "Insufficient stock for this movement") en el campo `error`. El frontend (correctamente) muestra `message`, así que el usuario nunca ve el motivo real de ningún fallo de movimiento. Inconsistente con `auth.controller.js`/`product.controller.js`, que sí devuelven el motivo real en `message`. Detectado en `prompts/09_frontend_movements.md` al probar un OUT con stock insuficiente. |
+| Q2 | `.env`/`.env.example` + `auth.service.js` | `JWT_EXPIRES_IN="1h"` está declarado en el entorno pero nunca se lee en el código — `jwt.sign()` hardcodea `{ expiresIn: '1d' }` directamente. Configuración muerta: cambiar la variable de entorno no tiene ningún efecto sobre la expiración real del token. Detectado en la revisión manual de patrones inseguros (Fase 4A.4, 2026-07-12). |
+| Q3 | `frontend/src/api/client.js` | `baseURL: 'http://localhost:3000'` hardcodeado en vez de leerse de una variable de entorno (`import.meta.env.VITE_API_URL` o similar) — no bloquea nada en desarrollo, pero impide desplegar el frontend contra otro backend sin editar código fuente. Detectado en la revisión manual de patrones inseguros (Fase 4A.4, 2026-07-12). |
 
 ---
 
