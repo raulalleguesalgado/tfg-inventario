@@ -68,6 +68,7 @@ Las siguientes vulnerabilidades se conservan para el análisis de pentesting (Fa
 | S3 | Race condition TOCTOU en movements | `movement.service.js` | A04 |
 | S4 | CORS abierto `cors()` sin configuración | `app.js` | A05 |
 | S5 | Rutas sin middleware de autenticación (categories, suppliers, products) | routes | A01 |
+| S6 | JWT guardado en `localStorage` sin protección adicional (accesible desde cualquier script del origen; robable vía XSS) — decisión de arquitectura pedida explícitamente en `[CONTEXT]` de todos los prompts de frontend, no elección espontánea del LLM. Detectada por SonarCloud (`jssecurity:S8475`) el 2026-07-12, ver `docs/analisis_estatico_completo.md` | `frontend/src/api/auth.js:5` | A02 |
 | ~~B3~~ | ~~Alucinación de API — `prisma.product.fields.minStock`~~ | ~~`product.repository.js`~~ | Verificado 2026-04-13: sintaxis válida en Prisma v5, endpoint funciona correctamente. No es bug. |
 
 ---
