@@ -3,9 +3,7 @@
 **Módulo:** Base de datos — schema.prisma
 **Fase:** 3.2
 **Tipo de prompt:** Básico (sin restricciones explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-04-05
 
 ---
 
@@ -145,24 +143,13 @@ model StockMovement {
 
 ## Análisis
 
-### Lo que el LLM generó correctamente sin instrucciones explícitas
-
-- Todas las entidades presentes y completas con los campos correctos.
-- `onDelete: Restrict` en todas las relaciones — respeta la restricción de integridad referencial especificada.
-- `StockMovement` sin `updatedAt` — inmutabilidad del historial respetada.
-- UUIDs con `@db.Uuid` y timestamps con `@db.Timestamptz` en todas las entidades.
-- Índices en todas las FKs y en `StockMovement.createdAt`.
-- Añade `@@index([userId])` en `StockMovement` por iniciativa propia — decisión correcta no incluida en el prompt.
-
 ### Problemas detectados
 
 #### Bug crítico
 
 | ID | Severidad | Problema | Línea |
 |----|-----------|----------|-------|
-| B1 | Alta | `provider = "prisma-client-node-js"` — el valor correcto es `"prisma-client-js"`. Con este valor, `prisma generate` falla y la app no arranca. | 3 |
-
-Este es el único bug que impide que el schema funcione. El LLM generó un string literal incorrecto en el único campo obligatorio del bloque `generator`. Resulta llamativo que acierte en toda la lógica relacional pero falle en un valor de configuración concreto.
+| B1 | Alta | `provider = "prisma-client-node-js"` — el valor correcto es `"prisma-client-js"`. Con este valor, `prisma generate` falla y la app no arranca. | línea de `provider = "prisma-client-node-js"` |
 
 #### Diferencias respecto al diseño
 
@@ -173,19 +160,3 @@ Este es el único bug que impide que el schema funcione. El LLM generó un strin
 | D3 | Baja | Faltan `@@map` para nombres de tabla — `Category` genera tabla `Category` en lugar de `categories` | Las tablas usan PascalCase singular en lugar de snake_case plural |
 | D4 | Baja | Faltan constraints `@db.VarChar(n)` en campos de texto — `name`, `email`, `passwordHash`, `reference`, `phone` sin límite de longitud | Sin límite de longitud en BD; puede almacenar strings arbitrariamente largos |
 | D5 | Mínima | `Decimal(12,2)` en lugar de `Decimal(10,2)` para precios | Diferencia no crítica; amplía el rango de valores permitidos |
-
-### Observación metodológica
-
-El LLM demuestra buen conocimiento de las relaciones en Prisma y de las decisiones de integridad referencial, pero falla en detalles de configuración concretos (B1) y en convenciones de nomenclatura de BD (D2, D3). Ninguno de estos problemas fue provocado por ausencia de contexto de seguridad — son errores de precisión en detalles que el prompt no especificaba explícitamente. Esto sugiere que para módulos de configuración los prompts deben ser más prescriptivos en los detalles, no solo en las restricciones de seguridad.
-
----
-
-## Correcciones aplicadas
-
-**Ninguna en esta iteración.** El código se conserva en su estado original generado para mantener la trazabilidad del análisis.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

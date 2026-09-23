@@ -2,9 +2,19 @@
 
 **Fecha:** 2026-04-07
 **Herramienta:** npm audit (npm v10.9.3)
-**Dependencias analizadas:** package.json generado por prompt 01
+**Dependencias analizadas:** package.json de prompt 01, tras el commit `74c7d31` que añadió
+`eslint`, `eslint-plugin-security`, `eslint-plugin-n` y `pg` como devDependencies (necesarias
+para la propia Fase 4A.2, no generadas por el LLM)
 
 ---
+
+## Comando ejecutado
+
+Ejecutado desde la raíz del repo (solo backend, el frontend aún no existía):
+
+```
+npm audit
+```
 
 ## Resultado
 
@@ -32,15 +42,9 @@ found 0 vulnerabilities
 | eslint-plugin-n | ^17.24.0 | dev |
 | eslint-plugin-security | ^4.0.0 | dev |
 | nodemon | ^3.0.1 | dev |
+| pg | ^8.20.0 | dev |
 | prisma | ^5.0.0 | dev |
 
----
-
-## Conclusión
-
-El LLM seleccionó versiones recientes y sin vulnerabilidades conocidas para todas las
-dependencias. Este es uno de los aspectos donde el código LLM-generado no introduce riesgo
-adicional: los modelos tienden a elegir versiones estables y actuales de librerías populares.
-
-Las vulnerabilidades identificadas en este proyecto son introducidas por la **lógica del código
-generado**, no por las dependencias seleccionadas.
+`eslint`, `eslint-plugin-n`, `eslint-plugin-security` y `pg` no fueron generadas por el LLM en el
+prompt 01 — se añadieron en el commit `74c7d31` como herramientas necesarias para esta misma fase
+de análisis.

@@ -2,10 +2,8 @@
 
 **Módulo:** Frontend — Suppliers (listado, creación, edición, borrado)
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — metodología en diario.md 2026-03-26)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado)
 **Iteraciones:** 1
-**Fecha:** 2026-07-12
 **Prompt anterior:** `09_frontend_categories.md`
 
 ---
@@ -250,24 +248,7 @@ export default App;
 | B1 | **Alta (bloqueante)** | **Email vacío rompe create/edit.** El input de email no tiene `required`, así que un usuario puede dejarlo en blanco → `formData.email` queda `''`. El backend valida `email: z.string().email().optional().nullable()`: al ser `.email()` encadenado, `''` se valida como formato de email y **falla** aunque el campo sea opcional (el `.optional()` de Zod solo permite *omitir* la clave, no un string vacío). Resultado: crear o editar cualquier proveedor sin rellenar el email devuelve siempre 400 "Invalid email", incluso aunque el enunciado del prompt diga explícitamente que el campo es opcional. | Suppliers.jsx |
 | B2 | Alta | **App.jsx reescrito desde cero — sexta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, `Categories`. Solo sobrevive `/suppliers`, con un comentario `{/* Other routes */}` que no llega a implementarse. | App.jsx |
 | F1 | Info | Errores de create/update/delete con `window.alert()`, mismo patrón que Products (F1 de 09C) y Categories (F2 de 09E). | Suppliers.jsx |
-
-### Observación metodológica — Patrón 8, n=6 de 6
-
-Sexto prompt de frontend consecutivo que reescribe `App.jsx` por completo al añadir una
-ruta — n=6/6, sin excepción. El comentario `{/* Other routes */}` que el propio LLM deja
-en su salida es indicativo: es consciente de que "otras rutas" deberían existir, pero al no
-tener el archivo real en su contexto, no puede reconstruirlas y las sustituye por un
-comentario vacío.
-
-### Hallazgo B1 — asimetría con el patrón de correcciones anteriores
-
-A diferencia de C7-C13 (bugs de integración entre conversaciones, Patrones 1/8), B1 es un
-bug dentro de un único módulo, causado por una particularidad de Zod (`.optional()` no
-exime a `.email()` de validar un string vacío) que el LLM no tuvo en cuenta al no marcar el
-campo `required` en el formulario. Bloquea un flujo funcional básico (crear/editar un
-proveedor sin email), por lo que entra en el mismo criterio de corrección mínima que C11
-(bug que impide completar el flujo, no vulnerabilidad de seguridad) — no es un hallazgo de
-calidad para Fase 4A, se corrige ahora.
+| F2 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
 ### Correcciones mínimas aplicadas
 
@@ -288,9 +269,3 @@ verificar bloqueo de borrado con productos asignados → borrar categoría sin p
 navegación a `/suppliers` → crear proveedor **sin email** (confirma que sin C15 la petición
 fallaría) → editar → verificar bloqueo de borrado con productos asignados → borrar
 proveedor sin productos. Sin errores de consola.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis. Correcciones mínimas aplicadas por separado.

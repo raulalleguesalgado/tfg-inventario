@@ -2,10 +2,8 @@
 
 **Módulo:** Frontend — Movements (selector de producto, registro de movimiento, historial)
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — metodología en diario.md 2026-03-26)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado)
 **Iteraciones:** 1
-**Fecha:** 2026-07-10
 **Prompt anterior:** `09_frontend_products.md`
 
 ---
@@ -239,37 +237,17 @@ export default App;
 | Sin validación de stock en cliente | ✅ | Delega enteramente en el servidor, tal y como pedía `[RULES]` |
 | Botón submit deshabilitado durante `loading` | ✅ | Extra no solicitado explícitamente, evita doble envío |
 
-Módulo limpio — no se detectaron bugs propios de `Movements.jsx` (primera vez en la serie de prompts de frontend que esto ocurre).
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
 | B1 | Alta | **App.jsx reescrito desde cero — cuarta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products` y los placeholders de Categories/Suppliers. Solo sobrevive `/movements`, sin siquiera un catch-all esta vez. | App.jsx |
 | F1 | Info | `<table border="1">` — mismo uso del atributo HTML obsoleto ya visto en `Products.jsx` (F2 de 09C), en vez de estilos inline. | Movements.jsx |
-
-### Observación metodológica — Patrón 8, n=4 de 4
-
-Cuarto prompt de frontend consecutivo que reescribe `App.jsx` por completo al tener que
-añadir una ruta. La muestra queda en **4 de 4** prompts que tocan ese fichero, sin
-excepción — evidencia estadística robusta para la memoria de que la fragmentación entre
-conversaciones independientes no depende del módulo ni de la complejidad de la tarea,
-sino exclusivamente de la falta de contexto persistente entre conversaciones.
+| F2 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
 ### Hallazgo adicional — mensaje de error genérico en el backend (no corregido)
 
-Al verificar el flujo en navegador (registrar un movimiento OUT con cantidad superior al
-stock disponible) se observó que el mensaje mostrado al usuario es siempre
-"Failed to record movement", nunca el motivo real ("Insufficient stock for this
-movement"). Causa: `movement.controller.js` hardcodea `message: 'Failed to record
-movement'` en el catch y solo pone el motivo real en el campo `error`, no en `message`
-— inconsistente con `auth.controller.js`/`product.controller.js`, que si devuelven el
-motivo real en `message`.
-
-Es un hallazgo del **prompt básico de movements** (`prompts/07_movements.md`), no de
-este prompt de frontend ni de esta sesión. Decisión: no corregir ahora (no bloquea el
-flujo, solo reduce la información mostrada al usuario) — se deja documentado aquí como
-dato para la Fase 4A (análisis de calidad).
+`movement.controller.js` hardcodea `message: 'Failed to record movement'` en el catch en vez de devolver el motivo real (p. ej. "Insufficient stock"), inconsistente con `auth.controller.js`/`product.controller.js`. No corregido — documentado para la Fase 4A.
 
 ### Correcciones mínimas aplicadas
 
@@ -285,9 +263,3 @@ movimiento IN (aparece en el historial, stock del selector se actualiza) → reg
 movimiento OUT con cantidad mayor al stock disponible (se muestra mensaje de error sin
 crashear la vista). Sin errores de consola de JavaScript (solo el log esperado del
 navegador para la respuesta HTTP 400, ya gestionada por el `catch`).
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis. Corrección mínima aplicada por separado.

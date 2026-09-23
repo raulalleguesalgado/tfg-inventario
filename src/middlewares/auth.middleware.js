@@ -1,6 +1,6 @@
 // auth.middleware.js
 // CORRECCIÓN MÍNIMA — no generado por LLM
-// Gap documentado como B5 en prompts/08_users.md y Patrón 8 en prompts/00_analisis_patrones_basicos.md
+// Gap documentado como B5 en prompts/08_users.md (patrón de fragmentación entre módulos)
 // user.routes.js importa authenticate y authorize pero el LLM nunca generó este fichero.
 
 import jwt from 'jsonwebtoken';

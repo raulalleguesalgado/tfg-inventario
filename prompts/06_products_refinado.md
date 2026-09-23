@@ -3,9 +3,7 @@
 **Módulo:** Products (CRUD completo + alertas de stock)
 **Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad y arquitectura explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 **Prompt básico de referencia:** `06_products.md`
 
 ---
@@ -225,20 +223,6 @@ module.exports = router;
 | A1 | Sin validación de UUID en params | ✅ Corregido | `validateId` middleware con `idSchema = z.object({ id: z.string().uuid() })` |
 | A2 | Rutas sin autenticación | ✅ Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
 
-**Los 5 problemas identificados en el prompt básico fueron eliminados.**
-
-### Lo que el LLM mantuvo bien del básico
-
-- `GET /alerts` definido antes de `GET /:id` — evita que Express interprete 'alerts' como UUID.
-- `next(err)` en todos los catch blocks.
-- Formato de respuesta estándar en todas las respuestas.
-- `productSchema.partial()` para PUT — validación parcial correcta.
-- `prisma.product.fields.minStock` en `findLowStock` — sintaxis válida en Prisma v5, confirmada funcional.
-
-### Técnica destacada — `router.use(authenticate)`
-
-El LLM aplicó `router.use(authenticate)` en lugar de añadir el middleware ruta por ruta. Esta solución es más robusta: cualquier ruta añadida en el futuro hereda automáticamente la autenticación, eliminando el riesgo de olvidar el middleware en una ruta nueva. Es una mejora sobre lo pedido en el prompt (que solo especificaba aplicar authenticate por ruta).
-
 ### Nuevos problemas detectados en el refinado
 
 | ID | Severidad | Problema | Fichero |
@@ -246,8 +230,6 @@ El LLM aplicó `router.use(authenticate)` en lugar de añadir el middleware ruta
 | R1 | Media | `findAll`, `findById` y `findLowStock` no incluyen relaciones (`include: { category, supplier }`). El prompt básico sí las incluía. Las respuestas de la API devolverán solo IDs de categoría y proveedor, no sus datos completos. Pérdida funcional respecto al básico. | product.repository.js |
 | R2 | Baja | `getById` en el service devuelve `null` si el producto no existe; el controller gestiona el 404 directamente fuera del catch. Es un patrón válido, pero inconsistente con auth (que lanzaba error tipado desde el service). | product.service.js / controller.js |
 | R3 | Info | Mensajes de error de validación genéricos (`"Invalid input"`) sin detalle de qué campo falló. El auth refinado devolvía `result.error.format()` con el detalle completo. | product.routes.js |
-
-R1 es el único punto relevante: el refinado pierde la capacidad de devolver datos de categoría y proveedor en las respuestas. No es un problema de seguridad, pero sí una regresión funcional no causada por las restricciones del `[RULES]` — el prompt no mencionaba explícitamente las relaciones y el LLM las omitió.
 
 ---
 
@@ -261,19 +243,3 @@ R1 es el único punto relevante: el refinado pierde la capacidad de devolver dat
 | PrismaClient sin singleton | Sí | No | ✅ |
 | Validación de UUID en params | No | Sí (`validateId`) | ✅ |
 | Regresiones funcionales | — | 1 (R1: sin includes) | +1 menor |
-
-**Eliminación total de problemas de seguridad y arquitectura. Una regresión funcional menor.**
-
----
-
-## Observación metodológica
-
-El hallazgo más relevante de este módulo es la técnica `router.use(authenticate)`: el LLM no solo cumplió la instrucción de aplicar autenticación en todas las rutas, sino que eligió la implementación más robusta posible para hacerlo. Esto sugiere que cuando el `[RULES]` especifica el *qué* con claridad suficiente, el modelo es capaz de elegir autónomamente el *cómo* óptimo.
-
-La regresión R1 (sin includes en las consultas) es un caso inverso al de auth (R1: sin check de email duplicado): en ambos módulos el refinado omite un comportamiento defensivo que el básico incluía por inercia. Esto refuerza la observación de que el prompt refinado maximiza las propiedades mencionadas en `[RULES]` pero puede perder comportamientos no explicitados. Para un prompt de producción, el `[RULES]` debería ser exhaustivo — incluyendo aspectos funcionales, no solo de seguridad.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

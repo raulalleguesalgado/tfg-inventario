@@ -3,9 +3,7 @@
 **Módulo:** Frontend — Navbar, Dashboard, actualización App.jsx
 **Fase:** 3.5
 **Tipo de prompt:** Refinado directo
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 **Prompt anterior:** `09_frontend_setup.md`
 
 ---
@@ -214,17 +212,7 @@ export default function App() {
 | B3 | Media | `user?.name` en Navbar siempre es `undefined`. El JWT se firmó con `{ id, role }` en `auth.service.js` — el campo `name` nunca se incluyó en el payload. Navbar muestra "Hello, " sin nombre. | Navbar.jsx |
 | F1 | Info | `handleLogout` llama a `logout()` (que ya hace `window.location.href = '/login'`) y luego `navigate('/login')`. Doble redirect — el segundo nunca llega a ejecutarse. | Navbar.jsx |
 | F2 | Info | Sin mensaje cuando `stats.alerts` está vacío — la tabla muestra cabeceras con cuerpo vacío. | Dashboard.jsx |
-
-### Observación metodológica — Patrón de fragmentación entre prompts
-
-B1 y B2 son la manifestación más clara del **Patrón 8** documentado en el análisis de prompts básicos (fragmentación por conversaciones independientes), ahora aplicado al frontend:
-
-- El LLM del prompt de Dashboard asumió que `AuthContext` exporta un hook `useAuth` — convención habitual en React pero no implementada en la conversación anterior.
-- Al reescribir `App.jsx`, el LLM generó una versión limpia desde cero sin recordar la estructura de `AuthProvider` y `ProtectedRoute` del prompt anterior.
-
-Estos errores no son de conocimiento — el LLM sabe implementar `useAuth` y sabe que React Router necesita el Provider. Son errores de **ausencia de contexto entre conversaciones**: exactamente el mismo problema que en el backend, ahora replicado en el frontend.
-
-**Dato relevante para la memoria:** este patrón aparece en los prompts básicos del backend (módulos ES Modules vs CommonJS, PrismaClient sin singleton) y ahora en el frontend (hook inexistente, Provider eliminado). Confirma que la fragmentación de conversaciones es un problema estructural independiente del dominio técnico.
+| F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
 ### Correcciones mínimas necesarias para integración
 
@@ -235,9 +223,3 @@ Estas correcciones son inevitables — sin ellas la app no funciona:
 3. Incluir `name` en el payload JWT en `auth.service.js`: `jwt.sign({ id, role, name }, ...)`
 
 Documentadas en `docs/correcciones_minimas.md` como C7, C8, C9.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis. Correcciones mínimas documentadas por separado.

@@ -1,7 +1,7 @@
 // schema.prisma
 // GENERADO POR LLM (Gemini Pro) — Prompt 02 — 2026-04-05
 // BUG B1 DOCUMENTADO: provider = "prisma-client-node-js" debería ser "prisma-client-js"
-// Conservado sin corregir para análisis comparativo prompts básicos vs refinados.
+// Corrección mínima C1 aplicada (docs/correcciones_minimas.md) — el valor de abajo ya está corregido.
 
 generator client {
   provider = "prisma-client-js"

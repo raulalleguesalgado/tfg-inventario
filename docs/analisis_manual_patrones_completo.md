@@ -38,10 +38,12 @@ app.use((err, req, res, next) => {
 ```
 
 **Confirmado que sigue activo:** el `.env` real del proyecto tiene `NODE_ENV=development`,
-por lo que esta condición se cumple en el entorno de desarrollo/pruebas actual. El guard en
-sí es correcto (no expondría el stack en producción con `NODE_ENV=production`), pero es la
-app tal y como se ejecuta la que sí filtra esta información — coherente con el hallazgo ya
-documentado, sin necesidad de re-explotarlo.
+por lo que esta condición se cumple en el entorno de pruebas actual. Con `NODE_ENV=production`
+esta vulnerabilidad concreta no existiría: el guard del código es correcto, filtra el stack
+por sí solo sin que haga falta tocar nada más. Lo que la activa es la configuración del
+entorno usado para las pruebas, no una decisión insegura del código generado — a diferencia
+del resto de hallazgos de este documento, aquí la responsabilidad es de quien montó el
+entorno de pentesting, no del LLM ni del prompt.
 
 ---
 
@@ -106,15 +108,8 @@ corrigen (mismo criterio que Q1, ver cabecera de `docs/correcciones_minimas.md`)
 
 ---
 
-## Conclusión — Fase 4A.4 completa
+## Fase 4A.4 completa
 
-De los cinco patrones de la checklist (`plan.md` 4A.4), solo la exposición de información
-sensible en errores y la política CORS constituyen hallazgos reales — y ambos ya estaban
-documentados de sesiones anteriores (ZAP-03 y S4 respectivamente). La revisión manual sobre
-el conjunto completo (backend + frontend) no encontró **ninguna vulnerabilidad nueva** más
-allá de la ya detectada por SonarCloud (S6, JWT en `localStorage`, ver
-`docs/analisis_estatico_completo.md`). Sí aportó dos hallazgos de calidad menores (Q2, Q3).
-
-**Con esto, la Fase 4A (Análisis estático) queda completa: SonarCloud (4A.1), ESLint
-(4A.2), npm audit (4A.3) y revisión manual (4A.4), las cuatro sobre el conjunto completo
-backend + frontend.**
+Con esto, la Fase 4A (Análisis estático) queda completa: SonarCloud (4A.1), ESLint (4A.2),
+npm audit (4A.3) y revisión manual (4A.4), las cuatro sobre el conjunto completo backend +
+frontend.

@@ -4,7 +4,7 @@
 erDiagram
     Category {
         uuid id PK
-        string name
+        string name UK
         string description
         timestamp created_at
         timestamp updated_at
@@ -14,7 +14,7 @@ erDiagram
         uuid id PK
         string name
         string contact_name
-        string email
+        string email UK
         string phone
         timestamp created_at
         timestamp updated_at
@@ -24,7 +24,7 @@ erDiagram
         uuid id PK
         string name
         string description
-        string reference
+        string reference UK
         decimal purchase_price
         decimal sale_price
         int current_stock
@@ -38,7 +38,7 @@ erDiagram
     User {
         uuid id PK
         string name
-        string email
+        string email UK
         string password_hash
         string role
         timestamp created_at
@@ -63,8 +63,8 @@ erDiagram
 
 ## Notes
 
-- `role` values: `admin`, `operator`
+- `role` values: `ADMIN`, `OPERATOR`
 - `type` values: `IN`, `OUT`, `ADJUSTMENT`
-- `reference` is optional (nullable)
+- `reference` is optional (nullable) and unique when set (no two products share the same reference)
 - All FK relations use `RESTRICT` on delete — a category or supplier cannot be deleted if it has products assigned; a product or user cannot be deleted if it has stock movements
 - `StockMovement` has no `updated_at` — movements are immutable

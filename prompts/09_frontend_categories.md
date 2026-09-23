@@ -2,10 +2,8 @@
 
 **Módulo:** Frontend — Categories (listado, creación, edición, borrado)
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — metodología en diario.md 2026-03-26)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado)
 **Iteraciones:** 1
-**Fecha:** 2026-07-12
 **Prompt anterior:** `09_frontend_movements.md`
 
 ---
@@ -232,8 +230,6 @@ export default App;
 | Manejo de errores sin crash (incluye borrado bloqueado por productos asignados) | ✅ | `try/catch` con `alert()`, la vista no revienta |
 | Sin librerías de UI | ✅ | Solo inline styles + tabla HTML plana |
 
-Módulo limpio — no se detectaron bugs propios de `Categories.jsx` (segunda vez consecutiva tras Movements que esto ocurre).
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
@@ -241,13 +237,7 @@ Módulo limpio — no se detectaron bugs propios de `Categories.jsx` (segunda ve
 | B1 | Alta | **App.jsx reescrito desde cero — quinta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements` y el placeholder de Suppliers. Solo sobrevive `/categories`, sin catch-all. | App.jsx |
 | F1 | Info | `<table border="1">` — mismo uso del atributo HTML obsoleto ya visto en `Products.jsx` (F2 de 09C) y `Movements.jsx` (F1 de 09D). | Categories.jsx |
 | F2 | Info | Errores de create/update/delete con `window.alert()`, mismo patrón que Products (F1 de 09C), inconsistente con el mensaje inline usado en Movements/Login/Register/Dashboard. | Categories.jsx |
-
-### Observación metodológica — Patrón 8, n=5 de 5
-
-Quinto prompt de frontend consecutivo que reescribe `App.jsx` por completo al añadir una
-ruta. Muestra ya en **5 de 5** prompts que tocan ese fichero, sin excepción — sigue
-reforzando la conclusión de que la fragmentación entre conversaciones independientes es
-estructural al enfoque "un prompt por módulo, sin contexto del repo", no un caso aislado.
+| F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
 ### Correcciones mínimas aplicadas
 
@@ -256,13 +246,3 @@ Documentada en `docs/correcciones_minimas.md`:
 - **C14** (`App.jsx`): se conserva la estructura completa (`AuthProvider`, `ProtectedRoute`,
   `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, placeholder de
   Suppliers) y solo se sustituye el placeholder de `/categories` por el componente real.
-
-### Verificación en navegador
-
-*(pendiente — se hará junto con Suppliers antes de cerrar la Fase 3.5)*
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis. Corrección mínima aplicada por separado.

@@ -2,15 +2,16 @@
 
 **Módulo:** Global error handler (Express)
 **Fase:** 3.4
-**Tipo de prompt:** Único (gap no generado en prompts básicos — no aplica comparativa básico/refinado)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Experimental, ligado a la rama refinada (sin comparativa básico/refinado
+propia — el prompt de setup nunca generó ningún middleware de errores dedicado, todo iba
+inline en `app.js`)
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 
-**Contexto:** Este middleware fue identificado como gap en el análisis de patrones básicos
-(Patrón 8 de `00_analisis_patrones_basicos.md`): el prompt de setup no lo generó porque
-los módulos de rutas no existían todavía. Es el receptor final de todos los `next(err)`
-que generan los controllers refinados de auth, products y movements.
+**Contexto:** Este middleware se diseñó para recibir los `next(err)` que generan los
+controllers *refinados* de auth, products y movements (`err.status`/`err.message` como
+código) — solo tiene sentido junto a esas tres versiones refinadas. **Nunca se creó ni se
+conectó en el repo real**: la app desplegada y auditada sigue usando el handler de errores
+original del prompt 01, inline en `app.js`.
 
 ---
 
@@ -135,10 +136,18 @@ module.exports = errorMiddleware;
 | Prisma — registro no encontrado | `PrismaClientKnownRequestError P2025` | 404 |
 | Error no clasificado | cualquier otro | 500 |
 
-**Observación importante:** los errores de `movement.service.js` (`INSUFFICIENT_STOCK`, `PRODUCT_NOT_FOUND`) se lanzan como `new Error('...')` sin `.status`. El middleware no los reconoce como `PrismaClientKnownRequestError` ni tienen `.status`, por lo que caen en el fallback 500. Funcionalmente devuelven el mensaje correcto en `error`, pero el código HTTP es incorrecto (debería ser 422 para stock insuficiente, 404 para producto no encontrado). Es una inconsistencia entre cómo el service lanza los errores (R2 de `07_movements_refinado.md`) y cómo el middleware los clasifica. Documentado para el análisis de resultados.
-
 ---
 
-## Número de iteraciones
+## Estado real: experimento, nunca integrado en la app
 
-1 — output aceptado sin re-prompting.
+Este fichero (`src/middlewares/error.middleware.js`) no existe en el repo real — es un
+experimento comparativo, igual que `auth`/`products`/`movements` *refinado*, ligado a esas
+tres versiones refinadas (nunca integradas tampoco). La app real sigue usando el handler
+original generado en el prompt 01 (`res.status(...).json({ status: 'error', message,
+...(NODE_ENV === 'development' && { stack: err.stack }) })`), que expone el stack trace
+completo cuando `NODE_ENV=development`. Esa exposición está documentada y analizada por
+separado (`docs/pentesting_zap_completo.md`, ZAP-C04; capítulo de auditoría de seguridad
+de la memoria): el guard `NODE_ENV` del código es correcto, la fuga ocurre solo porque el
+entorno de pruebas corre en modo desarrollo, no por ausencia de protección en el código.
+Este documento no corrige ni sustituye eso — documenta cómo habría respondido el LLM a un
+prompt específico para ese middleware, dentro del experimento de la rama refinada.

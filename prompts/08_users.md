@@ -3,9 +3,7 @@
 **Módulo:** Users (GET /users, GET /users/:id, PUT /users/:id — solo admin)
 **Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-04-05
 
 ---
 
@@ -213,14 +211,6 @@ export default router;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente sin instrucciones explícitas
-
-- **`select` explícito en todos los queries** — `passwordHash` nunca aparece en ninguna respuesta. El módulo más cuidadoso con datos sensibles de todos los generados.
-- **`error.statusCode = 404`** en el service — primer módulo que usa errores tipados con statusCode, lo que permite al middleware global de errores responder con el código HTTP correcto.
-- **`next(error)` en todos los controllers** — manejo de errores completamente consistente, sin ningún `res.status().json()` directo en los catch.
-- **`authenticate` y `authorize('ADMIN')` aplicados en las rutas** — primer módulo que incluye middleware de autenticación y autorización por iniciativa propia, sin que el prompt lo solicitara explícitamente.
-- `router.use(authenticate)` — protege todas las rutas del módulo con un único middleware.
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
@@ -230,21 +220,3 @@ export default router;
 | B3 | Media | Genera un nuevo `user.repository.js` con `findAll`, `findById`, `update` — pero el módulo de auth ya generó otro con `findByEmail`, `findById`, `create`. Al integrar los módulos habrá conflicto en el mismo fichero. | user.repository.js |
 | B4 | Baja | `new PrismaClient()` instanciado de nuevo — sin singleton. | user.repository.js |
 | A1 | Baja | Respuestas de éxito omiten `error: null` — inconsistencia menor con el formato estándar `{ success, data, error, message }`. | user.controller.js |
-
-### Observación metodológica
-
-Este es el módulo más seguro de todos los generados. La diferencia respecto a los anteriores está en el contexto: el prompt menciona explícitamente "Authorization: admin role can do everything, operator role has read-only access." Esto activa en el LLM comportamientos de seguridad que no emergieron en ningún módulo anterior. **El nivel de seguridad del código generado es directamente sensible al contexto semántico del prompt**, incluso sin un `[RULES]` explícito: con una sola frase de contexto sobre autorización, el LLM aplica `authenticate` y `authorize` por iniciativa propia.
-
-B2 ilustra la limitación estructural de los prompts fragmentados: el LLM asume la existencia de `auth.middleware.js` — un módulo que debería haber emergido del prompt de auth pero no lo hizo porque ese prompt solo pedía registro y login. **Las dependencias implícitas entre módulos no emergen en prompts independientes** — el modelo desconoce qué se ha generado en otras conversaciones.
-
----
-
-## Correcciones aplicadas
-
-**Ninguna en esta iteración.**
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

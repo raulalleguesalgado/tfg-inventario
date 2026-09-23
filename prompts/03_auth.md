@@ -3,9 +3,7 @@
 **Módulo:** Autenticación (register, login, JWT, roles)
 **Fase:** 3.4
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-04-05
 
 ---
 
@@ -189,29 +187,19 @@ export default router;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente sin instrucciones explícitas
-
-- Contraseña hasheada con bcrypt (10 rounds) antes de persistir.
-- `passwordHash` eliminado del objeto de respuesta en register — no se expone al cliente.
-- Mensaje de error genérico en login (`Invalid credentials`) tanto si el email no existe como si la contraseña es incorrecta — evita enumeración de usuarios (user enumeration).
-- JWT con expiración (`expiresIn: '1d'`).
-- Comprobación de usuario existente antes de registrar.
-
 ### Problemas de seguridad
 
 | ID | Severidad | Problema | Fichero | Línea | OWASP |
 |----|-----------|----------|---------|-------|-------|
 | S1 | Alta | `JWT_SECRET \|\| 'supersecret'` — si `JWT_SECRET` no está definida en el entorno, el secreto es el literal `'supersecret'`. Cualquier atacante que conozca este fallback puede firmar tokens válidos arbitrarios. | auth.service.js | 5 | A02 — Cryptographic Failures |
-| S2 | Alta | `role: userData.role` en register — el rol se toma directamente del body de la petición. Un atacante puede registrarse como `ADMIN` enviando `{"role": "ADMIN"}`. Vulnerabilidad de escalada de privilegios. | auth.service.js | 16 | A01 — Broken Access Control |
+| S2 | Alta | `role: userData.role` en register — el rol se toma directamente del body de la petición. Un atacante puede registrarse como `ADMIN` enviando `{"role": "ADMIN"}`. Vulnerabilidad de escalada de privilegios. | auth.service.js | 19 | A01 — Broken Access Control |
 | S3 | Baja | `password: z.string().min(6)` — mínimo de 6 caracteres para la contraseña; insuficiente para resistir ataques de fuerza bruta. | auth.routes.js | 10 | A07 — Identification & Authentication Failures |
-
-**S2 es el hallazgo más relevante del módulo:** es una vulnerabilidad de escalada de privilegios introducida por defecto. El LLM pasa `userData.role` directamente al repositorio sin sanear el input, ignorando el valor por defecto definido en el schema de Prisma (`OPERATOR`). Este tipo de vulnerabilidad — lógica de negocio insegura — es exactamente la categoría documentada por Pearce et al. como característica del código LLM-generado sin restricciones.
 
 ### Bugs
 
 | ID | Severidad | Problema | Fichero | Línea |
 |----|-----------|----------|---------|-------|
-| B1 | Alta | `z.zod.object()` — sintaxis incorrecta, debería ser `z.object()`. Causa un error en runtime al intentar registrar las rutas. | auth.routes.js | 7, 13 |
+| B1 | Alta | `z.zod.object()` — sintaxis incorrecta, debería ser `z.object()`. Causa un error en runtime al intentar registrar las rutas. | auth.routes.js | 7, 14 |
 | B2 | Alta | ES Modules (`import`/`export`) en todos los ficheros, mientras el setup (app.js, server.js) usa CommonJS (`require`/`module.exports`). Incompatible sin `"type": "module"` en package.json, que a su vez requeriría convertir el setup. | todos | — |
 | B3 | Baja | `new PrismaClient()` instanciado en el repository — tercera instancia separada (también está en server.js). Sin singleton, se abre una conexión a BD por módulo. | user.repository.js | 3 |
 
@@ -222,21 +210,3 @@ export default router;
 | A1 | El controller captura los errores y responde directamente (`res.status(400).json(...)`) en lugar de llamar a `next(error)` — bypasea el middleware global de errores definido en app.js. | auth.controller.js |
 | A2 | Formato de respuesta no sigue el estándar acordado `{ success, data, error, message }` — usa formatos ad hoc distintos en register y login. | auth.controller.js |
 | A3 | `throw new Error('...')` genérico en el service — sin errores tipados, el controller no puede distinguir entre un error de validación (400) y un error interno (500) salvo por el mensaje. | auth.service.js |
-
-### Observación metodológica
-
-Este módulo produce el hallazgo de seguridad más significativo hasta ahora: S2 (auto-asignación de rol) es una vulnerabilidad de escalada de privilegios que el LLM introduce por defecto al pasar el input del usuario directamente al ORM sin aplicar el principio de mínimo privilegio. El modelo conoce las buenas prácticas de autenticación (hash bcrypt, JWT con expiración, mensajes de error genéricos) pero no aplica por defecto restricciones de control de acceso en el registro. Esto es coherente con los hallazgos de Pearce et al. (2022) y refuerza la hipótesis de que la ingeniería de prompts con restricciones explícitas es necesaria para obtener código seguro.
-
-El bug B2 (inconsistencia de módulos) es un patrón estructural que se repetirá en módulos posteriores si el LLM elige ES Modules por defecto — a documentar como patrón en el análisis final.
-
----
-
-## Correcciones aplicadas
-
-**Ninguna en esta iteración.** El código se conserva en su estado original para mantener la trazabilidad del análisis.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

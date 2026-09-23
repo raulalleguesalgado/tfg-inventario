@@ -3,9 +3,7 @@
 **Módulo:** Suppliers (CRUD completo)
 **Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-04-05
 
 ---
 
@@ -216,13 +214,6 @@ module.exports = router;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente sin instrucciones explícitas
-
-- Formato de respuesta estándar `{ success, data, error, message }` seguido en todos los controllers.
-- `supplierSchema.partial()` para PUT — permite actualizaciones parciales correctamente.
-- Usa `_count` del repository para verificar productos antes de borrar — más eficiente que categories, que cargaba todos los productos.
-- `orderBy: { createdAt: 'desc' }` en findAll — añadido por iniciativa propia.
-
 ### Problemas detectados
 
 #### Bugs
@@ -239,19 +230,3 @@ module.exports = router;
 | A1 | Sin validación de UUID en params — categories lo implementaba, suppliers no. Inconsistencia entre módulos generados en conversaciones independientes. | supplier.routes.js |
 | A2 | Manejo de errores inconsistente: `getSupplierById` y `deleteSupplier` responden directamente con status hardcodeado; el resto usa `next(error)`. | supplier.controller.js |
 | A3 | Rutas sin middleware de autenticación. | supplier.routes.js |
-
-### Observación metodológica
-
-El LLM usó CommonJS en este módulo y ES Modules en categories y auth, generados en conversaciones igualmente independientes. Esto confirma que **el LLM no mantiene coherencia de decisiones técnicas entre prompts independientes** — elige el sistema de módulos por defecto según su propio criterio en cada sesión, que varía sin causa aparente. Esta inconsistencia es evidencia directa de la limitación documentada en el diario: sin acceso al contexto del proyecto completo, el modelo no puede garantizar coherencia arquitectónica entre módulos.
-
----
-
-## Correcciones aplicadas
-
-**Ninguna en esta iteración.**
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

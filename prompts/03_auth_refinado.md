@@ -3,9 +3,7 @@
 **Módulo:** Autenticación (register, login, JWT, roles, middlewares)
 **Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad explícita)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 **Prompt básico de referencia:** `03_auth.md`
 
 ---
@@ -240,8 +238,6 @@ module.exports = {
 | S2 | Rol auto-asignable desde el body de la petición | ✅ Corregido | `role: 'OPERATOR'` hardcoded en el service — el campo `role` del body es ignorado completamente |
 | S3 | Password mínimo 6 caracteres | ✅ Corregido | `z.string().min(8)` en ambos schemas |
 
-**Las 3 vulnerabilidades de seguridad identificadas en el prompt básico fueron eliminadas en su totalidad.**
-
 ### Bugs del prompt básico — estado en el refinado
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
@@ -249,8 +245,6 @@ module.exports = {
 | B1 | `z.zod.object()` — sintaxis incorrecta | ✅ Corregido | Usa `z.object()` correctamente |
 | B2 | Mezcla CommonJS / ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
 | B3 | PrismaClient sin singleton | ✅ Corregido | Singleton exportado desde `src/config/prisma.js` e importado en el repository |
-
-**Los 3 bugs del prompt básico fueron eliminados.**
 
 ### Problemas de arquitectura del prompt básico — estado en el refinado
 
@@ -274,8 +268,6 @@ module.exports = {
 | R2 | Info | `loginSchema` valida `password: z.string().min(8)`. Esto es innecesario en login — si alguien tiene una cuenta con contraseña de 7 caracteres (creada antes de este cambio), no podría iniciar sesión por fallo de validación, no por contraseña incorrecta. En login basta con `z.string().min(1)`. | auth.routes.js |
 | R3 | Info | `auth.middleware.js` responde directamente en lugar de llamar a `next(err)`. Es un patrón aceptable para middleware de autenticación (es conveniente responder 401/403 directamente), pero es inconsistente con la regla del prompt que pedía `next(error)` en todos los errores. | auth.middleware.js |
 
-R1 es el único punto que merece atención: el prompt básico incluía la comprobación de email duplicado explícitamente y el refinado la omitió. No es una regresión de seguridad (Prisma lanzará un error de unique constraint), pero sí una pérdida de control sobre el mensaje de error.
-
 ---
 
 ## Comparativa cuantitativa básico → refinado
@@ -289,21 +281,3 @@ R1 es el único punto que merece atención: el prompt básico incluía la compro
 | Sistema de módulos | Mixto (ES Modules) | CommonJS consistente | ✅ |
 | Formato de respuesta | Ad hoc | Estándar en todos | ✅ |
 | Issues nuevos introducidos | — | 3 (R1 Baja, R2 Info, R3 Info) | +3 menores |
-
-**Reducción total de problemas críticos y altos: de 4 a 0 (−100%).**
-
----
-
-## Observación metodológica
-
-El prompt refinado elimina la totalidad de las vulnerabilidades y bugs identificados en el básico. Esto confirma empíricamente la hipótesis central del TFG: las restricciones explícitas en el componente `[RULES]` del prompt tienen impacto directo y medible en la seguridad del código generado.
-
-Destaca especialmente la corrección de S2 (escalada de privilegios): el LLM ignoró completamente el campo `role` del body y hardcodeó `'OPERATOR'` tan pronto como el prompt lo instruyó explícitamente. El conocimiento de la buena práctica existía en el modelo — solo requería activación mediante instrucción directa.
-
-El único aspecto donde el refinado retrocede respecto al básico es R1: la comprobación previa de email duplicado. Este es un caso donde el prompt básico generó código más defensivo en ese punto concreto, posiblemente porque el LLM incluyó esa lógica por inercia al no tener restricciones. El refinado la omitió al delegar implícitamente en la constraint de BD. Esto ilustra que el refinado maximiza las propiedades pedidas explícitamente pero puede perder comportamientos defensivos no mencionados en el `[RULES]`.
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

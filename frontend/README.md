@@ -1,16 +1,16 @@
-# React + Vite
+# Frontend — tfg-inventario
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interfaz React + Vite del sistema de gestión de inventario. Sin librería de UI (CSS mínimo, decisión deliberada del TFG para mantener el foco en prompts/seguridad, no en UI/UX).
 
-Currently, two official plugins are available:
+## Vistas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Login, Register, Dashboard (resumen de stock + alertas), Productos, Movimientos, Categorías, Proveedores.
 
-## React Compiler
+## Desarrollo
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev       # http://localhost:5173, requiere el backend en :3000
+```
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Requiere el backend (`../`) y la base de datos PostgreSQL levantados — ver el README de la raíz del repositorio.

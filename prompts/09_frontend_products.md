@@ -2,10 +2,8 @@
 
 **Módulo:** Frontend — Products (listado, creación, edición, borrado)
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — metodología en diario.md 2026-03-26)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado)
 **Iteraciones:** 1
-**Fecha:** 2026-07-10
 **Prompt anterior:** `09_frontend_dashboard.md`
 
 ---
@@ -312,12 +310,7 @@ export default App;
 | B2 | Media | **Tipo de dato incorrecto en edición.** `purchasePrice`/`salePrice` se leen de `initialData` sin convertir a `Number`. La API serializa los campos `Decimal` de Prisma como **string** en el JSON (confirmado: `"purchasePrice":"10"`), pero el esquema Zod del backend (`PUT /products/:id`) exige `z.number()`. Si el usuario edita un producto sin tocar los campos de precio, se reenvía el string original y la petición fallaría validación. | ProductForm.jsx |
 | F1 | Info | Errores de create/update/delete se muestran con `window.alert()`, inconsistente con el patrón de mensaje inline (`<p style={{color:'red'}}>`) usado en Login/Register/Dashboard. No es un bug, es una discrepancia de estilo entre conversaciones. | Products.jsx |
 | F2 | Info | `<table border="1">` usa el atributo HTML obsoleto en vez de estilos inline, inconsistente con el resto de tablas del proyecto (Dashboard usa `borderCollapse` vía `style`). | Products.jsx |
-
-### Observación metodológica — Patrón 8, tercera ocurrencia consecutiva
-
-Este es ya el **tercer prompt de frontend consecutivo** (tras 09B y ahora 09C) en el que el LLM, al tener que tocar `App.jsx`, lo reescribe íntegramente en vez de asumir que ya existe una estructura previa y limitarse a modificar la ruta relevante. El patrón es completamente reproducible: cada nueva conversación sin contexto del repo trata `App.jsx` como un fichero que empieza de cero, no como un artefacto compartido entre módulos.
-
-Esto refuerza con fuerza estadística (n=3 de 3 prompts que tocan App.jsx) la conclusión ya apuntada en el análisis de patrones básicos: la fragmentación entre conversaciones independientes no es un fallo puntual, es un patrón estructural del enfoque "un prompt por módulo, sin contexto del repo" — dato central para la sección de conclusiones de la memoria (Fase 5).
+| F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
 ### Correcciones mínimas aplicadas
 
@@ -329,9 +322,3 @@ Documentadas en `docs/correcciones_minimas.md`:
 ### Verificación en navegador
 
 Verificado end-to-end con Playwright headless (login → navegación a `/products` → crear producto → editar sin tocar el precio → borrar). Resultado: sin errores de consola, sin peticiones fallidas, y la edición sin tocar el precio se guarda correctamente tras aplicar C11 (confirma que sin la corrección habría fallado la validación del backend).
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis. Correcciones mínimas aplicadas por separado.

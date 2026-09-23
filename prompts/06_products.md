@@ -3,9 +3,7 @@
 **Módulo:** Products (CRUD completo + alertas de stock)
 **Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-04-05
 
 ---
 
@@ -238,20 +236,9 @@ export default router;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente sin instrucciones explícitas
-
-- Formato de respuesta estándar `{ success, data, error, message }` seguido en todos los controllers.
-- `GET /alerts` definido **antes** de `GET /:id` en las rutas — evita que Express interprete `/alerts` como un ID. Decisión correcta no solicitada.
-- `next(err)` en **todos** los controllers — manejo de errores consistente por primera vez en el proyecto.
-- `productSchema.partial()` para PUT.
-- Valida `categoryId` y `supplierId` como UUIDs en Zod.
-- Precios validados como `number().positive()`.
-
 ### Nota sobre `prisma.product.fields.minStock`
 
-En el análisis inicial se clasificó `prisma.product.fields.minStock` como bug crítico (alucinación de API). Verificación posterior en runtime (2026-04-13) demostró que **la sintaxis es válida en Prisma Client v5** y el endpoint `GET /products/alerts` funciona correctamente: filtra productos con `currentStock < minStock` y excluye los que tienen stock suficiente.
-
-`prisma.product.fields` expone referencias de campo que Prisma resuelve como comparaciones de columna en la query SQL generada. No es alucinación — es una característica documentada de Prisma v5.
+Clasificado inicialmente como alucinación de API. Verificación en runtime (2026-04-13): es sintaxis válida de Prisma Client v5 (referencia de campo resuelta como comparación de columna en SQL) — `GET /products/alerts` funciona correctamente.
 
 ### Otros problemas
 
@@ -262,21 +249,3 @@ En el análisis inicial se clasificó `prisma.product.fields.minStock` como bug 
 | B4 | Baja | `new PrismaClient()` en el repository de nuevo — sin singleton. | product.repository.js |
 | A1 | Baja | Sin validación de UUID en params. | product.routes.js |
 | A2 | Baja | Rutas sin middleware de autenticación. | product.routes.js |
-
-### Observación metodológica
-
-La clasificación inicial de `prisma.product.fields.minStock` como alucinación de API resultó ser incorrecta tras verificación en runtime (2026-04-13). El LLM generó sintaxis válida de Prisma v5 que funciona correctamente. Este caso ilustra un riesgo metodológico inverso: **clasificar como alucinación código que en realidad usa una característica menos conocida de la librería**. La verificación en runtime es imprescindible antes de documentar un bug como definitivo.
-
-Combinado con la inconsistencia de sistema de módulos (B2) y patrón de exportación (B3), este módulo ilustra el patrón de que **el LLM toma decisiones de diseño de forma independiente en cada conversación**, acumulando inconsistencias que en un proyecto real requerirían refactorización.
-
----
-
-## Correcciones aplicadas
-
-**Ninguna en esta iteración.**
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

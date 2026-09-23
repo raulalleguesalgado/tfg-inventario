@@ -2,10 +2,8 @@
 
 **Módulo:** Frontend — estructura base, cliente API, contexto de auth, Login, Register
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — ver metodología en diario.md 2026-03-26)
-**LLM usado:** Gemini Pro
+**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — todo el frontend usa un único prompt por vista)
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 
 ---
 
@@ -345,6 +343,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 | F2 | Info | `login` en `AuthContext` no usa `useCallback` — se recrea en cada render del Provider. Para el alcance del proyecto es aceptable; en producción se memoizaría. | AuthContext.jsx |
 | F3 | Info | `Register.jsx` redirige a `/login` tras registro exitoso sin loguear al usuario automáticamente. Decisión de UX deliberada — el usuario debe hacer login explícito. | Register.jsx |
 | F4 | Info | Dashboard placeholder `<h1>Dashboard</h1>` en `App.jsx` — pendiente sustituir por la vista real en el siguiente prompt. | App.jsx |
+| F5 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real (un único commit de scaffold) fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el principio — probablemente por cómo se montó el proyecto (`npm create vite@latest` o equivalente, que instala la versión más reciente en ese momento), no por decisión del LLM. Sin impacto funcional: las APIs usadas aquí (`BrowserRouter`, `Routes`, `Route`, `Navigate`, `Outlet`, `useNavigate`) son compatibles entre v6/v7. | package.json |
+| F6 | Info | El bloque de código mostrado arriba para `src/main.jsx` usa el patrón de React 18 (`import React from 'react'`, `ReactDOM.createRoot`, `<React.StrictMode>`). El fichero real (`frontend/src/main.jsx`, commit `d10dff4`) usa el patrón de importaciones con nombre de React 19/Vite (`import { StrictMode } from 'react'`, `import { createRoot } from 'react-dom/client'`) — mismo comportamiento, sintaxis de import distinta. El `[TASK]` pedía solo "Standard Vite React entry point", sin más detalle, y el fichero no existía antes de este commit ni fue tocado por ningún commit posterior — descarta una sustitución manual posterior no documentada. Queda sin determinar si la respuesta real del LLM ya usaba esta sintaxis o si el bloque mostrado arriba es una transcripción inexacta del prompt log. | main.jsx |
 
 ### Ficheros generados
 
@@ -358,9 +358,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 | `src/pages/Register.jsx` | Vista de registro |
 | `src/App.jsx` | Router y estructura de rutas |
 | `src/main.jsx` | Entry point Vite |
-
----
-
-## Número de iteraciones
-
-1 — output aceptado sin re-prompting.

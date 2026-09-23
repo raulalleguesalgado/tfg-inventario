@@ -3,9 +3,7 @@
 **Módulo:** Stock Movements (registro + historial)
 **Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad y arquitectura explícitas)
-**LLM usado:** Gemini Pro
 **Iteraciones:** 1
-**Fecha:** 2026-07-09
 **Prompt básico de referencia:** `07_movements.md`
 
 ---
@@ -222,21 +220,6 @@ module.exports = router;
 | B3 | Service importa PrismaClient directamente violando la arquitectura de capas | ⚠️ Parcialmente corregido | El service importa el singleton de `config/prisma` para iniciar la transacción (`prisma.$transaction`) y pasa el cliente de transacción `tx` al repository. Es una violación pragmática de la regla de capas: dentro de la transacción, `tx.product.findUnique` se llama directamente en el service en lugar de a través del product repository. Este patrón es habitual en aplicaciones reales (evita dependencias circulares entre repositorios) pero técnicamente incumple la separación estricta de capas. |
 | B4 | Controllers sin `next(err)` | ✅ Corregido | Ambos controllers usan `next(err)` en los catch. |
 
-**4 de 5 problemas del básico completamente eliminados. 1 parcialmente resuelto (B3).**
-
-### Lo que el LLM mantuvo bien del básico
-
-- `prisma.$transaction` para atomicidad — el básico ya lo usaba, el refinado lo mantiene y lo amplía para incluir también la comprobación de stock.
-- `orderBy: { createdAt: 'desc' }` en `findByProduct`.
-
-### Técnica destacada — diseño del repository con `tx`
-
-El LLM diseñó el repository con una firma `create(data, tx)` que acepta el cliente de transacción como parámetro. Esto permite que el service controle la transacción (`prisma.$transaction`) y pase `tx` al repository, manteniendo la responsabilidad de las escrituras en el repository sin que este tenga que gestionar la transacción. Es un patrón de diseño correcto y deliberado, no solicitado explícitamente en el prompt.
-
-### Técnica destacada — `req.body = result.data`
-
-Tras la validación con Zod, el middleware de validación asigna `req.body = result.data`. Esto garantiza que el controller recibe siempre datos con los tipos correctos (Zod convierte y elimina campos extra), no el body raw del cliente. Previene inyección de campos no declarados en el schema.
-
 ### Nuevos problemas detectados en el refinado
 
 | ID | Severidad | Problema | Fichero |
@@ -248,6 +231,7 @@ Tras la validación con Zod, el middleware de validación asigna `req.body = res
 
 ## Comparativa cuantitativa básico → refinado
 
+
 | Categoría | Prompt básico | Prompt refinado | Mejora |
 |-----------|--------------|-----------------|--------|
 | Race condition TOCTOU | Presente (stock check fuera de tx) | Eliminada (todo dentro de tx) | ✅ |
@@ -257,19 +241,3 @@ Tras la validación con Zod, el middleware de validación asigna `req.body = res
 | Violación de arquitectura de capas | Completa (PrismaClient directo) | Parcial (solo dentro de tx) | Mejorado |
 | Controllers sin next(err) | 2/2 | 0/2 | −2 (−100%) |
 | Regresiones funcionales | — | 1 (R1: sin include user) | +1 menor |
-
-**Eliminación del 100% de vulnerabilidades de seguridad. Corrección del bug de lógica de negocio crítico (ADJUSTMENT). Violación de capas reducida a caso pragmático aceptable.**
-
----
-
-## Observación metodológica
-
-La corrección de S1 (race condition TOCTOU) es el resultado más técnicamente significativo de los tres prompts refinados. La solución generada es correcta: al mover la comprobación de stock dentro de `prisma.$transaction`, la lectura y la escritura son atómicas a nivel de base de datos. PostgreSQL garantiza que ninguna otra transacción concurrente puede modificar el stock entre la lectura y la actualización.
-
-La violación parcial de B3 ilustra un límite real de la instrucción "all DB access through repositories" en contextos de transacciones: para que el repository reciba el cliente de transacción `tx`, alguien tiene que iniciar la transacción, y ese alguien es el service. El LLM eligió la solución más pragmática y común en la industria — el service coordina la transacción y delega las escrituras al repository a través de `tx`. Es una violación de la regla literal pero no del principio subyacente (la lógica de negocio no debe conocer los detalles de las queries SQL).
-
----
-
-## Número de iteraciones
-
-1 — output aceptado para análisis sin re-prompting.

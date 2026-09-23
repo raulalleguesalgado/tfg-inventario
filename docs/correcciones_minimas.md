@@ -8,17 +8,6 @@
 
 ## Naturaleza de las correcciones
 
-Todas las correcciones aplicadas son consecuencia de **errores del LLM por falta de contexto
-global entre conversaciones independientes** (Patrones 1 y 8), no decisiones de diseño inseguras.
-La distinción es metodológicamente importante:
-
-- **Error de contexto:** el LLM no sabe qué generó en otras conversaciones, por lo que produce
-  código que asume artefactos inexistentes o usa un sistema de módulos inconsistente. Son bugs
-  de integración, no de lógica.
-- **Decisión insegura:** el LLM elige activamente un patrón de código que introduce riesgo
-  (pasar `userData.role` al ORM, usar un secreto hardcoded, omitir auth en rutas). Estas se
-  conservan intactas.
-
 Ninguna corrección elimina ni mitiga una vulnerabilidad de seguridad. El perfil de riesgo de la
 app es idéntico al del código LLM-generado original.
 
@@ -54,6 +43,7 @@ que C1-C6: bugs de contexto, no de lógica de seguridad.
 | C14 | `frontend/src/App.jsx` | B1 (prompt 09E) — quinta reescritura consecutiva de `App.jsx` desde cero (Patrón 8, n=5/5), dejando solo la ruta `/categories` | Conservar la estructura existente y sustituir únicamente el placeholder de `/categories` por el componente real |
 | C15 | `frontend/src/pages/Suppliers.jsx` | B1 (prompt 09F) — el input de email no es `required`, así que puede quedar `''`; el backend valida `email: z.string().email().optional().nullable()`, y `.optional()` solo exime de *omitir* la clave, no valida `''` como email válido. Crear/editar un proveedor sin email fallaba siempre con 400 "Invalid email" | Antes de enviar, `email: formData.email \|\| undefined` para omitir la clave en vez de mandar `''` |
 | C16 | `frontend/src/App.jsx` | B2 (prompt 09F) — sexta reescritura consecutiva de `App.jsx` desde cero (Patrón 8, n=6/6), dejando solo la ruta `/suppliers` | Conservar la estructura existente y sustituir únicamente el placeholder de `/suppliers` por el componente real. Se elimina además el componente `Placeholder`, ya sin uso al estar todos los módulos materializados |
+| C17 | `src/repositories/user.repository.js` | B3 (prompt 08_users.md) — el módulo de auth ya había generado `findByEmail`/`create` en este fichero (prompt 03_auth.md); el prompt de usuarios generó por separado `findAll`/`findById`/`update` para el mismo fichero, con `select` para excluir `passwordHash`, tal como el propio prompt predijo ("al integrar los módulos habrá conflicto en el mismo fichero") | Fusionadas las cinco funciones en un único fichero antes de commitear — sin corrección de comportamiento, solo consolidación de dos generaciones independientes sobre el mismo fichero |
 
 ---
 
@@ -72,7 +62,6 @@ Las siguientes vulnerabilidades se conservan para el análisis de pentesting (Fa
 | S7 | `GET /users` (y `GET /users/:id`) solo exige `authenticate`, sin `authorize('ADMIN')` — cualquier usuario autenticado, incluido un OPERATOR recién registrado, enumera todos los usuarios (nombre, email, rol, ID) incluidas las cuentas ADMIN. Detectada en pentesting manual completo (Fase 4B.3, 2026-07-13), ver `docs/pentesting_manual_completo.md` | `src/routes/user.routes.js` | A01 |
 | S8 | `PUT /products/:id` permite modificar `currentStock` directamente sin pasar por `/movements`, sin dejar rastro en el historial de auditoría (`StockMovement`) — bypass completo del flujo de negocio de inventario, agravado por la falta de autenticación (S5). Detectada en pentesting manual completo (Fase 4B.3, 2026-07-13) | `src/routes/product.routes.js`, `src/services/movement.service.js` | A04 |
 | S9 | Sin middleware de rate limiting en ningún endpoint del proyecto (`grep -r "rateLimit" src/` sin resultados) — `/auth/login` acepta fuerza bruta sin límite, retraso ni bloqueo. Detectada en pentesting manual completo (Fase 4B.3, 2026-07-13) | `src/app.js`, `src/routes/auth.routes.js` | A07 |
-| ~~B3~~ | ~~Alucinación de API — `prisma.product.fields.minStock`~~ | ~~`product.repository.js`~~ | Verificado 2026-04-13: sintaxis válida en Prisma v5, endpoint funciona correctamente. No es bug. |
 
 ---
 
@@ -88,16 +77,7 @@ necesario para que la app arranque y funcione, ver cabecera de este documento).
 | Q1 | `movement.controller.js` | El catch de `registerMovement` hardcodea `message: 'Failed to record movement'` y solo pone el motivo real (p. ej. "Insufficient stock for this movement") en el campo `error`. El frontend (correctamente) muestra `message`, así que el usuario nunca ve el motivo real de ningún fallo de movimiento. Inconsistente con `auth.controller.js`/`product.controller.js`, que sí devuelven el motivo real en `message`. Detectado en `prompts/09_frontend_movements.md` al probar un OUT con stock insuficiente. |
 | Q2 | `.env`/`.env.example` + `auth.service.js` | `JWT_EXPIRES_IN="1h"` está declarado en el entorno pero nunca se lee en el código — `jwt.sign()` hardcodea `{ expiresIn: '1d' }` directamente. Configuración muerta: cambiar la variable de entorno no tiene ningún efecto sobre la expiración real del token. Detectado en la revisión manual de patrones inseguros (Fase 4A.4, 2026-07-12). |
 | Q3 | `frontend/src/api/client.js` | `baseURL: 'http://localhost:3000'` hardcodeado en vez de leerse de una variable de entorno (`import.meta.env.VITE_API_URL` o similar) — no bloquea nada en desarrollo, pero impide desplegar el frontend contra otro backend sin editar código fuente. Detectado en la revisión manual de patrones inseguros (Fase 4A.4, 2026-07-12). |
-| Q4 | `src/app.js` (config de `helmet()`) | La Content-Security-Policy que genera Helmet por defecto (`default-src 'none'`) no declara explícitamente las directivas sin fallback (`script-src`, `style-src`, etc.). Impacto bajo en una API JSON pura sin HTML servido, pero relevante si en el futuro la API sirve páginas de error o documentación embebida. Detectado por OWASP ZAP Active Scan (Fase 4B.2, 2026-07-13) — `docs/pentesting_zap_completo.md`. |
-
----
-
-## Problema de entorno resuelto
-
-Durante la configuración se detectó un conflicto de puertos: una instalación nativa de
-PostgreSQL 12 en Windows (servicio `postgresql-x64-12`) ocupaba el puerto 5432, impidiendo
-que Prisma conectara al contenedor Docker. Se paró y deshabilitó el servicio de Windows.
-El contenedor Docker `tfg-postgres` (PostgreSQL 16) queda como único servidor en ese puerto.
+| Q5 | `movement.service.js` y el resto de `*.service.js` | Los servicios lanzan `new Error('mensaje')` genérico sin código de error asociado — única excepción, `user.service.js`, que sí asigna `error.statusCode`. El middleware global de errores solo mapea correctamente los que lo incluyen, así que fallos de negocio en movimientos (`Insufficient stock`, `Product not found`) devuelven `500` en vez de un código más preciso (`422`/`404`). Ya citado en la memoria (`calidad_codigo.tex`) sin entrada aquí; añadido en la revisión de correcciones de 2026-09-23. |
 
 ---
 
