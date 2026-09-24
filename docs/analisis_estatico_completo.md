@@ -53,9 +53,14 @@ Gate — por qué falla" más abajo):
 | Maintainability Rating | 1.0 (A) | A |
 | Coverage | 0.0% | 0.0% |
 | Duplications | 0.0% | 0.0% |
-| Complejidad ciclomática | 263 | *(no registrada en el básico)* |
-| Líneas de código (ncloc) | 1607 | *(solo backend, ~967 líneas)* |
-| Deuda técnica (sqale_index) | 222 min | *(no registrada en el básico)* |
+| Complejidad ciclomática | 263 | 107 ¹ |
+| Líneas de código (ncloc) | 1607 | 793 ¹ (solo backend) |
+| Deuda técnica (sqale_index) | 222 min | 65 min ¹ |
+
+¹ No se anotaron en `analisis_estatico_basico.md`. Sacadas el 2026-09-24 del historial de
+SonarCloud (`measures/search_history`, análisis del 2026-04-07). Antes esta tabla ponía
+"~967 líneas" para el básico: 967 es la métrica `lines` (cuenta comentarios y líneas en
+blanco), no `ncloc`. La comparable con las 1607 de la ronda completa es 793.
 
 ---
 
