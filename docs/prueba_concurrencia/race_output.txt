@@ -1,0 +1,26 @@
+
+== REFINADO: stock inicial 10, 8 x OUT de 3 (máximo correcto: 3 aceptadas, stock final 1) ==
+run  1: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=4 <-- INCORRECTO 
+run  2: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  3: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  4: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  5: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  6: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  7: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  8: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run  9: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+run 10: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=7 <-- INCORRECTO 
+REFINADO: 10/10 ejecuciones con resultado incorrecto
+
+== BASICO: stock inicial 10, 8 x OUT de 3 (máximo correcto: 3 aceptadas, stock final 1) ==
+run  1: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  2: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  3: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  4: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  5: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  6: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  7: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  8: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run  9: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+run 10: aceptadas=8 movimientos=8 (salen 24 uds) stockFinal=-14 <-- INCORRECTO 
+BASICO: 10/10 ejecuciones con resultado incorrecto

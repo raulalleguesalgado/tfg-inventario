@@ -86,8 +86,9 @@ const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 defecto recomendado en la documentación de la librería está entre 10 y 12). El hash nunca
 se devuelve al cliente (destructuring `{ passwordHash: _, ...userWithoutPassword }` en
 `register` y `login`, aunque SonarCloud lo marque como falso positivo de variable no usada
-— CS2/S1481, ya documentado). **Sin hallazgos** — este es el único de los cinco puntos de
-la checklist 4A.4 en el que el código generado por el LLM no introduce ningún riesgo.
+— CS2/S1481, ya documentado). **Sin hallazgos** — junto con las cabeceras HTTP (punto 3),
+es uno de los dos puntos de la checklist 4A.4 en los que el código generado por el LLM no
+introduce ningún riesgo.
 
 ---
 

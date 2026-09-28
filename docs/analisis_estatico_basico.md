@@ -3,7 +3,7 @@
 **Fecha:** 2026-04-07
 **Herramienta:** SonarCloud (Build #4)
 **Código analizado:** Output prompts básicos 01-08 (sin corregir)
-**LLM:** Gemini Pro
+**LLM:** Gemini 2.5 Pro
 
 ---
 

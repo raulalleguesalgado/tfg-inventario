@@ -2,7 +2,7 @@
 
 **Módulo:** Frontend — Navbar, Dashboard, actualización App.jsx
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo
+**Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_setup.md`
 

@@ -213,7 +213,7 @@ module.exports = router;
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| S1 | Race condition TOCTOU — comprobación de stock fuera de la transacción | ✅ Corregido | La lectura del stock, la validación, el cálculo del nuevo stock y la actualización ocurren íntegramente dentro de `prisma.$transaction`. No existe ventana de tiempo entre la comprobación y la escritura. |
+| S1 | Race condition TOCTOU — comprobación de stock fuera de la transacción | ❌ No corregido (prueba del 2026-09-28) | La lectura, la validación y la actualización están dentro de `prisma.$transaction`, tal como pedía la regla del prompt, pero eso no basta: con el aislamiento por defecto de PostgreSQL (READ COMMITTED), `findUnique` no bloquea la fila y dos transacciones concurrentes leen el mismo stock. En la prueba de concurrencia (stock 10, 8 × OUT de 3, 10 repeticiones) se aceptan las 8 salidas y el stock queda en 7 (en una repetición, en 4): actualizaciones perdidas. Ver `docs/prueba_concurrencia_refinado.md`. |
 | S2 | Rutas sin autenticación con `req.user.id` referenciado sin middleware | ✅ Corregido | Ambas rutas aplican `authenticate`. `userId` nunca se acepta del body — se extrae de `req.user.id` como segundo argumento de `register`. |
 | B1 | ADJUSTMENT siempre tratado como incremento positivo | ✅ Corregido | Lógica de tres ramas: IN suma, OUT resta (con validación), ADJUSTMENT establece el valor absoluto (`newStock = data.quantity`). |
 | B2 | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros. |
@@ -234,7 +234,7 @@ module.exports = router;
 
 | Categoría | Prompt básico | Prompt refinado | Mejora |
 |-----------|--------------|-----------------|--------|
-| Race condition TOCTOU | Presente (stock check fuera de tx) | Eliminada (todo dentro de tx) | ✅ |
+| Race condition TOCTOU | Presente (stock check fuera de tx) | Presente (actualizaciones perdidas, todo dentro de tx) | ❌ |
 | Rutas sin autenticación | 2/2 (100%) | 0/2 (0%) | −2 (−100%) |
 | Lógica ADJUSTMENT incorrecta | Sí (siempre positivo) | No (valor absoluto) | ✅ |
 | ES Modules | Sí | No | ✅ |

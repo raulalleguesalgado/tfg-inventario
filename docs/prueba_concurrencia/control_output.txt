@@ -1,0 +1,11 @@
+run  1: aceptadas=3 stockFinal=1 ok
+run  2: aceptadas=3 stockFinal=1 ok
+run  3: aceptadas=3 stockFinal=1 ok
+run  4: aceptadas=3 stockFinal=1 ok
+run  5: aceptadas=3 stockFinal=1 ok
+run  6: aceptadas=3 stockFinal=1 ok
+run  7: aceptadas=3 stockFinal=1 ok
+run  8: aceptadas=3 stockFinal=1 ok
+run  9: aceptadas=3 stockFinal=1 ok
+run 10: aceptadas=3 stockFinal=1 ok
+CONTROL (resta condicionada): 0/10 ejecuciones con resultado incorrecto

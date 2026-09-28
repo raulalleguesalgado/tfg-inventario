@@ -2,7 +2,7 @@
 
 **Módulo:** Frontend — estructura base, cliente API, contexto de auth, Login, Register
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado — todo el frontend usa un único prompt por vista)
+**Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado — todo el frontend usa un único prompt por vista)
 **Iteraciones:** 1
 
 ---

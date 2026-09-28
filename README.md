@@ -1,6 +1,6 @@
 # tfg-inventario
 
-Aplicación web de gestión de inventario generada mediante ingeniería de prompts con LLMs (Gemini Pro), desarrollada como Trabajo de Fin de Grado. El foco del proyecto es la auditoría de seguridad (OWASP) y de calidad del código resultante, no la aplicación en sí.
+Aplicación web de gestión de inventario generada mediante ingeniería de prompts con LLMs (Gemini 2.5 Pro), desarrollada como Trabajo de Fin de Grado. El foco del proyecto es la auditoría de seguridad (OWASP) y de calidad del código resultante, no la aplicación en sí.
 
 ## Stack
 

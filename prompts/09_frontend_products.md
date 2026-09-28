@@ -2,7 +2,7 @@
 
 **Módulo:** Frontend — Products (listado, creación, edición, borrado)
 **Fase:** 3.5
-**Tipo de prompt:** Refinado directo (sin comparativa básico/refinado)
+**Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado)
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_dashboard.md`
 
