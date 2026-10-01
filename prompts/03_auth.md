@@ -208,5 +208,5 @@ export default router;
 | ID | Problema | Fichero |
 |----|----------|---------|
 | A1 | El controller captura los errores y responde directamente (`res.status(400).json(...)`) en lugar de llamar a `next(error)` — bypasea el middleware global de errores definido en app.js. | auth.controller.js |
-| A2 | Formato de respuesta no sigue el estándar acordado `{ success, data, error, message }` — usa formatos ad hoc distintos en register y login. | auth.controller.js |
+| A2 | Formato de respuesta distinto del estándar del diseño `{ success, data, error, message }` — usa formatos ad hoc distintos en register y login. El prompt no lo mencionaba (se añadió a los prompts a partir de categorías). | auth.controller.js |
 | A3 | `throw new Error('...')` genérico en el service — sin errores tipados, el controller no puede distinguir entre un error de validación (400) y un error interno (500) salvo por el mensaje. | auth.service.js |

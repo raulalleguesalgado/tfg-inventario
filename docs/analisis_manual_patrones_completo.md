@@ -45,6 +45,14 @@ entorno usado para las pruebas, no una decisión insegura del código generado �
 del resto de hallazgos de este documento, aquí la responsabilidad es de quien montó el
 entorno de pentesting, no del LLM ni del prompt.
 
+**Nota (revisado 2026-10-01):** lo anterior se queda corto. Con `NODE_ENV=production`
+desaparece el stack trace, pero no toda la fuga: el handler devuelve siempre `err.message`,
+y los errores de Prisma llevan detalles internos. En una prueba con Prisma 5.22, el mensaje
+mostraba en desarrollo la ruta y el código que falló, y en producción, por ejemplo, la
+dirección de la base de datos si no era accesible. Además, los controllers que responden
+desde su propio `catch` (Patrón 5) devuelven el mensaje de la excepción sea cual sea el
+entorno. Así que parte del problema sí está en el código generado.
+
 ---
 
 ## 3. Cabeceras HTTP (Helmet)

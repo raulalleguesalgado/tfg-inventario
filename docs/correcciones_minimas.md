@@ -25,7 +25,7 @@ corrección elimina ni mitiga una vulnerabilidad de seguridad.
 | C3 | `src/middlewares/auth.middleware.js` | Bug B5 (prompt 08) / Patrón 8 — fichero no generado por el LLM | Creado manualmente con `authenticate` y `authorize`. Replica el mismo fallback `\|\| 'supersecret'` de `auth.service.js`, para que la verificación use el mismo secreto que la firma y S2 se conserve tal cual |
 | C4 | `src/app.js` | Patrón 8 — rutas no registradas en app.js | Añadidos imports y `app.use()` para las 6 rutas |
 | C5 | `src/app.js`, `src/server.js`, `src/config/env.js`, `src/routes/supplier.routes.js`, `src/services/supplier.service.js`, `src/controllers/supplier.controller.js`, `src/repositories/supplier.repository.js` | Patrón 1 — módulo suppliers en CommonJS incompatible con el resto | Convertidos a ES Modules |
-| C6 | `src/routes/movement.routes.js` | Patrón 8 — el controller usa `req.user.id` pero el LLM no añadió `authenticate` en las rutas | Añadido `router.use(authenticate)` — sin esto el módulo falla siempre (no es corrección de seguridad: el LLM diseñó movements para requerir auth pero no conectó las piezas) |
+| C6 | `src/routes/movement.routes.js` | Patrón 8 — el controller usa `req.user.id`, pero el prompt no mencionaba la autenticación y las rutas no aplican `authenticate` | Añadido `router.use(authenticate)` — sin esto el módulo falla siempre (no es corrección de seguridad: el controller cuenta con un usuario autenticado, pero las piezas no llegaron a conectarse) |
 
 ---
 
@@ -58,7 +58,7 @@ Las siguientes vulnerabilidades se conservan para el análisis de pentesting (Fa
 | ID | Vulnerabilidad | Fichero | OWASP |
 |----|---------------|---------|-------|
 | S1 | Escalada de privilegios — `role: userData.role` en registro | `auth.service.js` | A01 |
-| S2 | JWT secret con fallback `\|\| 'supersecret'` | `auth.service.js` | A02 |
+| S2 | Secreto JWT débil: `env.js` solo exige 8 caracteres y acepta el valor de ejemplo del `.env`; el fallback `\|\| 'supersecret'` queda, pero nunca se usa (ver origen en `docs/vulnerabilidades_pentesting.md`) | `src/config/env.js`, `auth.service.js` | A02 |
 | S3 | Race condition TOCTOU en movements | `movement.service.js` | A04 |
 | S4 | CORS abierto `cors()` sin configuración | `app.js` | A05 |
 | S5 | Rutas sin middleware de autenticación (categories, suppliers, products) | routes | A01 |

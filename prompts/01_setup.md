@@ -162,5 +162,5 @@ startServer();
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
 | A1 | Baja | `PrismaClient` instanciado en `server.js` — debería ser un singleton en `src/config/prisma.js` para evitar múltiples instancias en distintos módulos | server.js:3,5 |
-| A2 | Baja | Falta `morgan` para logging de peticiones HTTP — estaba en los requisitos del sistema | app.js |
-| A3 | Baja | Formato de error no respeta el estándar acordado `{ success, data, error, message }` — usa `{ status, message }` | app.js:20-25 |
+| A2 | Baja | No incluye registro de peticiones HTTP (p. ej., `morgan`); el prompt no lo pedía | app.js |
+| A3 | Baja | Formato de error distinto del estándar del diseño `{ success, data, error, message }` — usa `{ status, message }`; el prompt no lo mencionaba | app.js:20-25 |

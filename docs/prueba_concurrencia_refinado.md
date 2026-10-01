@@ -61,8 +61,10 @@ Salidas completas: `docs/prueba_concurrencia/race_output.txt` y `control_output.
 La condición de carrera **no** está corregida en el módulo refinado. El modelo cumplió la
 regla del prompt al pie de la letra, pero la regla era insuficiente: pedía una transacción,
 y hacía falta una actualización condicionada (o `SELECT ... FOR UPDATE`, o aislamiento
-`SERIALIZABLE`). S3 sigue siendo la única vulnerabilidad de severidad alta de los tres
-módulos refinados que el prompt refinado no elimina.
+`SERIALIZABLE`). S3 es la única vulnerabilidad de severidad alta que el refinado no
+elimina pese a tener una regla para ella. La otra que sigue en los módulos refinados, S8
+en productos (ya solo para ADMIN), no la cubría ninguna regla
+(`docs/vulnerabilidades_pentesting.md`).
 
 ## Cómo repetirla
 

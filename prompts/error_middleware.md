@@ -147,7 +147,10 @@ original generado en el prompt 01 (`res.status(...).json({ status: 'error', mess
 ...(NODE_ENV === 'development' && { stack: err.stack }) })`), que expone el stack trace
 completo cuando `NODE_ENV=development`. Esa exposición está documentada y analizada por
 separado (`docs/pentesting_zap_completo.md`, ZAP-C04; capítulo de auditoría de seguridad
-de la memoria): el guard `NODE_ENV` del código es correcto, la fuga ocurre solo porque el
-entorno de pruebas corre en modo desarrollo, no por ausencia de protección en el código.
+de la memoria). El guard `NODE_ENV` quita el stack trace en producción, pero no toda la
+fuga: el handler devuelve siempre el mensaje original del error, y los de Prisma llevan
+detalles internos (por ejemplo, la dirección de la base de datos si no es accesible), así
+que parte del problema sí está en el código, no solo en el entorno de pruebas
+(`docs/analisis_manual_patrones_completo.md`, punto 2).
 Este documento no corrige ni sustituye eso — documenta cómo habría respondido el LLM a un
 prompt específico para ese middleware, dentro del experimento de la rama refinada.

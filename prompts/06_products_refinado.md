@@ -223,6 +223,13 @@ module.exports = router;
 | A1 | Sin validación de UUID en params | ✅ Corregido | `validateId` middleware con `idSchema = z.object({ id: z.string().uuid() })` |
 | A2 | Rutas sin autenticación | ✅ Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
 
+**Nota (revisado 2026-10-01):** el refinado no corrige S8 (bypass del flujo de auditoría de
+stock, `docs/vulnerabilidades_pentesting.md`). `productSchema` sigue incluyendo
+`currentStock` y `PUT /products/:id` pasa `req.body` al `update`, así que el stock se puede
+cambiar sin registrar ningún movimiento, aunque ya solo un ADMIN. Cuando se escribió este
+prompt, S8 aún no se había detectado (salió después, en la ronda completa de pentesting) y
+ninguna regla la cubría.
+
 ### Nuevos problemas detectados en el refinado
 
 | ID | Severidad | Problema | Fichero |
