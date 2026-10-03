@@ -345,16 +345,3 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 | F4 | Info | Dashboard placeholder `<h1>Dashboard</h1>` en `App.jsx` — pendiente sustituir por la vista real en el siguiente prompt. | App.jsx |
 | F5 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real (un único commit de scaffold) fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el principio — probablemente por cómo se montó el proyecto (`npm create vite@latest` o equivalente, que instala la versión más reciente en ese momento), no por decisión del LLM. Sin impacto funcional: las APIs usadas aquí (`BrowserRouter`, `Routes`, `Route`, `Navigate`, `Outlet`, `useNavigate`) son compatibles entre v6/v7. | package.json |
 | F6 | Info | El bloque de código mostrado arriba para `src/main.jsx` usa el patrón de React 18 (`import React from 'react'`, `ReactDOM.createRoot`, `<React.StrictMode>`). El fichero real (`frontend/src/main.jsx`, commit `d10dff4`) usa el patrón de importaciones con nombre de React 19/Vite (`import { StrictMode } from 'react'`, `import { createRoot } from 'react-dom/client'`) — mismo comportamiento, sintaxis de import distinta. El `[TASK]` pedía solo "Standard Vite React entry point", sin más detalle, y el fichero no existía antes de este commit ni fue tocado por ningún commit posterior — descarta una sustitución manual posterior no documentada. Queda sin determinar si la respuesta real del LLM ya usaba esta sintaxis o si el bloque mostrado arriba es una transcripción inexacta del prompt log. | main.jsx |
-
-### Ficheros generados
-
-| Fichero | Propósito |
-|---------|-----------|
-| `src/api/client.js` | Axios instance — punto central de todas las llamadas a la API |
-| `src/api/auth.js` | Funciones de autenticación (login, logout, getCurrentUser) |
-| `src/context/AuthContext.jsx` | Estado global de autenticación |
-| `src/components/ProtectedRoute.jsx` | Guard de rutas privadas |
-| `src/pages/Login.jsx` | Vista de login |
-| `src/pages/Register.jsx` | Vista de registro |
-| `src/App.jsx` | Router y estructura de rutas |
-| `src/main.jsx` | Entry point Vite |

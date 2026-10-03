@@ -110,7 +110,7 @@ de la respuesta, SonarCloud no reconoce la semántica de destructuring-para-desc
 **Nota sobre S2486 (catch vacíos, x3 ahora — antes x1):** el mismo patrón de calidad ya
 señalado en el análisis básico (CS1) aparece ahora también dos veces en el frontend
 (`Dashboard.jsx`, `auth.js`) — consistente con el hallazgo de que el manejo de errores es
-un punto débil recurrente en el código generado por LLM, tanto en backend como frontend.
+un punto débil recurrente del código generado en este proyecto, tanto en backend como frontend.
 
 ---
 

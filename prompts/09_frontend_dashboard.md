@@ -214,12 +214,6 @@ export default function App() {
 | F2 | Info | Sin mensaje cuando `stats.alerts` está vacío — la tabla muestra cabeceras con cuerpo vacío. | Dashboard.jsx |
 | F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
-### Correcciones mínimas necesarias para integración
+### Correcciones mínimas
 
-Estas correcciones son inevitables — sin ellas la app no funciona:
-
-1. Añadir `export const useAuth = () => useContext(AuthContext)` en `AuthContext.jsx`
-2. Restaurar `AuthProvider` y `ProtectedRoute` en `App.jsx`, y recuperar las rutas `/login` y `/register`
-3. Incluir `name` en el payload JWT en `auth.service.js`: `jwt.sign({ id, role, name }, ...)`
-
-Documentadas en `docs/correcciones_minimas.md` como C7, C8, C9.
+C7, C8, C9 (detalle en `docs/correcciones_minimas.md`).

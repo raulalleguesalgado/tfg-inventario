@@ -250,17 +250,9 @@ export default App;
 | F1 | Info | Errores de create/update/delete con `window.alert()`, mismo patrón que Products (F1 de 09C) y Categories (F2 de 09E). | Suppliers.jsx |
 | F2 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
-### Correcciones mínimas aplicadas
+### Correcciones mínimas
 
-Documentadas en `docs/correcciones_minimas.md`:
-
-- **C15** (`Suppliers.jsx`): antes de enviar el formulario, `email` se convierte a
-  `undefined` cuando está vacío (`formData.email || undefined`) para que la clave se omita
-  del body en vez de enviarse como `''`, evitando el 400 "Invalid email" en creación/edición
-  sin email.
-- **C16** (`App.jsx`): se conserva la estructura completa (`AuthProvider`, `ProtectedRoute`,
-  `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, `Categories`) y solo
-  se sustituye el placeholder de `/suppliers` por el componente real.
+C15, C16 (detalle en `docs/correcciones_minimas.md`).
 
 ### Verificación en navegador
 

@@ -26,10 +26,12 @@ segundo bloque de configuración para `frontend/src/**/*.jsx` y `frontend/src/**
 
 Se ejecutó ESLint desde la raíz del repo (`tfg-inventario/`) sobre el conjunto completo
 (`npx eslint . --no-error-on-unmatched-pattern`), invocado directamente con `npx` al no existir
-un script `npm run lint` a nivel de raíz. Se repitió la ejecución acotada a `frontend/src/**/*.jsx`
-y `frontend/src/**/*.js` para confirmar que ese directorio se estaba procesando realmente y
-arrojaba 0 issues, no "no analizado" (el comando sobre el conjunto completo no imprime nada
-para ficheros sin issues).
+un script `npm run lint` a nivel de raíz. Como ese comando no imprime nada para ficheros sin
+issues, se comprobó aparte que el frontend se analiza de verdad: `npx eslint
+"frontend/src/**/*.{js,jsx}" --format json` lista cada fichero analizado (salen los 15 de
+`frontend/src/`, todos con 0 mensajes), y `npx eslint --print-config frontend/src/App.jsx`
+confirma que se les aplica el bloque del frontend (plugin `security` con sus 14 reglas y JSX
+activado).
 
 **Salida real** (reproducida sobre las mismas versiones ancladas del `package-lock.json`
 de la época — ESLint v10.2.0, `eslint-plugin-security` v4.0.0, `eslint-plugin-n`
@@ -68,7 +70,19 @@ sin cambios:
 | E1 | `src/config/env.js` | 18 | `n/no-process-exit` | Warning | `process.exit()` en vez de lanzar un error |
 | E2 | `src/server.js` | 19 | `n/no-process-exit` | Warning | Mismo patrón en el arranque del servidor |
 
+Mismo veredicto que en el análisis básico: ninguno de los dos es de seguridad, y los dos son
+intencionados (parar el arranque si las variables de entorno no son válidas o si no hay base de
+datos).
+
+`n/no-sync`, activa en el backend, tampoco saltó: no hay llamadas `*Sync()` en `src/`.
+
 **El frontend no generó ningún warning ni error.** `eslint-plugin-security` no disparó
 ninguna regla en los 15 ficheros de `frontend/src/` (mismas 14 reglas ejecutadas que en el
 análisis básico del backend — `detect-eval-with-expression`, `detect-object-injection`,
 `detect-unsafe-regex`, etc.).
+
+La ausencia de hallazgos en el frontend llama la atención: las siete vistas muestran campos
+de texto libre (nombre de producto, de proveedor) sin limpiar ni validar ese contenido, un
+patrón potencialmente peligroso en aplicaciones web. Sin embargo, no es explotable como XSS
+porque React escapa el texto dentro de JSX: lo muestra como texto, sin ejecutarlo. Es una
+propiedad del framework, no del código generado ni de la herramienta de análisis.

@@ -51,3 +51,10 @@ found 0 vulnerabilities
 |---|---|---|
 | Backend | 0 vulnerabilidades | 4 moderadas (todas transitivas: `qs`, `brace-expansion`) |
 | Frontend | *(no existía)* | 0 vulnerabilidades |
+
+**Severidad práctica:** baja. Pueden dejar el servidor sin responder en casos muy concretos,
+pero no permiten ejecutar código ni robar datos.
+
+**Ver también:** `docs/tercera_ronda_comprobacion.md`, sección 1. Con el mismo código, los
+avisos pasaron de 2 a 14 en septiembre. Allí se analiza cuáles llegan a producción (`qs`,
+`body-parser`, `react-router`) y por qué el de `react-router` no es explotable aquí.

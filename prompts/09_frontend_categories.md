@@ -239,10 +239,6 @@ export default App;
 | F2 | Info | Errores de create/update/delete con `window.alert()`, mismo patrón que Products (F1 de 09C), inconsistente con el mensaje inline usado en Movements/Login/Register/Dashboard. | Categories.jsx |
 | F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
-### Correcciones mínimas aplicadas
+### Correcciones mínimas
 
-Documentada en `docs/correcciones_minimas.md`:
-
-- **C14** (`App.jsx`): se conserva la estructura completa (`AuthProvider`, `ProtectedRoute`,
-  `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, placeholder de
-  Suppliers) y solo se sustituye el placeholder de `/categories` por el componente real.
+C14 (detalle en `docs/correcciones_minimas.md`).

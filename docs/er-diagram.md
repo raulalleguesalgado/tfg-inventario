@@ -1,4 +1,4 @@
-# Entity-Relationship Diagram
+# Diagrama entidad-relación
 
 ```mermaid
 erDiagram
@@ -61,10 +61,10 @@ erDiagram
     User ||--o{ StockMovement : "registers"
 ```
 
-## Notes
+## Notas
 
-- `role` values: `ADMIN`, `OPERATOR`
-- `type` values: `IN`, `OUT`, `ADJUSTMENT`
-- `reference` is optional (nullable) and unique when set (no two products share the same reference)
-- All FK relations use `RESTRICT` on delete — a category or supplier cannot be deleted if it has products assigned; a product or user cannot be deleted if it has stock movements
-- `StockMovement` has no `updated_at` — movements are immutable
+- Valores de `role`: `ADMIN`, `OPERATOR`
+- Valores de `type`: `IN`, `OUT`, `ADJUSTMENT`
+- `reference` es opcional (puede ser nula) y única cuando tiene valor (dos productos no pueden compartirla)
+- Todas las claves foráneas usan `RESTRICT` al borrar: no se puede borrar una categoría o un proveedor con productos asignados, ni un producto o un usuario con movimientos de stock
+- `StockMovement` no tiene `updated_at`: los movimientos no se modifican una vez creados

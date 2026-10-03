@@ -34,16 +34,22 @@ src/server.js
 ## Corrección mínima aplicada antes del análisis
 
 **Problema:** El código de prompts básicos mezcla CommonJS (setup, suppliers — Patrón 1) y ES Modules
-(resto de módulos). ESLint requiere un `sourceType` uniforme para analizar sin errores de parseo.
+(resto de módulos). Node.js no siempre puede cargar esa mezcla en un mismo proyecto: si se declara como ES
+Modules, un `.js` escrito en CommonJS ya no se carga como tal (corrección C5). ESLint, en
+cambio, no exige un único `sourceType`: la configuración puede fijar uno distinto por grupo de ficheros.
 
 **Corrección aplicada** (commit `74c7d31`): además de añadir `"type": "module"` a `package.json`
 (declara el sistema de módulos dominante, ES Modules en 6/8 módulos), el mismo commit convirtió
-`src/config/env.js` y `src/server.js` de `require`/`module.exports` a `import`/`export` — los dos
-únicos ficheros del setup original en CommonJS — y añadió `eslint`, `eslint-plugin-security`,
-`eslint-plugin-n` y `pg` como devDependencies necesarias para poder ejecutar este mismo análisis.
+`src/config/env.js` y `src/server.js` de `require`/`module.exports` a `import`/`export` (dos de los
+tres ficheros del setup en CommonJS; `app.js` y el módulo suppliers se convirtieron después, en el
+resto de la corrección C5) y añadió `eslint`, `eslint-plugin-security` y
+`eslint-plugin-n` como devDependencies necesarias para poder ejecutar este mismo análisis, además
+de `pg`.
 Ninguno de estos cambios altera la lógica del código analizado ni introduce ni corrige ningún bug
-o vulnerabilidad de los prompts básicos — es infraestructura mínima para que el analizador pueda
-procesar el proyecto sin errores de parseo.
+o vulnerabilidad de los prompts básicos — es infraestructura mínima para que el proyecto se pueda
+cargar y analizar. La conversión no cambia el orden de carga: en las dos versiones `server.js`
+carga `app.js` antes que `env.js`. El resultado de ESLint es el mismo con `app.js` y suppliers
+todavía en CommonJS.
 
 ---
 
@@ -67,6 +73,11 @@ procesar el proyecto sin errores de parseo.
 | E1 | `src/config/env.js` | 18 | `n/no-process-exit` | Warning | `process.exit()` — se recomienda lanzar un error en su lugar |
 | E2 | `src/server.js` | 19 | `n/no-process-exit` | Warning | `process.exit()` — mismo patrón en el arranque del servidor |
 
+**Veredicto:** ninguno de los dos es de seguridad, y los dos son intencionados. `n/no-process-exit`
+es una regla de estilo. E1 para el proceso si las variables de entorno no pasan la validación
+de zod, y es lo que impide arrancar sin `JWT_SECRET`. E2 lo para si no se puede conectar a la
+base de datos al arrancar, después de desconectar Prisma.
+
 ---
 
 ## Reglas de seguridad ejecutadas sin hallazgos
@@ -86,9 +97,13 @@ y no dispararon ninguna alerta:
 | `security/detect-child-process` | Uso de `child_process` |
 | `security/detect-disable-mustache-escape` | Desactivación de escape en templates |
 | `security/detect-new-buffer` | Constructor `new Buffer()` deprecado |
-| `security/detect-no-csrf-before-method-override` | CSRF sin protección |
-| `security/detect-pseudoRandomBytes` | `Math.random()` en contexto criptográfico |
+| `security/detect-no-csrf-before-method-override` | Middleware `csrf` de Express registrado antes de `methodOverride` |
+| `security/detect-pseudoRandomBytes` | Uso de `crypto.pseudoRandomBytes()`, que no genera números criptográficamente seguros |
 | `security/detect-non-literal-require` | `require()` con argumento dinámico |
 | `security/detect-bidi-characters` | Caracteres Unicode bidireccionales ocultos en el código |
+
+Además de las de seguridad, la configuración activa dos reglas de `eslint-plugin-n` en el backend:
+`n/no-process-exit` (E1 y E2) y `n/no-sync`, que no saltó: el backend no llama a ninguna función
+síncrona de Node (`*Sync()`).
 
 ---

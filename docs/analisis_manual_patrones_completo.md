@@ -9,7 +9,8 @@
 ## 1. `eval()`, `exec()`, concatenación de SQL sin parametrizar
 
 ```bash
-grep -rn "eval\(|exec\(|child_process" src/ frontend/src/
+grep -rnE "eval\(|exec\(|child_process" src/ frontend/src/
+grep -rnE '\$queryRaw|\$executeRaw|Unsafe\(' src/
 ```
 
 **Resultado: ninguna coincidencia en todo el proyecto.** Todo el acceso a base de datos
@@ -39,19 +40,13 @@ app.use((err, req, res, next) => {
 
 **Confirmado que sigue activo:** el `.env` real del proyecto tiene `NODE_ENV=development`,
 por lo que esta condición se cumple en el entorno de pruebas actual. Con `NODE_ENV=production`
-esta vulnerabilidad concreta no existiría: el guard del código es correcto, filtra el stack
-por sí solo sin que haga falta tocar nada más. Lo que la activa es la configuración del
-entorno usado para las pruebas, no una decisión insegura del código generado — a diferencia
-del resto de hallazgos de este documento, aquí la responsabilidad es de quien montó el
-entorno de pentesting, no del LLM ni del prompt.
-
-**Nota (revisado 2026-10-01):** lo anterior se queda corto. Con `NODE_ENV=production`
 desaparece el stack trace, pero no toda la fuga: el handler devuelve siempre `err.message`,
 y los errores de Prisma llevan detalles internos. En una prueba con Prisma 5.22, el mensaje
 mostraba en desarrollo la ruta y el código que falló, y en producción, por ejemplo, la
 dirección de la base de datos si no era accesible. Además, los controllers que responden
 desde su propio `catch` (Patrón 5) devuelven el mensaje de la excepción sea cual sea el
-entorno. Así que parte del problema sí está en el código generado.
+entorno. El stack trace depende de la configuración del entorno de pruebas, pero el resto
+de la fuga está en el código generado.
 
 ---
 
@@ -75,8 +70,8 @@ explícitamente ni configuración insegura. Sin hallazgos nuevos.
 app.use(cors());
 ```
 
-`cors()` sin argumentos — refleja el header `Origin` de cualquier petición entrante en
-`Access-Control-Allow-Origin`, permitiendo requests desde cualquier origen. Ya documentado
+`cors()` sin argumentos envía `Access-Control-Allow-Origin: *` en todas las respuestas, así
+que acepta peticiones desde cualquier origen. Ya documentado
 como **S4** (Media, A05) y confirmado por SonarCloud como Security Hotspot (SH1) en ambos
 análisis, básico y completo. Sin cambios.
 
@@ -94,9 +89,7 @@ const isPasswordValid = await bcrypt.compare(password, user.passwordHash);
 defecto recomendado en la documentación de la librería está entre 10 y 12). El hash nunca
 se devuelve al cliente (destructuring `{ passwordHash: _, ...userWithoutPassword }` en
 `register` y `login`, aunque SonarCloud lo marque como falso positivo de variable no usada
-— CS2/S1481, ya documentado). **Sin hallazgos** — junto con las cabeceras HTTP (punto 3),
-es uno de los dos puntos de la checklist 4A.4 en los que el código generado por el LLM no
-introduce ningún riesgo.
+— CS2/S1481, ya documentado). **Sin hallazgos** — junto con el punto 1 (`eval()`/SQL) y las cabeceras HTTP (punto 3), es uno de los tres puntos de la checklist 4A.4 en los que el código generado por el LLM no introduce ningún riesgo.
 
 ---
 

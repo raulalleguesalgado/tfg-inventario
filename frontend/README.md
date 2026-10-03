@@ -6,6 +6,10 @@ Interfaz React + Vite del sistema de gestión de inventario. Sin librería de UI
 
 Login, Register, Dashboard (resumen de stock + alertas), Productos, Movimientos, Categorías, Proveedores.
 
+Capturas de la aplicación en marcha (acceso, dashboard, productos e historial de movimientos):
+`docs/capturas/frontend-login.png`, `frontend-dashboard.png`, `frontend-products.png` y
+`frontend-movements.png`.
+
 ## Desarrollo
 
 ```bash

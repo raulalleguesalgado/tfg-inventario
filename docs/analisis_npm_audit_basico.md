@@ -2,9 +2,9 @@
 
 **Fecha:** 2026-04-07
 **Herramienta:** npm audit (npm v10.9.3)
-**Dependencias analizadas:** package.json de prompt 01, tras el commit `74c7d31` que añadió
-`eslint`, `eslint-plugin-security`, `eslint-plugin-n` y `pg` como devDependencies (necesarias
-para la propia Fase 4A.2, no generadas por el LLM)
+**Dependencias analizadas:** package.json de prompt 01, tras el commit `74c7d31`, que añadió
+`eslint`, `eslint-plugin-security`, `eslint-plugin-n` y `pg` como devDependencies (no generadas
+por el LLM)
 
 ---
 
@@ -46,5 +46,5 @@ found 0 vulnerabilities
 | prisma | ^5.0.0 | dev |
 
 `eslint`, `eslint-plugin-n`, `eslint-plugin-security` y `pg` no fueron generadas por el LLM en el
-prompt 01 — se añadieron en el commit `74c7d31` como herramientas necesarias para esta misma fase
-de análisis.
+prompt 01: se añadieron en el commit `74c7d31`. Las tres primeras son las herramientas de la fase
+de análisis (4A.2).

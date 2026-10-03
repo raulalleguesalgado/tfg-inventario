@@ -312,12 +312,9 @@ export default App;
 | F2 | Info | `<table border="1">` usa el atributo HTML obsoleto en vez de estilos inline, inconsistente con el resto de tablas del proyecto (Dashboard usa `borderCollapse` vía `style`). | Products.jsx |
 | F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
 
-### Correcciones mínimas aplicadas
+### Correcciones mínimas
 
-Documentadas en `docs/correcciones_minimas.md`:
-
-- **C11** (`ProductForm.jsx`): `purchasePrice`/`salePrice` convertidos con `Number()` al leer `initialData`, evitando el envío de strings al backend en ediciones donde el precio no se modifica.
-- **C12** (`App.jsx`): se conserva la estructura completa (`AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, placeholders restantes) y solo se sustituye el placeholder de `/products` por el componente real.
+C11, C12 (detalle en `docs/correcciones_minimas.md`).
 
 ### Verificación en navegador
 

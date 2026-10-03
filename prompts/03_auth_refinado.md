@@ -256,8 +256,8 @@ module.exports = {
 
 ### Gap cubierto
 
-| Gap | Estado |
-|-----|--------|
+| Gap | Estado | Detalle |
+|-----|--------|---------|
 | `src/middlewares/auth.middleware.js` no existía (ningún prompt básico lo generó) | ✅ Generado | Incluye `authenticate` (verifica JWT, adjunta `req.user`) y `authorize(...roles)` (verifica permisos por rol) |
 
 ### Nuevos problemas detectados en el refinado

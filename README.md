@@ -5,7 +5,10 @@ Aplicación web de gestión de inventario generada mediante ingeniería de promp
 ## Stack
 
 - **Backend:** Node.js + Express, ORM Prisma, PostgreSQL, autenticación JWT (`jsonwebtoken` + `bcryptjs`), validación con `zod`
-- **Frontend:** React + Vite
+- **Frontend:** React + Vite. Los prompts del frontend pedían React 18 y React Router v6; al
+  crear el proyecto (Vite + `npm install`) se instalaron las versiones del momento, React 19 y
+  React Router 7 (`frontend/package-lock.json`), y el código
+  generado funciona con ellas sin cambios.
 - **Análisis estático:** SonarCloud, ESLint (`eslint-plugin-security`), `npm audit`
 - **Pentesting:** OWASP ZAP, Burp Suite Community
 

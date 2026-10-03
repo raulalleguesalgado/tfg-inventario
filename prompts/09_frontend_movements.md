@@ -249,12 +249,9 @@ export default App;
 
 `movement.controller.js` hardcodea `message: 'Failed to record movement'` en el catch en vez de devolver el motivo real (p. ej. "Insufficient stock"), inconsistente con `auth.controller.js`/`product.controller.js`. No corregido — documentado para la Fase 4A.
 
-### Correcciones mínimas aplicadas
+### Correcciones mínimas
 
-Documentada en `docs/correcciones_minimas.md`:
-
-- **C13** (`App.jsx`): se conserva la estructura completa y solo se sustituye el
-  placeholder de `/movements` por el componente real.
+C13 (detalle en `docs/correcciones_minimas.md`).
 
 ### Verificación en navegador
 
