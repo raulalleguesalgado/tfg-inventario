@@ -1,7 +1,6 @@
 # Prompt 07 — Módulo de movimientos de stock
 
 **Módulo:** Stock Movements (registro + historial)
-**Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -239,14 +238,14 @@ export default router;
 
 | ID | Severidad | Problema | Fichero | Línea | OWASP |
 |----|-----------|----------|---------|-------|-------|
-| S1 | Media | **Race condition (TOCTOU — Time of Check to Time of Use)**: el service comprueba el stock disponible en una query separada y luego llama al repository que ejecuta la transacción. Entre ambas operaciones, una petición concurrente puede reducir el stock, permitiendo que `currentStock` llegue a valores negativos. La comprobación debería realizarse **dentro** de la transacción. | movement.service.js | 7-18 | A04 — Insecure Design |
-| S2 | Baja | `req.user.id` referenciado en el controller pero sin middleware de autenticación aplicado en las rutas. Si la ruta se registra sin auth middleware, `req.user` es `undefined` y se lanza un error no controlado que expone información interna. | movement.controller.js / movement.routes.js | 7 / — | A01 — Broken Access Control |
+| S3 | Alta | **Race condition (TOCTOU — Time of Check to Time of Use)**: el service comprueba el stock disponible en una query separada y luego llama al repository que ejecuta la transacción. Entre ambas operaciones, una petición concurrente puede reducir el stock, permitiendo que `currentStock` llegue a valores negativos. La comprobación debería realizarse **dentro** de la transacción. | movement.service.js | 7-18 | A04 — Insecure Design |
+| S5 | Alta | `req.user.id` referenciado en el controller pero sin middleware de autenticación aplicado en las rutas. Si la ruta se registra sin auth middleware, `req.user` es `undefined` y se lanza un error no controlado que expone información interna. | movement.controller.js / movement.routes.js | 7 / — | A01 — Broken Access Control |
 
 ### Otros problemas
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Media | `ADJUSTMENT` tratado siempre como incremento positivo (`+data.quantity`). Un ajuste que corrija stock a la baja sería imposible con esta lógica. Comportamiento ambiguo no documentado. | movement.repository.js:17 |
-| B2 | Alta | ES Modules — consistente con products pero no con suppliers/setup. | todos |
-| B3 | Media | El service importa `PrismaClient` directamente para consultar el producto, violando la arquitectura de capas. Debería hacerlo a través del product repository. | movement.service.js:2,4,7-10 |
-| B4 | Baja | Ambos controllers responden directamente en el `catch` en lugar de usar `next(error)` — bypasea el middleware global de errores. | movement.controller.js |
+| B4 | Media | `ADJUSTMENT` tratado siempre como incremento positivo (`+data.quantity`). Un ajuste que corrija stock a la baja sería imposible con esta lógica. Comportamiento ambiguo no documentado. | movement.repository.js:17 |
+| — | Alta | ES Modules — consistente con products pero no con suppliers/setup. | todos |
+| — | Media | El service importa `PrismaClient` directamente para consultar el producto, violando la arquitectura de capas. Debería hacerlo a través del product repository. | movement.service.js:2,4,7-10 |
+| — | Baja | Ambos controllers responden directamente en el `catch` en lugar de usar `next(error)` — bypasea el middleware global de errores. | movement.controller.js |

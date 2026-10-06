@@ -1,7 +1,6 @@
 # Prompt — Middleware global de errores
 
 **Módulo:** Global error handler (Express)
-**Fase:** 3.4
 **Tipo de prompt:** Experimental, ligado a la rama refinada (sin comparativa básico/refinado
 propia — el prompt de setup nunca generó ningún middleware de errores dedicado, todo iba
 inline en `app.js`)
@@ -104,26 +103,6 @@ module.exports = errorMiddleware;
 ---
 
 ## Análisis
-
-### Lo que el LLM generó correctamente
-
-| Requisito | Estado | Detalle |
-|-----------|--------|---------|
-| Prisma P2002 → 409 CONFLICT | ✅ | Mensaje genérico al cliente — no expone el campo con conflicto |
-| Prisma P2025 → 404 NOT_FOUND | ✅ | Mensaje genérico — no expone detalles de BD |
-| `err.status` → HTTP dinámico | ✅ | Cubre los errores tipados de auth.service.js (`error.status = 401`) y los futuros |
-| Fallback 500 INTERNAL_ERROR | ✅ | Default seguro para cualquier error no clasificado |
-| `console.error(err)` antes de responder | ✅ | Log completo interno (con stack trace) sin exponer nada al cliente |
-| Stack trace nunca expuesto | ✅ | La respuesta solo contiene `{ success, data, error, message }` |
-| Formato de respuesta estándar | ✅ | Idéntico al resto de la app |
-| Import correcto de Prisma | ✅ | `@prisma/client/runtime/library` — la ruta correcta en Prisma v5 |
-
-### Puntos a documentar
-
-| ID | Severidad | Observación | Fichero |
-|----|-----------|-------------|---------|
-| N1 | Info | Cuando `err.status` está definido, `message` se genera transformando `err.message` (`'PRODUCT_NOT_FOUND'` → `'PRODUCT NOT FOUND'`). El campo `error` y el campo `message` acaban siendo la misma información en distinto formato. Funcional pero redundante — en una versión de producción se añadirían mensajes amigables independientes por código de error. | error.middleware.js |
-| N2 | Info | Solo cubre P2002 y P2025 de Prisma. Otros códigos frecuentes (P2003 — foreign key constraint, P2014 — relación inválida) caerán en el fallback 500. Suficiente para el alcance del proyecto. | error.middleware.js |
 
 ### Cobertura de errores del proyecto
 

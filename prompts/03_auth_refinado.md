@@ -1,7 +1,6 @@
 # Prompt 03R — Módulo de autenticación (refinado)
 
 **Módulo:** Autenticación (register, login, JWT, roles, middlewares)
-**Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad explícita)
 **Iteraciones:** 1
 **Prompt básico de referencia:** `03_auth.md`
@@ -234,17 +233,17 @@ module.exports = {
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| S1 | JWT secret con fallback hardcoded `\|\| 'supersecret'` | ✅ Corregido | `if (!process.env.JWT_SECRET) throw new Error(...)` en tiempo de carga del módulo — la app no arranca sin la variable de entorno |
-| S2 | Rol auto-asignable desde el body de la petición | ✅ Corregido | `role: 'OPERATOR'` hardcoded en el service — el campo `role` del body es ignorado completamente |
-| S3 | Password mínimo 6 caracteres | ✅ Corregido | `z.string().min(8)` en ambos schemas |
+| S2 | JWT secret con fallback hardcoded `\|\| 'supersecret'` | ✅ Corregido | `if (!process.env.JWT_SECRET) throw new Error(...)` en tiempo de carga del módulo — la app no arranca sin la variable de entorno |
+| S1 | Rol auto-asignable desde el body de la petición | ✅ Corregido | `role: 'OPERATOR'` hardcoded en el service — el campo `role` del body es ignorado completamente |
+| — | Password mínimo 6 caracteres | ✅ Corregido | `z.string().min(8)` en ambos schemas |
 
 ### Bugs del prompt básico — estado en el refinado
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| B1 | `z.zod.object()` — sintaxis incorrecta | ✅ Corregido | Usa `z.object()` correctamente |
-| B2 | Mezcla CommonJS / ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
-| B3 | PrismaClient sin singleton | ✅ Corregido | Singleton exportado desde `src/config/prisma.js` e importado en el repository |
+| B2 | `z.zod.object()` — sintaxis incorrecta | ✅ Corregido | Usa `z.object()` correctamente |
+| — | Mezcla CommonJS / ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
+| — | PrismaClient sin singleton | ✅ Corregido | Singleton exportado desde `src/config/prisma.js` e importado en el repository |
 
 ### Problemas de arquitectura del prompt básico — estado en el refinado
 
@@ -267,17 +266,3 @@ module.exports = {
 | R1 | Baja | `register` no comprueba si el email ya existe antes de intentar la inserción. El prompt básico sí lo hacía explícitamente. La constraint `@unique` de Prisma lanzará un error a nivel de BD, pero el mensaje de error podría exponer que el email está registrado (según cómo lo maneje el middleware global de errores). | auth.service.js |
 | R2 | Info | `loginSchema` valida `password: z.string().min(8)`. Esto es innecesario en login — si alguien tiene una cuenta con contraseña de 7 caracteres (creada antes de este cambio), no podría iniciar sesión por fallo de validación, no por contraseña incorrecta. En login basta con `z.string().min(1)`. | auth.routes.js |
 | R3 | Info | `auth.middleware.js` responde directamente en lugar de llamar a `next(err)`. Es un patrón aceptable para middleware de autenticación (es conveniente responder 401/403 directamente), pero es inconsistente con la regla del prompt que pedía `next(error)` en todos los errores. | auth.middleware.js |
-
----
-
-## Comparativa cuantitativa básico → refinado
-
-| Categoría | Prompt básico | Prompt refinado | Mejora |
-|-----------|--------------|-----------------|--------|
-| Vulnerabilidades de seguridad | 3 (S1 Alta, S2 Alta, S3 Baja) | 0 críticas / 0 altas | -3 (−100%) |
-| Bugs funcionales | 3 (B1 Alta, B2 Alta, B3 Baja) | 0 | -3 (−100%) |
-| Problemas de arquitectura | 3 (A1, A2, A3) | 0 | -3 (−100%) |
-| Ficheros generados | 4 | 6 (añade prisma.js y auth.middleware.js) | +2 |
-| Sistema de módulos | Mixto (ES Modules) | CommonJS consistente | ✅ |
-| Formato de respuesta | Ad hoc | Estándar en todos | ✅ |
-| Issues nuevos introducidos | — | 3 (R1 Baja, R2 Info, R3 Info) | +3 menores |

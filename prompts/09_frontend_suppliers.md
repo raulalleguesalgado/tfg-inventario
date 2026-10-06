@@ -1,7 +1,6 @@
 # Prompt 09F — Frontend: Gestión de proveedores
 
 **Módulo:** Frontend — Suppliers (listado, creación, edición, borrado)
-**Fase:** 3.5
 **Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado)
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_categories.md`
@@ -229,26 +228,12 @@ export default App;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente
-
-| Requisito | Estado | Detalle |
-|-----------|--------|---------|
-| Tabla con name/contactName/email/phone + acciones | ✅ | Render directo de los campos planos |
-| Formulario único reutilizado create/edit | ✅ | Controlado por `editingId` (null = create) |
-| CRUD completo con refresco de lista | ✅ | POST/PUT/DELETE seguidos de `fetchSuppliers()` |
-| Confirmación antes de borrar | ✅ | `window.confirm()` |
-| Manejo de errores sin crash (incluye borrado bloqueado por productos asignados) | ✅ | `try/catch` con `alert()` |
-| Estilos de tabla vía `style` (sin `<table border="1">`) | ✅ | Primera vez en la serie de frontend sin el atributo HTML obsoleto (ver F1 de 09C/09D/09E) |
-| Sin librerías de UI | ✅ | Solo inline styles |
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | **Alta (bloqueante)** | **Email vacío rompe create/edit.** El input de email no tiene `required`, así que un usuario puede dejarlo en blanco → `formData.email` queda `''`. El backend valida `email: z.string().email().optional().nullable()`: al ser `.email()` encadenado, `''` se valida como formato de email y **falla** aunque el campo sea opcional (el `.optional()` de Zod solo permite *omitir* la clave, no un string vacío). Resultado: crear o editar cualquier proveedor sin rellenar el email devuelve siempre 400 "Invalid email", incluso aunque el enunciado del prompt diga explícitamente que el campo es opcional. | Suppliers.jsx |
-| B2 | Alta | **App.jsx reescrito desde cero — sexta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, `Categories`. Solo sobrevive `/suppliers`, con un comentario `{/* Other routes */}` que no llega a implementarse. | App.jsx |
-| F1 | Info | Errores de create/update/delete con `window.alert()`, mismo patrón que Products (F1 de 09C) y Categories (F2 de 09E). | Suppliers.jsx |
-| F2 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
+| — | **Alta (bloqueante)** | **Email vacío rompe create/edit.** El input de email no tiene `required`, así que un usuario puede dejarlo en blanco → `formData.email` queda `''`. El backend valida `email: z.string().email().optional().nullable()`: al ser `.email()` encadenado, `''` se valida como formato de email y **falla** aunque el campo sea opcional (el `.optional()` de Zod solo permite *omitir* la clave, no un string vacío). Resultado: crear o editar cualquier proveedor sin rellenar el email devuelve siempre 400 "Invalid email", incluso aunque el enunciado del prompt diga explícitamente que el campo es opcional. | Suppliers.jsx |
+| — | Alta | **App.jsx reescrito desde cero — sexta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products`, `Movements`, `Categories`. Solo sobrevive `/suppliers`, con un comentario `{/* Other routes */}` que no llega a implementarse. | App.jsx |
 
 ### Correcciones mínimas
 

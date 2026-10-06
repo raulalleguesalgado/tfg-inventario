@@ -1,7 +1,6 @@
 # Prompt 01 — Setup base del proyecto
 
 **Módulo:** Configuración inicial (package.json, Express, middlewares globales, config de entorno)
-**Fase:** 3.1
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -154,8 +153,8 @@ startServer();
 
 | ID | Severidad | Problema | Fichero | Categoría OWASP |
 |----|-----------|----------|---------|-----------------|
-| S1 | Media | `cors()` sin configuración — abre la API a cualquier origen (`Access-Control-Allow-Origin: *`) | app.js:9 | A05 — Security Misconfiguration |
-| S2 | Media | `JWT_SECRET` con mínimo de 8 caracteres — insuficiente para un secreto criptográfico; permite secretos débiles como `password` | env.js:9 | A02 — Cryptographic Failures |
+| S4 | Media | `cors()` sin configuración — abre la API a cualquier origen (`Access-Control-Allow-Origin: *`) | app.js:9 | A05 — Security Misconfiguration |
+| S2 | Crítica | `JWT_SECRET` con mínimo de 8 caracteres — insuficiente para un secreto criptográfico; permite secretos débiles como `password` | env.js:9 | A02 — Cryptographic Failures |
 
 ### Problemas de arquitectura y calidad
 

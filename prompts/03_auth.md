@@ -1,7 +1,6 @@
 # Prompt 03 — Módulo de autenticación
 
 **Módulo:** Autenticación (register, login, JWT, roles)
-**Fase:** 3.4
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -191,17 +190,17 @@ export default router;
 
 | ID | Severidad | Problema | Fichero | Línea | OWASP |
 |----|-----------|----------|---------|-------|-------|
-| S1 | Alta | `JWT_SECRET \|\| 'supersecret'` — si `JWT_SECRET` no está definida en el entorno, el secreto es el literal `'supersecret'`. Cualquier atacante que conozca este fallback puede firmar tokens válidos arbitrarios. | auth.service.js | 5 | A02 — Cryptographic Failures |
-| S2 | Alta | `role: userData.role` en register — el rol se toma directamente del body de la petición. Un atacante puede registrarse como `ADMIN` enviando `{"role": "ADMIN"}`. Vulnerabilidad de escalada de privilegios. | auth.service.js | 19 | A01 — Broken Access Control |
-| S3 | Baja | `password: z.string().min(6)` — mínimo de 6 caracteres para la contraseña; insuficiente para resistir ataques de fuerza bruta. | auth.routes.js | 10 | A07 — Identification & Authentication Failures |
+| S2 | Crítica | `JWT_SECRET \|\| 'supersecret'` — si `JWT_SECRET` no está definida en el entorno, el secreto es el literal `'supersecret'`. Cualquier atacante que conozca este fallback puede firmar tokens válidos arbitrarios. | auth.service.js | 5 | A02 — Cryptographic Failures |
+| S1 | Crítica | `role: userData.role` en register — el rol se toma directamente del body de la petición. Un atacante puede registrarse como `ADMIN` enviando `{"role": "ADMIN"}`. Vulnerabilidad de escalada de privilegios. | auth.service.js | 19 | A01 — Broken Access Control |
+| — | Baja | `password: z.string().min(6)` — mínimo de 6 caracteres para la contraseña; insuficiente para resistir ataques de fuerza bruta. | auth.routes.js | 10 | A07 — Identification & Authentication Failures |
 
 ### Bugs
 
 | ID | Severidad | Problema | Fichero | Línea |
 |----|-----------|----------|---------|-------|
-| B1 | Alta | `z.zod.object()` — sintaxis incorrecta, debería ser `z.object()`. Causa un error en runtime al intentar registrar las rutas. | auth.routes.js | 7, 14 |
-| B2 | Alta | ES Modules (`import`/`export`) en todos los ficheros, mientras el setup (app.js, server.js) usa CommonJS (`require`/`module.exports`). Incompatible sin `"type": "module"` en package.json, que a su vez requeriría convertir el setup. | todos | — |
-| B3 | Baja | `new PrismaClient()` instanciado en el repository — tercera instancia separada (también está en server.js). Sin singleton, se abre una conexión a BD por módulo. | user.repository.js | 3 |
+| B2 | Alta | `z.zod.object()` — sintaxis incorrecta, debería ser `z.object()`. Causa un error en runtime al intentar registrar las rutas. | auth.routes.js | 7, 14 |
+| — | Alta | ES Modules (`import`/`export`) en todos los ficheros, mientras el setup (app.js, server.js) usa CommonJS (`require`/`module.exports`). Incompatible sin `"type": "module"` en package.json, que a su vez requeriría convertir el setup. | todos | — |
+| — | Baja | `new PrismaClient()` instanciado en el repository — tercera instancia separada (también está en server.js). Sin singleton, se abre una conexión a BD por módulo. | user.repository.js | 3 |
 
 ### Problemas de arquitectura y calidad
 

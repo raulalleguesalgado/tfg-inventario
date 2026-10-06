@@ -1,4 +1,4 @@
-// env.js — CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+// Corrección mínima C5: paso a ES Modules.
 import dotenv from 'dotenv';
 import { z } from 'zod';
 

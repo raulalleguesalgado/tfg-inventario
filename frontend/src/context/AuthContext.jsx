@@ -1,7 +1,4 @@
-// AuthContext.jsx — CORRECCIÓN MÍNIMA C7 aplicada:
-// export const useAuth añadido — Navbar (prompt 09B) lo importa pero el prompt de
-// setup (09A) nunca lo generó, solo AuthContext/AuthProvider (Patrón 8).
-// El resto del fichero es el output original del prompt 09A.
+// Corrección mínima C7: añadido el hook useAuth.
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import * as authService from '../api/auth';

@@ -1,7 +1,4 @@
-// app.js — CORRECCIÓN MÍNIMA aplicada:
-// 1. Convertido a ES Modules (import/export) para unificar con el resto del proyecto (Patrón 1)
-// 2. Rutas registradas — el LLM generó app.js sin importar ninguna route (Patrón 8)
-// El resto del fichero es el output original del prompt 01.
+// Correcciones mínimas C4 y C5: rutas registradas y paso a ES Modules.
 
 import express from 'express';
 import cors from 'cors';

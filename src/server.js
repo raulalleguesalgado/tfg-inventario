@@ -1,4 +1,4 @@
-// server.js — CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+// Corrección mínima C5: paso a ES Modules.
 import app from './app.js';
 import env from './config/env.js';
 import { PrismaClient } from '@prisma/client';

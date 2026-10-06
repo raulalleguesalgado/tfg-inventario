@@ -1,8 +1,4 @@
-// auth.controller.js — CORRECCIÓN MÍNIMA C10 aplicada:
-// Respuestas envueltas en el formato estándar { success, data, error, message }
-// (ya documentado como hallazgo A2 en prompts/03_auth.md — el LLM nunca lo aplicó
-// aquí pese a usarlo en product.controller.js). Sin esto el frontend generado en
-// el prompt 09A no puede leer data.data.token / data.data.user tras login.
+// Corrección mínima C10: respuestas con el formato { success, data, error, message }.
 
 import * as authService from '../services/auth.service.js';
 

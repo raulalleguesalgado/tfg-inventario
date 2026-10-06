@@ -1,6 +1,4 @@
-// CORRECCIÓN MÍNIMA C6: añadido authenticate — Patrón 8
-// El controller usa req.user.id pero el LLM no añadió el middleware en las rutas.
-// Sin esto movements falla siempre con "Cannot read properties of undefined (reading 'id')".
+// Corrección mínima C6: añadido authenticate.
 import { Router } from 'express';
 import { z } from 'zod';
 import * as movementController from '../controllers/movement.controller.js';

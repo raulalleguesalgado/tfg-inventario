@@ -1,11 +1,11 @@
 # tfg-inventario
 
-Aplicación web de gestión de inventario generada mediante ingeniería de prompts con LLMs (Gemini 2.5 Pro), desarrollada como Trabajo de Fin de Grado. El foco del proyecto es la auditoría de seguridad (OWASP) y de calidad del código resultante, no la aplicación en sí.
+Aplicación web de gestión de inventario generada mediante ingeniería de prompts con un LLM (Gemini 3.1 Pro), desarrollada como Trabajo de Fin de Grado. El foco del proyecto es la auditoría de seguridad (OWASP) y de calidad del código resultante, no la aplicación en sí.
 
 ## Stack
 
 - **Backend:** Node.js + Express, ORM Prisma, PostgreSQL, autenticación JWT (`jsonwebtoken` + `bcryptjs`), validación con `zod`
-- **Frontend:** React + Vite. Los prompts del frontend pedían React 18 y React Router v6; al
+- **Frontend:** React + Vite, sin librería de UI. Los prompts del frontend pedían React 18 y React Router v6; al
   crear el proyecto (Vite + `npm install`) se instalaron las versiones del momento, React 19 y
   React Router 7 (`frontend/package-lock.json`), y el código
   generado funciona con ellas sin cambios.
@@ -43,11 +43,19 @@ docs/           informes de análisis estático, pentesting y correcciones aplic
    npx prisma db push     # crea las tablas en la BD a partir del schema
    npm start               # http://localhost:3000
    ```
-   No hay migraciones ni seed de datos de prueba versionados: el schema se aplica
-   directamente con `db push`, y los usuarios de prueba se crean a mano vía `/auth/register`.
 3. Frontend:
    ```bash
    cd frontend
    npm install
    npm run dev              # http://localhost:5173
    ```
+4. Usuarios de prueba (con el backend arrancado). La base de datos arranca vacía:
+   ```bash
+   curl -X POST http://localhost:3000/auth/register -H "Content-Type: application/json" \
+     -d '{"name":"Admin","email":"admin@test.com","password":"admin1234"}'
+   curl -X POST http://localhost:3000/auth/register -H "Content-Type: application/json" \
+     -d '{"name":"Operador","email":"operador@test.com","password":"operador1234"}'
+   docker exec tfg-postgres psql -U tfguser -d tfg_inventario \
+     -c "UPDATE \"User\" SET role = 'ADMIN' WHERE email = 'admin@test.com';"
+   ```
+   Quedan `admin@test.com` / `admin1234` (administrador) y `operador@test.com` / `operador1234` (operador).

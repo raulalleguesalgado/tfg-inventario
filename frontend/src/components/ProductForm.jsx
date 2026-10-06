@@ -1,8 +1,4 @@
-// ProductForm.jsx — CORRECCIÓN MÍNIMA C11 aplicada:
-// purchasePrice/salePrice envueltos en Number() al leer initialData. Prisma serializa
-// los campos Decimal como string en el JSON (ver purchasePrice:"10" en /products), pero
-// el LLM asumió que venían como number. Sin la conversión, editar un producto sin tocar
-// el precio enviaba un string al PUT y el backend lo rechazaba (Zod espera z.number()).
+// Corrección mínima C11: los precios se convierten a Number al editar.
 
 import { useState } from 'react';
 

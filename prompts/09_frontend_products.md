@@ -1,7 +1,6 @@
 # Prompt 09C — Frontend: Gestión de productos
 
 **Módulo:** Frontend — Products (listado, creación, edición, borrado)
-**Fase:** 3.5
 **Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado)
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_dashboard.md`
@@ -291,26 +290,12 @@ export default App;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente
-
-| Requisito | Estado | Detalle |
-|-----------|--------|---------|
-| ProductForm reutilizable create/edit | ✅ | Un único componente controlado por `initialData` |
-| Fetch paralelo de products/categories/suppliers | ✅ | `Promise.all` en `fetchData()` |
-| CRUD completo (create/edit/delete) | ✅ | POST/PUT/DELETE seguidos de refresco de la lista |
-| Confirmación antes de borrar | ✅ | `window.confirm()` |
-| Manejo de errores sin crash | ✅ | `try/catch` con `alert()`/mensaje, la vista no revienta |
-| Sin librerías de UI | ✅ | Solo inline styles + tabla HTML plana |
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | **App.jsx reescrito desde cero — tercera ocurrencia del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard` y los placeholders de Movements/Categories/Suppliers generados en 09A/09B. Solo sobrevive `/products`, con un catch-all que redirige todo lo demás ahí. Aplicado tal cual, la app pierde login, protección de rutas y el resto de vistas. | App.jsx |
-| B2 | Media | **Tipo de dato incorrecto en edición.** `purchasePrice`/`salePrice` se leen de `initialData` sin convertir a `Number`. La API serializa los campos `Decimal` de Prisma como **string** en el JSON (confirmado: `"purchasePrice":"10"`), pero el esquema Zod del backend (`PUT /products/:id`) exige `z.number()`. Si el usuario edita un producto sin tocar los campos de precio, se reenvía el string original y la petición fallaría validación. | ProductForm.jsx |
-| F1 | Info | Errores de create/update/delete se muestran con `window.alert()`, inconsistente con el patrón de mensaje inline (`<p style={{color:'red'}}>`) usado en Login/Register/Dashboard. No es un bug, es una discrepancia de estilo entre conversaciones. | Products.jsx |
-| F2 | Info | `<table border="1">` usa el atributo HTML obsoleto en vez de estilos inline, inconsistente con el resto de tablas del proyecto (Dashboard usa `borderCollapse` vía `style`). | Products.jsx |
-| F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
+| — | Alta | **App.jsx reescrito desde cero — tercera ocurrencia del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard` y los placeholders de Movements/Categories/Suppliers generados en 09A/09B. Solo sobrevive `/products`, con un catch-all que redirige todo lo demás ahí. Aplicado tal cual, la app pierde login, protección de rutas y el resto de vistas. | App.jsx |
+| — | Media | **Tipo de dato incorrecto en edición.** `purchasePrice`/`salePrice` se leen de `initialData` sin convertir a `Number`. La API serializa los campos `Decimal` de Prisma como **string** en el JSON (confirmado: `"purchasePrice":"10"`), pero el esquema Zod del backend (`PUT /products/:id`) exige `z.number()`. Si el usuario edita un producto sin tocar los campos de precio, se reenvía el string original y la petición fallaría validación. | ProductForm.jsx |
 
 ### Correcciones mínimas
 

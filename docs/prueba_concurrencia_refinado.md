@@ -1,6 +1,5 @@
 # Prueba de concurrencia del módulo de movimientos refinado
 
-**Fecha:** 2026-09-28
 **Entorno:** PostgreSQL 16.13 en Docker (aislamiento por defecto: `read committed`),
 Prisma Client 5.22.0, Node.js 22.20.0. Esquema: `prisma/schema.prisma` del repositorio.
 **Scripts y salidas:** `docs/prueba_concurrencia/`
@@ -10,7 +9,7 @@ Prisma Client 5.22.0, Node.js 22.20.0. Esquema: `prisma/schema.prisma` del repos
 `prompts/07_movements_refinado.md` daba por corregida la condición de carrera TOCTOU (S3)
 porque el código refinado mete la lectura, la validación y la escritura del stock dentro
 de `prisma.$transaction`, tal como pedía la regla del prompt. Esa corrección nunca se
-había probado con peticiones concurrentes: el ataque de la Fase 4B (stock 10, 8 salidas
+había probado con peticiones concurrentes: el ataque de la ronda completa (stock 10, 8 salidas
 de 3 unidades en paralelo) solo se lanzó contra la versión básica, que es la desplegada.
 
 En PostgreSQL, con el nivel de aislamiento por defecto (`read committed`), un `SELECT`
@@ -36,7 +35,7 @@ prueba distingue un código correcto de uno incorrecto.
 
 La prueba llama directamente al servicio, sin pasar por HTTP: la carrera está en la lógica
 del servicio y la base de datos, no en la capa HTTP. Al lanzar las llamadas desde un mismo
-proceso, la concurrencia es algo mayor que en el ataque por HTTP de la Fase 4B.
+proceso, la concurrencia es algo mayor que en el ataque por HTTP de la ronda completa.
 
 ## Resultados
 
@@ -53,7 +52,7 @@ proceso, la concurrencia es algo mayor que en el ataque por HTTP de la Fase 4B.
   transacciones en el tiempo (lo mismo que se ve en S3 en `docs/tercera_ronda_comprobacion.md`,
   "S3 con repeticiones"). Con 7, todas leyeron 10; con 4, al menos una leyó el stock cuando
   otra ya había escrito 7 (10 → 7 → 4).
-- **Básico:** mismo fallo que en la Fase 4B (allí 6 de 8 aceptadas y stock −8 por HTTP;
+- **Básico:** mismo fallo que en la ronda completa (allí 6 de 8 aceptadas y stock −8 por HTTP;
   aquí más, porque las llamadas salen más a la vez).
 - **Control:** correcto en todas las ejecuciones, lo que valida la prueba.
 

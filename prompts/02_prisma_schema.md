@@ -1,7 +1,6 @@
 # Prompt 02 — Schema de Prisma
 
 **Módulo:** Base de datos — schema.prisma
-**Fase:** 3.2
 **Tipo de prompt:** Básico (sin restricciones explícitas)
 **Iteraciones:** 1
 

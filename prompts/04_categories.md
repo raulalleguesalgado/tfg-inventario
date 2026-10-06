@@ -1,7 +1,6 @@
 # Prompt 04 — Módulo de categorías
 
 **Módulo:** Categories (CRUD completo)
-**Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -234,8 +233,8 @@ export default router;
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | ES Modules (`import`/`export`) — patrón consistente con el módulo de auth pero incompatible con el setup que usa CommonJS. Se confirma como patrón sistemático del LLM. | todos |
-| B2 | Baja | `new PrismaClient()` instanciado en el repository — cuarta instancia separada, sin singleton. | category.repository.js |
+| — | Alta | ES Modules (`import`/`export`) — patrón consistente con el módulo de auth pero incompatible con el setup que usa CommonJS. Se confirma como patrón sistemático del LLM. | todos |
+| — | Baja | `new PrismaClient()` instanciado en el repository — cuarta instancia separada, sin singleton. | category.repository.js |
 
 #### Problemas de arquitectura y calidad
 
@@ -243,4 +242,4 @@ export default router;
 |----|----------|---------|
 | A1 | Manejo de errores inconsistente dentro del mismo controller: `getById` y `delete` responden directamente con status hardcodeado; `getAll`, `create` y `update` usan `next(error)`. | category.controller.js |
 | A2 | La lógica de borrado en el service depende de que `findById` incluya `products` en el resultado. Si el repository cambia, el check de integridad falla silenciosamente sin error. | category.service.js |
-| A3 | Rutas sin middleware de autenticación — todas las operaciones CRUD son públicas. Esperado en prompt básico sin `[RULES]`, pero relevante para la auditoría posterior. | category.routes.js |
+| A3 | Rutas sin middleware de autenticación — todas las operaciones CRUD son públicas (vulnerabilidad S5). | category.routes.js |

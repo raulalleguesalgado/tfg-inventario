@@ -1,7 +1,6 @@
 # Prompt 06 — Módulo de productos
 
 **Módulo:** Products (CRUD completo + alertas de stock)
-**Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -236,7 +235,7 @@ export default router;
 
 ## Análisis
 
-### Nota sobre `prisma.product.fields.minStock`
+### Nota sobre `prisma.product.fields.minStock` (B3)
 
 Clasificado inicialmente como alucinación de API. Verificación en runtime (2026-04-13): es sintaxis válida de Prisma Client v5 (referencia de campo resuelta como comparación de columna en SQL) — `GET /products/alerts` funciona correctamente.
 
@@ -244,8 +243,8 @@ Clasificado inicialmente como alucinación de API. Verificación en runtime (202
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B2 | Alta | ES Modules de nuevo — alterna con CommonJS de suppliers sin coherencia. | todos |
-| B3 | Media | Cambia el patrón de exportación a clases — auth y categories usaban funciones/objetos, products usa clases. Inconsistencia estructural entre módulos. | todos |
-| B4 | Baja | `new PrismaClient()` en el repository de nuevo — sin singleton. | product.repository.js |
+| — | Alta | ES Modules de nuevo — alterna con CommonJS de suppliers sin coherencia. | todos |
+| — | Media | Cambia el patrón de exportación a clases — auth y categories usaban funciones/objetos, products usa clases. Inconsistencia estructural entre módulos. | todos |
+| — | Baja | `new PrismaClient()` en el repository de nuevo — sin singleton. | product.repository.js |
 | A1 | Baja | Sin validación de UUID en params. | product.routes.js |
-| A2 | Baja | Rutas sin middleware de autenticación. | product.routes.js |
+| A2 | Alta | Rutas sin middleware de autenticación (vulnerabilidad S5). | product.routes.js |

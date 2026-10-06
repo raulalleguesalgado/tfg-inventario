@@ -1,23 +1,27 @@
-# Análisis ESLint — Prompts básicos (Fase 4A.2)
+# Análisis ESLint — Prompts básicos
 
-**Fecha:** 2026-04-07
 **Herramienta:** ESLint v10.2.0 + eslint-plugin-security v4.0.0 + eslint-plugin-n v17.24.0
-**Código analizado:** Output prompts básicos 01-08 (sin corregir)
+**Código analizado:** Output prompts básicos 01-08, commit `a6c2138` (sin corregir, salvo el cambio a ES Modules descrito abajo)
 **Ficheros analizados:** 26 (todos los ficheros en `src/`)
 
 ---
 
-## Comando ejecutado
+## Cambio previo al análisis
 
-Ejecutado desde la raíz del repo, sin script `npm run lint` a nivel de raíz:
+Para poder cargar el proyecto, el commit `a6c2138` añadió `"type": "module"` a `package.json`,
+pasó `src/config/env.js` y `src/server.js` a ES Modules y añadió ESLint y sus plugins como
+dependencias de desarrollo (además de `pg`). No cambia la lógica del código generado. El
+resultado de ESLint es el mismo con `app.js` y el módulo de proveedores todavía en CommonJS.
+
+---
+
+## Resultado
 
 ```
 npx eslint . --no-error-on-unmatched-pattern
 ```
 
-**Salida real** (reproducida sobre las mismas versiones ancladas del `package-lock.json`
-de la época — ESLint v10.2.0, `eslint-plugin-security` v4.0.0, `eslint-plugin-n`
-v17.24.0):
+Salida (reproducida con las mismas versiones del `package-lock.json`):
 
 ```
 src/config/env.js
@@ -28,45 +32,6 @@ src/server.js
 
 ✖ 2 problems (0 errors, 2 warnings)
 ```
-
----
-
-## Corrección mínima aplicada antes del análisis
-
-**Problema:** El código de prompts básicos mezcla CommonJS (setup, suppliers — Patrón 1) y ES Modules
-(resto de módulos). Node.js no siempre puede cargar esa mezcla en un mismo proyecto: si se declara como ES
-Modules, un `.js` escrito en CommonJS ya no se carga como tal (corrección C5). ESLint, en
-cambio, no exige un único `sourceType`: la configuración puede fijar uno distinto por grupo de ficheros.
-
-**Corrección aplicada** (commit `74c7d31`): además de añadir `"type": "module"` a `package.json`
-(declara el sistema de módulos dominante, ES Modules en 6/8 módulos), el mismo commit convirtió
-`src/config/env.js` y `src/server.js` de `require`/`module.exports` a `import`/`export` (dos de los
-tres ficheros del setup en CommonJS; `app.js` y el módulo suppliers se convirtieron después, en el
-resto de la corrección C5) y añadió `eslint`, `eslint-plugin-security` y
-`eslint-plugin-n` como devDependencies necesarias para poder ejecutar este mismo análisis, además
-de `pg`.
-Ninguno de estos cambios altera la lógica del código analizado ni introduce ni corrige ningún bug
-o vulnerabilidad de los prompts básicos — es infraestructura mínima para que el proyecto se pueda
-cargar y analizar. La conversión no cambia el orden de carga: en las dos versiones `server.js`
-carga `app.js` antes que `env.js`. El resultado de ESLint es el mismo con `app.js` y suppliers
-todavía en CommonJS.
-
----
-
-## Resultados
-
-### Resumen
-
-| Métrica | Valor |
-|---------|-------|
-| Ficheros analizados | 26 |
-| Ficheros con issues | 2 |
-| Ficheros limpios | 24 |
-| Errors | 0 |
-| Warnings | 2 |
-| Reglas de seguridad disparadas | 0 |
-
-### Issues encontrados
 
 | ID | Fichero | Línea | Regla | Tipo | Descripción |
 |----|---------|-------|-------|------|-------------|

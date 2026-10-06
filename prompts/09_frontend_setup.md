@@ -1,7 +1,6 @@
 # Prompt 09A — Frontend: Setup base + Login/Register
 
 **Módulo:** Frontend — estructura base, cliente API, contexto de auth, Login, Register
-**Fase:** 3.5
 **Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado — todo el frontend usa un único prompt por vista)
 **Iteraciones:** 1
 
@@ -322,26 +321,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
 ## Análisis
 
-### Lo que el LLM generó correctamente
+### Nota sobre `src/main.jsx`
 
-| Requisito | Estado | Detalle |
-|-----------|--------|---------|
-| Axios instance con interceptores | ✅ | Request adjunta Bearer token; response elimina token y redirige en 401 |
-| JWT decode sin librería | ✅ | `atob(token.split('.')[1])` — sin dependencias externas |
-| Restauración de sesión en mount | ✅ | `useEffect` en AuthProvider llama `getCurrentUser()` al arrancar |
-| ProtectedRoute con loading state | ✅ | Evita flash de redirect mientras se restaura la sesión |
-| Error messages desde API | ✅ | `err.response?.data?.message` con optional chaining y fallback |
-| Rutas públicas y protegidas | ✅ | `/login` y `/register` públicas; `/` bajo `ProtectedRoute` |
-| ES Modules en frontend | ✅ | Correcto para React/Vite — distinto del backend que usa CommonJS |
-| Sin librerías UI externas | ✅ | Solo inline styles para el mensaje de error |
-
-### Puntos a documentar
-
-| ID | Severidad | Observación | Fichero |
-|----|-----------|-------------|---------|
-| F1 | Info | `window.location.href = '/login'` en el interceptor de 401 y en `logout()`. Es el patrón estándar cuando axios no tiene acceso al contexto de React Router — `useNavigate` solo funciona dentro de componentes. Técnicamente correcto aunque provoca un full page reload en lugar de navegación SPA. | client.js / AuthContext.jsx |
-| F2 | Info | `login` en `AuthContext` no usa `useCallback` — se recrea en cada render del Provider. Para el alcance del proyecto es aceptable; en producción se memoizaría. | AuthContext.jsx |
-| F3 | Info | `Register.jsx` redirige a `/login` tras registro exitoso sin loguear al usuario automáticamente. Decisión de UX deliberada — el usuario debe hacer login explícito. | Register.jsx |
-| F4 | Info | Dashboard placeholder `<h1>Dashboard</h1>` en `App.jsx` — pendiente sustituir por la vista real en el siguiente prompt. | App.jsx |
-| F5 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real (un único commit de scaffold) fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el principio — probablemente por cómo se montó el proyecto (`npm create vite@latest` o equivalente, que instala la versión más reciente en ese momento), no por decisión del LLM. Sin impacto funcional: las APIs usadas aquí (`BrowserRouter`, `Routes`, `Route`, `Navigate`, `Outlet`, `useNavigate`) son compatibles entre v6/v7. | package.json |
-| F6 | Info | El bloque de código mostrado arriba para `src/main.jsx` usa el patrón de React 18 (`import React from 'react'`, `ReactDOM.createRoot`, `<React.StrictMode>`). El fichero real (`frontend/src/main.jsx`, commit `d10dff4`) usa el patrón de importaciones con nombre de React 19/Vite (`import { StrictMode } from 'react'`, `import { createRoot } from 'react-dom/client'`) — mismo comportamiento, sintaxis de import distinta. El `[TASK]` pedía solo "Standard Vite React entry point", sin más detalle, y el fichero no existía antes de este commit ni fue tocado por ningún commit posterior — descarta una sustitución manual posterior no documentada. Queda sin determinar si la respuesta real del LLM ya usaba esta sintaxis o si el bloque mostrado arriba es una transcripción inexacta del prompt log. | main.jsx |
+El bloque de código mostrado arriba para `src/main.jsx` usa el patrón de React 18 (`import React from 'react'`, `ReactDOM.createRoot`, `<React.StrictMode>`). El fichero real (`frontend/src/main.jsx`, commit `a41ec7d`) usa el patrón de importaciones con nombre de React 19/Vite (`import { StrictMode } from 'react'`, `import { createRoot } from 'react-dom/client'`) — mismo comportamiento, sintaxis de import distinta. El `[TASK]` pedía solo "Standard Vite React entry point", sin más detalle, y el fichero no existía antes de este commit ni fue tocado por ningún commit posterior — descarta una sustitución manual posterior no documentada. Queda sin determinar si la respuesta real del LLM ya usaba esta sintaxis o si el bloque mostrado arriba es una transcripción inexacta del prompt log.

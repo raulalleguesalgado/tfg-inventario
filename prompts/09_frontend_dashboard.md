@@ -1,7 +1,6 @@
 # Prompt 09B — Frontend: Dashboard + Navbar
 
 **Módulo:** Frontend — Navbar, Dashboard, actualización App.jsx
-**Fase:** 3.5
 **Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_setup.md`
@@ -207,12 +206,9 @@ export default function App() {
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | `useAuth` importado en Navbar pero no existe — el prompt de setup exportó `AuthContext` y `AuthProvider`, nunca un hook `useAuth`. La app crashea en runtime con `TypeError: useAuth is not a function`. | Navbar.jsx |
-| B2 | Alta | `App.jsx` actualizado elimina `AuthProvider` y `ProtectedRoute` del setup anterior. Resultado: toda la app pierde el contexto de autenticación y todas las rutas son públicas. Login y Register dejan de existir como rutas. La app es no funcional. | App.jsx |
-| B3 | Media | `user?.name` en Navbar siempre es `undefined`. El JWT se firmó con `{ id, role }` en `auth.service.js` — el campo `name` nunca se incluyó en el payload. Navbar muestra "Hello, " sin nombre. | Navbar.jsx |
-| F1 | Info | `handleLogout` llama a `logout()` (que ya hace `window.location.href = '/login'`) y luego `navigate('/login')`. Doble redirect — el segundo nunca llega a ejecutarse. | Navbar.jsx |
-| F2 | Info | Sin mensaje cuando `stats.alerts` está vacío — la tabla muestra cabeceras con cuerpo vacío. | Dashboard.jsx |
-| F3 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
+| — | Alta | `useAuth` importado en Navbar pero no existe — el prompt de setup exportó `AuthContext` y `AuthProvider`, nunca un hook `useAuth`. La app crashea en runtime con `TypeError: useAuth is not a function`. | Navbar.jsx |
+| — | Alta | `App.jsx` actualizado elimina `AuthProvider` y `ProtectedRoute` del setup anterior. Resultado: toda la app pierde el contexto de autenticación y todas las rutas son públicas. Login y Register dejan de existir como rutas. La app es no funcional. | App.jsx |
+| — | Media | `user?.name` en Navbar siempre es `undefined`. El JWT se firmó con `{ id, role }` en `auth.service.js` — el campo `name` nunca se incluyó en el payload. Navbar muestra "Hello, " sin nombre. | Navbar.jsx |
 
 ### Correcciones mínimas
 

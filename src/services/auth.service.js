@@ -34,16 +34,14 @@ export const login = async (email, password) => {
     throw new Error('Invalid credentials');
   }
 
-  // CORRECCIÓN MÍNIMA C9: name añadido al payload — el frontend (Navbar) lo necesita
-  // para mostrar el usuario logueado y el prompt original nunca lo incluyó (Patrón 8).
+  // Corrección mínima C9: name añadido al payload del token.
   const token = jwt.sign(
     { id: user.id, role: user.role, name: user.name },
     JWT_SECRET,
     { expiresIn: '1d' }
   );
 
-  // CORRECCIÓN MÍNIMA C10: user devuelto junto al token — el frontend (AuthContext)
-  // espera { token, user } (prompt 09A), el service original solo devolvía { token }.
+  // Corrección mínima C10: se devuelve también el usuario.
   const { passwordHash: _, ...userWithoutPassword } = user;
   return { token, user: userWithoutPassword };
 };

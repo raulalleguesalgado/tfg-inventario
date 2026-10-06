@@ -1,7 +1,6 @@
 # Prompt 08 — Módulo de usuarios
 
 **Módulo:** Users (GET /users, GET /users/:id, PUT /users/:id — solo admin)
-**Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -215,8 +214,8 @@ export default router;
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | ES Modules — mismo patrón recurrente. | todos |
-| B2 | Alta | Importa `authenticate` y `authorize` de `../middlewares/auth.middleware.js` — ese fichero no existe en el proyecto, ningún módulo anterior lo generó. La app fallará al arrancar. | user.routes.js |
-| B3 | Media | Genera un nuevo `user.repository.js` con `findAll`, `findById`, `update` — pero el módulo de auth ya generó otro con `findByEmail`, `findById`, `create`. Al integrar los módulos habrá conflicto en el mismo fichero. | user.repository.js |
-| B4 | Baja | `new PrismaClient()` instanciado de nuevo — sin singleton. | user.repository.js |
+| — | Alta | ES Modules — mismo patrón recurrente. | todos |
+| B5 | Alta | Importa `authenticate` y `authorize` de `../middlewares/auth.middleware.js` — ese fichero no existe en el proyecto, ningún módulo anterior lo generó. La app fallará al arrancar. | user.routes.js |
+| — | Media | Genera un nuevo `user.repository.js` con `findAll`, `findById`, `update` — pero el módulo de auth ya generó otro con `findByEmail`, `findById`, `create`. Al integrar los módulos habrá conflicto en el mismo fichero. | user.repository.js |
+| — | Baja | `new PrismaClient()` instanciado de nuevo — sin singleton. | user.repository.js |
 | A1 | Baja | Respuestas de éxito omiten `error: null` — inconsistencia menor con el formato estándar `{ success, data, error, message }`. | user.controller.js |

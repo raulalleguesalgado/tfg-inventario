@@ -1,17 +1,13 @@
-# Análisis estático — Prompts básicos (Fase 4A)
+# Análisis estático — Prompts básicos
 
-**Fecha:** 2026-04-07
 **Herramienta:** SonarCloud (Build #4)
-**Código analizado:** Output prompts básicos 01-08 (sin corregir)
-**LLM:** Gemini 2.5 Pro
+**Código analizado:** Output prompts básicos 01-08, commit `f532bd5`
 
 ---
 
 ## Cómo se ejecutó
 
-SonarCloud no se lanza con un comando manual: está enganchado a un workflow de GitHub
-Actions (`.github/workflows/build.yml`) que dispara el análisis automáticamente en cada
-`push` a `main`, usando la configuración de `sonar-project.properties` de la raíz del repo.
+El análisis lo lanza GitHub Actions (`.github/workflows/build.yml`) en cada push a `main`.
 
 ---
 
@@ -22,8 +18,6 @@ Actions (`.github/workflows/build.yml`) que dispara el análisis automáticament
 | ID | Regla | Fichero | Línea | Categoría | Prioridad | Descripción |
 |----|-------|---------|-------|-----------|-----------|-------------|
 | SH1 | S5122 | `src/app.js` | 9 | Insecure Configuration | Low | `cors()` sin configuración — abre la API a cualquier origen (`*`) |
-
-**Total Security Hotspots:** 1
 
 ### Issues de mantenibilidad (Code Smells)
 

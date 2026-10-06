@@ -1,4 +1,4 @@
-// CORRECCIÓN MÍNIMA: convertido a ES Modules (Patrón 1)
+// Corrección mínima C5: paso a ES Modules.
 import * as supplierService from '../services/supplier.service.js';
 
 const getAllSuppliers = async (req, res, next) => {

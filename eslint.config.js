@@ -1,8 +1,4 @@
-// eslint.config.js
-// Configuración para análisis estático de seguridad — Fase 4A.2
-// Corrección mínima aplicada: "type": "module" en package.json para resolver
-// la inconsistencia CommonJS/ES Modules entre módulos del backend
-// Extendido para cubrir frontend/src (Fase 4A, análisis sobre el conjunto completo backend+frontend)
+// Configuración de ESLint para el análisis estático (backend y frontend).
 
 import pluginSecurity from 'eslint-plugin-security';
 import pluginN from 'eslint-plugin-n';

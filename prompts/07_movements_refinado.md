@@ -1,7 +1,6 @@
 # Prompt 07R — Módulo de movimientos de stock (refinado)
 
 **Módulo:** Stock Movements (registro + historial)
-**Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad y arquitectura explícitas)
 **Iteraciones:** 1
 **Prompt básico de referencia:** `07_movements.md`
@@ -213,12 +212,12 @@ module.exports = router;
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| S1 | Race condition TOCTOU — comprobación de stock fuera de la transacción | ❌ No corregido (prueba del 2026-09-28) | La lectura, la validación y la actualización están dentro de `prisma.$transaction`, tal como pedía la regla del prompt, pero eso no basta: con el aislamiento por defecto de PostgreSQL (READ COMMITTED), `findUnique` no bloquea la fila y dos transacciones concurrentes leen el mismo stock. En la prueba de concurrencia (stock 10, 8 × OUT de 3, 10 repeticiones) se aceptan las 8 salidas y el stock queda en 7 (en una repetición, en 4): actualizaciones perdidas. Ver `docs/prueba_concurrencia_refinado.md`. |
-| S2 | Rutas sin autenticación con `req.user.id` referenciado sin middleware | ✅ Corregido | Ambas rutas aplican `authenticate`. `userId` nunca se acepta del body — se extrae de `req.user.id` como segundo argumento de `register`. |
-| B1 | ADJUSTMENT siempre tratado como incremento positivo | ✅ Corregido | Lógica de tres ramas: IN suma, OUT resta (con validación), ADJUSTMENT establece el valor absoluto (`newStock = data.quantity`). |
-| B2 | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros. |
-| B3 | Service importa PrismaClient directamente violando la arquitectura de capas | ⚠️ Parcialmente corregido | El service importa el singleton de `config/prisma` para iniciar la transacción (`prisma.$transaction`) y pasa el cliente de transacción `tx` al repository. Es una violación pragmática de la regla de capas: dentro de la transacción, el service lee y actualiza el stock directamente (`tx.product.findUnique` y `tx.product.update`) en lugar de hacerlo a través del product repository; al repository solo le delega la creación del movimiento (precisado el 2026-09-29). Este patrón es habitual en aplicaciones reales (evita dependencias circulares entre repositorios) pero técnicamente incumple la separación estricta de capas. |
-| B4 | Controllers sin `next(err)` | ✅ Corregido | Ambos controllers usan `next(err)` en los catch. |
+| S3 | Race condition TOCTOU — comprobación de stock fuera de la transacción | ❌ No corregido (prueba del 2026-09-28) | La lectura, la validación y la actualización están dentro de `prisma.$transaction`, tal como pedía la regla del prompt, pero eso no basta: con el aislamiento por defecto de PostgreSQL (READ COMMITTED), `findUnique` no bloquea la fila y dos transacciones concurrentes leen el mismo stock. En la prueba de concurrencia (stock 10, 8 × OUT de 3, 10 repeticiones) se aceptan las 8 salidas y el stock queda en 7 (en una repetición, en 4): actualizaciones perdidas. Ver `docs/prueba_concurrencia_refinado.md`. |
+| S5 | Rutas sin autenticación con `req.user.id` referenciado sin middleware | ✅ Corregido | Ambas rutas aplican `authenticate`. `userId` nunca se acepta del body — se extrae de `req.user.id` como segundo argumento de `register`. |
+| B4 | ADJUSTMENT siempre tratado como incremento positivo | ✅ Corregido | Lógica de tres ramas: IN suma, OUT resta (con validación), ADJUSTMENT establece el valor absoluto (`newStock = data.quantity`). |
+| — | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros. |
+| — | Service importa PrismaClient directamente violando la arquitectura de capas | ⚠️ Parcialmente corregido | El service importa el singleton de `config/prisma` para iniciar la transacción (`prisma.$transaction`) y pasa el cliente de transacción `tx` al repository. Es una violación pragmática de la regla de capas: dentro de la transacción, el service lee y actualiza el stock directamente (`tx.product.findUnique` y `tx.product.update`) en lugar de hacerlo a través del product repository; al repository solo le delega la creación del movimiento (precisado el 2026-09-29). Este patrón es habitual en aplicaciones reales (evita dependencias circulares entre repositorios) pero técnicamente incumple la separación estricta de capas. |
+| — | Controllers sin `next(err)` | ✅ Corregido | Ambos controllers usan `next(err)` en los catch. |
 
 ### Nuevos problemas detectados en el refinado
 
@@ -226,18 +225,3 @@ module.exports = router;
 |----|-----------|----------|---------|
 | R1 | Baja | `findByProduct` no incluye datos del usuario (`include: { user: { select: { id, name } } }`). El básico sí los incluía. El historial de movimientos devuelve solo el `userId` sin el nombre del usuario. Regresión funcional. | movement.repository.js |
 | R2 | Info | Los errores lanzados desde el service (`'PRODUCT_NOT_FOUND'`, `'INSUFFICIENT_STOCK'`) son strings en el mensaje de Error genérico. El middleware global de errores necesita interpretar `err.message` para devolver el código HTTP correcto (404 vs 422). Sin errores tipados con `.status`, el middleware no puede distinguirlos automáticamente. | movement.service.js |
-
----
-
-## Comparativa cuantitativa básico → refinado
-
-
-| Categoría | Prompt básico | Prompt refinado | Mejora |
-|-----------|--------------|-----------------|--------|
-| Race condition TOCTOU | Presente (stock check fuera de tx) | Presente (actualizaciones perdidas, todo dentro de tx) | ❌ |
-| Rutas sin autenticación | 2/2 (100%) | 0/2 (0%) | −2 (−100%) |
-| Lógica ADJUSTMENT incorrecta | Sí (siempre positivo) | No (valor absoluto) | ✅ |
-| ES Modules | Sí | No | ✅ |
-| Violación de arquitectura de capas | Completa (PrismaClient directo) | Parcial (solo dentro de tx) | Mejorado |
-| Controllers sin next(err) | 2/2 | 0/2 | −2 (−100%) |
-| Regresiones funcionales | — | 1 (R1: sin include user) | +1 menor |

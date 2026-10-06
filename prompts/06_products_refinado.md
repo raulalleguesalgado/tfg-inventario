@@ -1,7 +1,6 @@
 # Prompt 06R — Módulo de productos (refinado)
 
 **Módulo:** Products (CRUD completo + alertas de stock)
-**Fase:** 3.3
 **Tipo de prompt:** Refinado (con componente [RULES] de seguridad y arquitectura explícitas)
 **Iteraciones:** 1
 **Prompt básico de referencia:** `06_products.md`
@@ -217,11 +216,11 @@ module.exports = router;
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| B2 | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
-| B3 | Exportación con clases | ✅ Corregido | Objetos planos con `module.exports` en todos los módulos |
-| B4 | PrismaClient sin singleton | ✅ Corregido | `require('../config/prisma')` — reutiliza la instancia del auth refinado |
+| — | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
+| — | Exportación con clases | ✅ Corregido | Objetos planos con `module.exports` en todos los módulos |
+| — | PrismaClient sin singleton | ✅ Corregido | `require('../config/prisma')` — reutiliza la instancia del auth refinado |
 | A1 | Sin validación de UUID en params | ✅ Corregido | `validateId` middleware con `idSchema = z.object({ id: z.string().uuid() })` |
-| A2 | Rutas sin autenticación | ✅ Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
+| S5 | Rutas sin autenticación | ✅ Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
 
 **Nota (revisado 2026-10-01):** el refinado no corrige S8 (bypass del flujo de auditoría de
 stock, `docs/vulnerabilidades_pentesting.md`). `productSchema` sigue incluyendo
@@ -237,16 +236,3 @@ ninguna regla la cubría.
 | R1 | Media | `findAll`, `findById` y `findLowStock` no incluyen relaciones (`include: { category, supplier }`). El prompt básico sí las incluía. Las respuestas de la API devolverán solo IDs de categoría y proveedor, no sus datos completos. Pérdida funcional respecto al básico. | product.repository.js |
 | R2 | Baja | `getById` en el service devuelve `null` si el producto no existe; el controller gestiona el 404 directamente fuera del catch. Es un patrón válido, pero inconsistente con auth (que lanzaba error tipado desde el service). | product.service.js / controller.js |
 | R3 | Info | Mensajes de error de validación genéricos (`"Invalid input"`) sin detalle de qué campo falló. El auth refinado devolvía `result.error.format()` con el detalle completo. | product.routes.js |
-
----
-
-## Comparativa cuantitativa básico → refinado
-
-| Categoría | Prompt básico | Prompt refinado | Mejora |
-|-----------|--------------|-----------------|--------|
-| Rutas sin autenticación | 6/6 (100%) | 0/6 (0%) | −6 (−100%) |
-| Bugs de sistema de módulos | 1 (ES Modules) | 0 | −1 |
-| Patrón de exportación inconsistente | Clases | Objetos planos | ✅ |
-| PrismaClient sin singleton | Sí | No | ✅ |
-| Validación de UUID en params | No | Sí (`validateId`) | ✅ |
-| Regresiones funcionales | — | 1 (R1: sin includes) | +1 menor |

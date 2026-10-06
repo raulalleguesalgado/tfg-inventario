@@ -1,47 +1,22 @@
-# Análisis estático — SonarCloud, conjunto completo backend + frontend (Fase 4A.1)
+# Análisis estático — SonarCloud, conjunto completo backend + frontend
 
-**Fecha:** 2026-07-12
 **Herramienta:** SonarCloud (SonarQube Cloud)
 **Código analizado:** `src/` (backend, prompts básicos 01-08 + correcciones C1-C17) y
-`frontend/src/`
-**Comparativa con:** `docs/analisis_estatico_basico.md` (2026-04-07, solo backend)
+`frontend/src/`, commit `a97799a`
+**Comparativa con:** `docs/analisis_estatico_basico.md` (solo backend)
 
 ---
 
-## Comandos / consultas usadas para extraer los resultados
+## Cómo se obtuvieron los resultados
 
-El proyecto es privado, así que la API pública no autenticada no sirve. Se generó un
-token de solo consulta (distinto del usado en el secreto de CI, revocado tras esta
-sesión) y se consultó directamente vía la API REST de SonarCloud: métricas globales
-(`measures/component`, con las claves de bugs, vulnerabilities, code smells, hotspots,
-cobertura, duplicación, ncloc, complejidad y ratings), issues (`issues/search`, filtrado
-por `BUG,VULNERABILITY,CODE_SMELL`), Security Hotspots (`hotspots/search`) y el estado del
-Quality Gate con sus condiciones (`qualitygates/project_status`).
-
-**Salida real de `qualitygates/project_status`** (respalda directamente la tabla "Quality
-Gate — por qué falla" más abajo):
-
-```json
-{
-  "projectStatus": {
-    "status": "ERROR",
-    "conditions": [
-      {"status":"OK","metricKey":"new_reliability_rating","comparator":"GT","errorThreshold":"1","actualValue":"1"},
-      {"status":"ERROR","metricKey":"new_security_rating","comparator":"GT","errorThreshold":"1","actualValue":"2"},
-      {"status":"OK","metricKey":"new_maintainability_rating","comparator":"GT","errorThreshold":"1","actualValue":"1"},
-      {"status":"ERROR","metricKey":"new_coverage","comparator":"LT","errorThreshold":"80","actualValue":"0.0"},
-      {"status":"OK","metricKey":"new_duplicated_lines_density","comparator":"GT","errorThreshold":"3","actualValue":"0.0"},
-      {"status":"ERROR","metricKey":"new_security_hotspots_reviewed","comparator":"LT","errorThreshold":"100","actualValue":"0.0"}
-    ]
-  }
-}
-```
+Con la API REST de SonarCloud (`measures/component`, `issues/search`, `hotspots/search`,
+`qualitygates/project_status`).
 
 ---
 
 ## Métricas globales
 
-| Métrica | Valor | Básico (2026-04-07, solo backend) |
+| Métrica | Valor | Básico (solo backend) |
 |---------|-------|-------------------------------------|
 | Quality Gate | **Failed** | Failed |
 | Bugs | 0 | 0 |
@@ -53,14 +28,13 @@ Gate — por qué falla" más abajo):
 | Maintainability Rating | 1.0 (A) | A |
 | Coverage | 0.0% | 0.0% |
 | Duplications | 0.0% | 0.0% |
-| Complejidad ciclomática | 263 | 107 ¹ |
-| Líneas de código (ncloc) | 1607 | 793 ¹ (solo backend) |
-| Deuda técnica (sqale_index) | 222 min | 65 min ¹ |
+| Complejidad ciclomática | 263 | 107 |
+| Líneas de código (ncloc) | 1607 | 793 |
+| Deuda técnica (sqale_index) | 222 min | 65 min |
 
-¹ No se anotaron en `analisis_estatico_basico.md`. Sacadas el 2026-09-24 del historial de
-SonarCloud (`measures/search_history`, análisis del 2026-04-07). Antes esta tabla ponía
-"~967 líneas" para el básico: 967 es la métrica `lines` (cuenta comentarios y líneas en
-blanco), no `ncloc`. La comparable con las 1607 de la ronda completa es 793.
+La complejidad, las líneas de código y la deuda técnica del básico se sacaron del historial de
+SonarCloud (`measures/search_history`). Las 793 líneas son `ncloc` (solo código); las 967 del
+informe básico son `lines`, que cuenta también comentarios y líneas en blanco.
 
 ---
 
@@ -78,11 +52,7 @@ export const login = async (email, password) => {
 };
 ```
 
-El JWT recibido de la API (dato de red, "tainted" para SonarCloud) se guarda directamente
-en `localStorage` sin ninguna capa adicional — patrón pedido explícitamente en el
-`[CONTEXT]` de los prompts de frontend (*"Auth: JWT token in localStorage"*), no una
-elección espontánea del LLM. Se mantiene sin corregir deliberadamente, documentado como
-**S6** en `docs/correcciones_minimas.md`.
+Es la vulnerabilidad **S6** (ver `docs/vulnerabilidades_pentesting.md`).
 
 ---
 
@@ -103,14 +73,10 @@ elección espontánea del LLM. Se mantiene sin corregir deliberadamente, documen
 | `src/middlewares/auth.middleware.js` | 12 | Minor | S6582 | Preferir optional chaining (`?.`) |
 | `src/routes/category.routes.js` | 32 | Minor | S2486 | `catch` que no maneja ni relanza la excepción |
 
-**Nota sobre S1481 (auth.service.js, x2):** mismo falso positivo ya documentado en el
-análisis básico (CS2) — es el patrón `{ passwordHash: _, ...rest }` para excluir el hash
-de la respuesta, SonarCloud no reconoce la semántica de destructuring-para-descartar.
+**S1481 (x2):** el mismo falso positivo del análisis básico (CS2), el destructuring que excluye `passwordHash` de la respuesta.
 
-**Nota sobre S2486 (catch vacíos, x3 ahora — antes x1):** el mismo patrón de calidad ya
-señalado en el análisis básico (CS1) aparece ahora también dos veces en el frontend
-(`Dashboard.jsx`, `auth.js`) — consistente con el hallazgo de que el manejo de errores es
-un punto débil recurrente del código generado en este proyecto, tanto en backend como frontend.
+**S2486 (x3):** el `catch` que no gestiona la excepción del análisis básico (CS1) aparece ahora
+también dos veces en el frontend (`Dashboard.jsx`, `auth.js`).
 
 ---
 

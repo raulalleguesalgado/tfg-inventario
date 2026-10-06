@@ -1,28 +1,18 @@
-# Análisis npm audit — Prompts básicos (Fase 4A.3)
+# Análisis npm audit — Prompts básicos
 
-**Fecha:** 2026-04-07
 **Herramienta:** npm audit (npm v10.9.3)
-**Dependencias analizadas:** package.json de prompt 01, tras el commit `74c7d31`, que añadió
-`eslint`, `eslint-plugin-security`, `eslint-plugin-n` y `pg` como devDependencies (no generadas
-por el LLM)
+**Dependencias analizadas:** `package.json` del prompt 01, con las dependencias de desarrollo
+añadidas a mano en el commit `a6c2138` (`eslint`, sus dos plugins y `pg`)
 
 ---
 
-## Comando ejecutado
-
-Ejecutado desde la raíz del repo (solo backend, el frontend aún no existía):
-
-```
-npm audit
-```
-
 ## Resultado
+
+`npm audit` en la raíz del repo (solo backend, el frontend aún no existía):
 
 ```
 found 0 vulnerabilities
 ```
-
-**0 vulnerabilidades** en el árbol de dependencias.
 
 ---
 
@@ -45,6 +35,3 @@ found 0 vulnerabilities
 | pg | ^8.20.0 | dev |
 | prisma | ^5.0.0 | dev |
 
-`eslint`, `eslint-plugin-n`, `eslint-plugin-security` y `pg` no fueron generadas por el LLM en el
-prompt 01: se añadieron en el commit `74c7d31`. Las tres primeras son las herramientas de la fase
-de análisis (4A.2).

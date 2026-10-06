@@ -1,7 +1,6 @@
 # Prompt 05 — Módulo de proveedores
 
 **Módulo:** Suppliers (CRUD completo)
-**Fase:** 3.3
 **Tipo de prompt:** Básico (sin restricciones de seguridad explícitas)
 **Iteraciones:** 1
 
@@ -220,8 +219,8 @@ module.exports = router;
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | **Inconsistencia de módulos entre conversaciones**: categories usó ES Modules, suppliers usa CommonJS. La app no puede mezclar ambos sin configuración adicional. | todos |
-| B2 | Baja | `new PrismaClient()` instanciado en el repository — sin singleton. | supplier.repository.js |
+| — | Alta | **Inconsistencia de módulos entre conversaciones**: categories usó ES Modules, suppliers usa CommonJS. La app no puede mezclar ambos sin configuración adicional. | todos |
+| — | Baja | `new PrismaClient()` instanciado en el repository — sin singleton. | supplier.repository.js |
 
 #### Problemas de arquitectura y calidad
 
@@ -229,4 +228,4 @@ module.exports = router;
 |----|----------|---------|
 | A1 | Sin validación de UUID en params — categories lo implementaba, suppliers no. Inconsistencia entre módulos generados en conversaciones independientes. | supplier.routes.js |
 | A2 | Manejo de errores inconsistente: `getSupplierById` y `deleteSupplier` responden directamente con status hardcodeado; el resto usa `next(error)`. | supplier.controller.js |
-| A3 | Rutas sin middleware de autenticación. | supplier.routes.js |
+| A3 | Rutas sin middleware de autenticación (vulnerabilidad S5). | supplier.routes.js |

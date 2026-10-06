@@ -41,8 +41,7 @@ export default function Suppliers() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // CORRECCIÓN MÍNIMA C15: email vacío se omite en vez de enviarse como ''
-      // (Zod .email().optional() rechaza '' aunque el campo sea opcional)
+      // Corrección mínima C15: el email vacío se omite en vez de enviarse como ''.
       const payload = { ...formData, email: formData.email || undefined };
       if (editingId) {
         await apiClient.put(`/suppliers/${editingId}`, payload);

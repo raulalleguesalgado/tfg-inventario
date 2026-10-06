@@ -1,7 +1,6 @@
 # Prompt 09D — Frontend: Registro de movimientos de stock
 
 **Módulo:** Frontend — Movements (selector de producto, registro de movimiento, historial)
-**Fase:** 3.5
 **Tipo de prompt:** Único, con [RULES] de estilo e integración, sin restricciones de seguridad (sin comparativa básico/refinado)
 **Iteraciones:** 1
 **Prompt anterior:** `09_frontend_products.md`
@@ -225,29 +224,15 @@ export default App;
 
 ## Análisis
 
-### Lo que el LLM generó correctamente
-
-| Requisito | Estado | Detalle |
-|-----------|--------|---------|
-| Selector de producto con stock visible | ✅ | `{p.name} (Stock: {p.currentStock})` |
-| Historial se recarga al cambiar de producto | ✅ | `handleProductChange` llama a `fetchHistory` |
-| Formulario deshabilitado sin producto seleccionado | ✅ | `disabled={!selectedProductId}` en todos los campos y el submit |
-| Refresco de productos + historial tras registrar | ✅ | `Promise.all([fetchData(), fetchHistory(selectedProductId)])` — el stock mostrado se actualiza |
-| Manejo de errores sin crash, mensaje inline (no `alert()`) | ✅ | Más consistente con Login/Register/Dashboard que el prompt de Products |
-| Sin validación de stock en cliente | ✅ | Delega enteramente en el servidor, tal y como pedía `[RULES]` |
-| Botón submit deshabilitado durante `loading` | ✅ | Extra no solicitado explícitamente, evita doble envío |
-
 ### Problemas detectados
 
 | ID | Severidad | Problema | Fichero |
 |----|-----------|----------|---------|
-| B1 | Alta | **App.jsx reescrito desde cero — cuarta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products` y los placeholders de Categories/Suppliers. Solo sobrevive `/movements`, sin siquiera un catch-all esta vez. | App.jsx |
-| F1 | Info | `<table border="1">` — mismo uso del atributo HTML obsoleto ya visto en `Products.jsx` (F2 de 09C), en vez de estilos inline. | Movements.jsx |
-| F2 | Info | El `[CONTEXT]` pide React 18/React Router v6, pero `frontend/package.json` real fija React `^19.2.7` y `react-router-dom` `^7.18.1` desde el scaffold inicial — ver F5 de `09_frontend_setup.md` para el detalle. Sin impacto funcional. | package.json |
+| — | Alta | **App.jsx reescrito desde cero — cuarta ocurrencia consecutiva del Patrón 8.** Elimina `AuthProvider`, `ProtectedRoute`, `Navbar`, `Login`, `Register`, `Dashboard`, `Products` y los placeholders de Categories/Suppliers. Solo sobrevive `/movements`, sin siquiera un catch-all esta vez. | App.jsx |
 
-### Hallazgo adicional — mensaje de error genérico en el backend (no corregido)
+### Hallazgo adicional en el backend (Q1, no corregido)
 
-`movement.controller.js` hardcodea `message: 'Failed to record movement'` en el catch en vez de devolver el motivo real (p. ej. "Insufficient stock"), inconsistente con `auth.controller.js`/`product.controller.js`. No corregido — documentado para la Fase 4A.
+`movement.controller.js` hardcodea `message: 'Failed to record movement'` en el catch en vez de devolver el motivo real (p. ej. "Insufficient stock"), inconsistente con `auth.controller.js`/`product.controller.js`. Es el hallazgo de calidad Q1 de `docs/correcciones_minimas.md`.
 
 ### Correcciones mínimas
 
