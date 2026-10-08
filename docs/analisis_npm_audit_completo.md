@@ -19,7 +19,7 @@ se había instalado de cada paquete señalado.
 4 moderate severity vulnerabilities
 ```
 
-| Paquete | Rango afectado | Severidad | Vía | Advisory |
+| Paquete | Rango afectado | Severidad | Llega a través de | Aviso (GHSA) |
 |---------|---------------|-----------|-----|----------|
 | `brace-expansion` | 5.0.2 - 5.0.5 | Moderate | `eslint` → `minimatch` (devDependency) | GHSA-jxxr-4gwj-5jf2 — DoS: rango numérico grande evade la protección `max` documentada |
 | `qs` | 6.11.1 - 6.15.1 | Moderate | `express` → `body-parser` (dependencia directa) | GHSA-q8mj-m7cp-5q26 — `qs.stringify` puede lanzar TypeError no controlado con entradas null/undefined en arrays formato "comma" |
@@ -50,7 +50,3 @@ found 0 vulnerabilities
 
 **Severidad práctica:** baja. Pueden dejar el servidor sin responder en casos muy concretos,
 pero no permiten ejecutar código ni robar datos.
-
-**Ver también:** `docs/tercera_ronda_comprobacion.md`, sección 1. Con el mismo código, los
-avisos pasaron de 2 a 14 en la tercera ronda. Allí se analiza cuáles llegan a producción (`qs`,
-`body-parser`, `react-router`) y por qué el de `react-router` no es explotable aquí.

@@ -48,12 +48,8 @@ proceso, la concurrencia es algo mayor que en el ataque por HTTP de la ronda com
 - **Refinado:** cada transacción lee `currentStock = 10`, calcula 7 y lo escribe encima de
   la anterior (actualizaciones perdidas). El stock no llega a ser negativo, pero deja de
   cuadrar con los movimientos registrados: se registran 24 unidades de salida y solo se
-  descuentan 3. El stock final no es siempre el mismo porque depende de cómo coincidan las
-  transacciones en el tiempo (lo mismo que se ve en S3 en `docs/tercera_ronda_comprobacion.md`,
-  "S3 con repeticiones"). Con 7, todas leyeron 10; con 4, al menos una leyó el stock cuando
-  otra ya había escrito 7 (10 → 7 → 4).
-- **Básico:** mismo fallo que en la ronda completa (allí 6 de 8 aceptadas y stock −8 por HTTP;
-  aquí más, porque las llamadas salen más a la vez).
+  descuentan 3. El stock final varía (7 o 4) según cómo coincidan las transacciones.
+- **Básico:** mismo fallo que en la ronda completa, con más aceptadas porque las llamadas salen más a la vez.
 - **Control:** correcto en todas las ejecuciones, lo que valida la prueba.
 
 Salidas completas: `docs/prueba_concurrencia/race_output.txt` y `control_output.txt`.
@@ -64,9 +60,7 @@ La condición de carrera **no** está corregida en el módulo refinado. El model
 regla del prompt al pie de la letra, pero la regla era insuficiente: pedía una transacción,
 y hacía falta una actualización condicionada (o `SELECT ... FOR UPDATE`, o aislamiento
 `SERIALIZABLE`). S3 es la única vulnerabilidad de severidad alta que el refinado no
-elimina pese a tener una regla para ella. La otra que sigue en los módulos refinados, S8
-en productos (ya solo para ADMIN), no la cubría ninguna regla
-(`docs/vulnerabilidades_pentesting.md`).
+elimina pese a tener una regla para ella.
 
 ## Cómo repetirla
 

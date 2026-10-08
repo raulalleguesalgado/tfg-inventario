@@ -36,15 +36,11 @@ app.use((err, req, res, next) => {
 });
 ```
 
-**Confirmado que sigue activo:** el `.env` real del proyecto tiene `NODE_ENV=development`,
-por lo que esta condición se cumple en el entorno de pruebas actual. Con `NODE_ENV=production`
-desaparece el stack trace, pero no toda la fuga: el handler devuelve siempre `err.message`,
-y los errores de Prisma llevan detalles internos. En una prueba con Prisma 5.22, el mensaje
-mostraba en desarrollo la ruta y el código que falló, y en producción, por ejemplo, la
-dirección de la base de datos si no era accesible. Además, los controllers que responden
-desde su propio `catch` (Patrón 5) devuelven el mensaje de la excepción sea cual sea el
-entorno. El stack trace depende de la configuración del entorno de pruebas, pero el resto
-de la fuga está en el código generado.
+**Sigue activo:** el `.env` del proyecto tiene `NODE_ENV=development`. Pasar a `production`
+solo quita el stack trace: el handler devuelve siempre `err.message`, que en los errores de
+Prisma lleva detalles internos (en una prueba con Prisma 5.22, la ruta y el código que falló,
+o la dirección de la base de datos si no era accesible). Los controllers que responden desde
+su propio `catch` (Patrón 5) también devuelven el mensaje de la excepción en cualquier entorno.
 
 ---
 
@@ -92,7 +88,5 @@ se devuelve al cliente (destructuring `{ passwordHash: _, ...userWithoutPassword
 
 ## Hallazgos de calidad
 
-Durante esta revisión salieron dos configuraciones fijadas en el código, documentadas en
-`docs/correcciones_minimas.md`: **Q2** (`JWT_EXPIRES_IN` declarado en el entorno pero nunca
-leído, la expiración está fija a `'1d'`) y **Q3** (`baseURL` del frontend fija en el código).
-Ninguna es una vulnerabilidad, así que no se corrigen.
+Esta revisión encontró Q2 y Q3, dos configuraciones fijadas en el código y no
+vulnerabilidades (detalle en `docs/correcciones_minimas.md`).

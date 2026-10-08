@@ -233,31 +233,31 @@ module.exports = {
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| S2 | JWT secret con fallback hardcoded `\|\| 'supersecret'` | ✅ Corregido | `if (!process.env.JWT_SECRET) throw new Error(...)` en tiempo de carga del módulo — la app no arranca sin la variable de entorno |
-| S1 | Rol auto-asignable desde el body de la petición | ✅ Corregido | `role: 'OPERATOR'` hardcoded en el service — el campo `role` del body es ignorado completamente |
-| — | Password mínimo 6 caracteres | ✅ Corregido | `z.string().min(8)` en ambos schemas |
+| S2 | JWT secret con fallback hardcoded `\|\| 'supersecret'` | Corregido | `if (!process.env.JWT_SECRET) throw new Error(...)` en tiempo de carga del módulo — la app no arranca sin la variable de entorno |
+| S1 | Rol auto-asignable desde el body de la petición | Corregido | `role: 'OPERATOR'` hardcoded en el service — el campo `role` del body es ignorado completamente |
+| — | Password mínimo 6 caracteres | Corregido | `z.string().min(8)` en ambos schemas |
 
 ### Bugs del prompt básico — estado en el refinado
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| B2 | `z.zod.object()` — sintaxis incorrecta | ✅ Corregido | Usa `z.object()` correctamente |
-| — | Mezcla CommonJS / ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
-| — | PrismaClient sin singleton | ✅ Corregido | Singleton exportado desde `src/config/prisma.js` e importado en el repository |
+| B2 | `z.zod.object()` — sintaxis incorrecta | Corregido | Usa `z.object()` correctamente |
+| — | Mezcla CommonJS / ES Modules | Corregido | 100% CommonJS en todos los ficheros |
+| — | PrismaClient sin singleton | Corregido | Singleton exportado desde `src/config/prisma.js` e importado en el repository |
 
 ### Problemas de arquitectura del prompt básico — estado en el refinado
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| A1 | Controller responde directamente en catch, bypaseando middleware de errores | ✅ Corregido | Ambos controllers usan `next(err)` |
-| A2 | Formato de respuesta no estándar | ✅ Corregido | Todas las respuestas siguen `{ success, data, error, message }` |
-| A3 | Errores genéricos `new Error('...')` sin tipo ni status | ✅ Corregido | El service crea errores con `.status` adjunto (`error.status = 401`) — el middleware global puede usar este campo para determinar el código HTTP |
+| A1 | Controller responde directamente en catch, bypaseando middleware de errores | Corregido | Ambos controllers usan `next(err)` |
+| A2 | Formato de respuesta no estándar | Corregido | Todas las respuestas siguen `{ success, data, error, message }` |
+| A3 | Errores genéricos `new Error('...')` sin tipo ni status | Corregido | El service crea errores con `.status` adjunto (`error.status = 401`) — el middleware global puede usar este campo para determinar el código HTTP |
 
 ### Gap cubierto
 
 | Gap | Estado | Detalle |
 |-----|--------|---------|
-| `src/middlewares/auth.middleware.js` no existía (ningún prompt básico lo generó) | ✅ Generado | Incluye `authenticate` (verifica JWT, adjunta `req.user`) y `authorize(...roles)` (verifica permisos por rol) |
+| `src/middlewares/auth.middleware.js` no existía (ningún prompt básico lo generó) | Generado | Incluye `authenticate` (verifica JWT, adjunta `req.user`) y `authorize(...roles)` (verifica permisos por rol) |
 
 ### Nuevos problemas detectados en el refinado
 

@@ -216,11 +216,11 @@ module.exports = router;
 
 | ID | Descripción (básico) | Estado en refinado | Detalle |
 |----|---------------------|-------------------|---------|
-| — | ES Modules | ✅ Corregido | 100% CommonJS en todos los ficheros |
-| — | Exportación con clases | ✅ Corregido | Objetos planos con `module.exports` en todos los módulos |
-| — | PrismaClient sin singleton | ✅ Corregido | `require('../config/prisma')` — reutiliza la instancia del auth refinado |
-| A1 | Sin validación de UUID en params | ✅ Corregido | `validateId` middleware con `idSchema = z.object({ id: z.string().uuid() })` |
-| S5 | Rutas sin autenticación | ✅ Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
+| — | ES Modules | Corregido | 100% CommonJS en todos los ficheros |
+| — | Exportación con clases | Corregido | Objetos planos con `module.exports` en todos los módulos |
+| — | PrismaClient sin singleton | Corregido | `require('../config/prisma')` — reutiliza la instancia del auth refinado |
+| A1 | Sin validación de UUID en params | Corregido | `validateId` middleware con `idSchema = z.object({ id: z.string().uuid() })` |
+| S5 | Rutas sin autenticación | Corregido | `router.use(authenticate)` aplica autenticación a todas las rutas del router; `authorize('ADMIN')` en POST, PUT y DELETE |
 
 **Nota (revisado 2026-10-01):** el refinado no corrige S8 (bypass del flujo de auditoría de
 stock, `docs/vulnerabilidades_pentesting.md`). `productSchema` sigue incluyendo

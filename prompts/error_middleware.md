@@ -109,8 +109,8 @@ module.exports = errorMiddleware;
 | Origen del error | Ejemplo | Código HTTP resultante |
 |-----------------|---------|----------------------|
 | `auth.service.js` — credenciales inválidas | `err.status = 401` | 401 |
-| `movement.service.js` — stock insuficiente | `err.message = 'INSUFFICIENT_STOCK'`, sin `err.status` | 500 ⚠️ |
-| `movement.service.js` — producto no encontrado | `err.message = 'PRODUCT_NOT_FOUND'`, sin `err.status` | 500 ⚠️ |
+| `movement.service.js` — stock insuficiente | `err.message = 'INSUFFICIENT_STOCK'`, sin `err.status` | 500 |
+| `movement.service.js` — producto no encontrado | `err.message = 'PRODUCT_NOT_FOUND'`, sin `err.status` | 500 |
 | Prisma — email duplicado en register | `PrismaClientKnownRequestError P2002` | 409 |
 | Prisma — registro no encontrado | `PrismaClientKnownRequestError P2025` | 404 |
 | Error no clasificado | cualquier otro | 500 |
