@@ -1,0 +1,1190 @@
+{
+  "total": 68,
+  "p": 1,
+  "ps": 500,
+  "events": [
+    {
+      "date": "2026-09-09T09:39:31+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9379",
+      "ruleName": "DOM elements should not use the \"autofocus\" attribute",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-28T15:23:44+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S9073",
+      "ruleName": "Composite assertions should be split",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-28T15:23:42+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S2925",
+      "ruleName": "Fixed waits should not be used in tests",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-28T15:23:38+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S4140",
+      "ruleName": "Sparse arrays should not be created with extra commas",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-28T15:23:35+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S9012",
+      "ruleName": "Snapshots should not be generated inside Testing Library async utilities",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-28T15:23:33+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9339",
+      "ruleName": "Native APIs should be preferred over Axios utility methods",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-08-28T15:22:59+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9162",
+      "ruleName": "Cypress assertions should be retryable",
+      "cleanCodeAttribute": "TESTED",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-28T15:22:17+0000",
+      "action": "UPDATED",
+      "ruleKey": "javascript:S8951",
+      "ruleName": "Vue component props should not be mutated directly",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "impactChanges": [
+          {
+            "oldSoftwareQuality": "MAINTAINABILITY",
+            "newSoftwareQuality": "RELIABILITY",
+            "oldSeverity": "MEDIUM",
+            "newSeverity": "MEDIUM"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-08-19T17:55:48+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S5976",
+      "ruleName": "Similar tests should be grouped in a single Parameterized test",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-19T17:55:39+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S5906",
+      "ruleName": "The most specific assertion should be used",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-19T17:54:37+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S8754",
+      "ruleName": "Test titles should be unique within the same suite",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-14T09:04:36+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S8960",
+      "ruleName": "Test and hook callbacks should use a single completion style",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-08-14T09:04:31+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9333",
+      "ruleName": "Synchronous Testing Library queries should not be awaited",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:04:25+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9144",
+      "ruleName": "Native APIs should be preferred over jQuery utility methods",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:04:19+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9145",
+      "ruleName": "Vue components should not use the deprecated \"vue-class-component\" or \"vue-property-decorator\" libraries",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:04:14+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9135",
+      "ruleName": "Nested properties of Lodash and Underscore.js clone results should not be mutated",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:04:10+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9153",
+      "ruleName": "Testing Library disappearance waits should use non-throwing queries",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:04:04+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9150",
+      "ruleName": "Vue components should not use mixins",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:03:53+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9163",
+      "ruleName": "Reactive state should not be unconditionally mutated inside Vue's \"updated\" lifecycle hook",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:03:47+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9169",
+      "ruleName": "vi.mock should be declared at module scope",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-14T09:02:29+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9332",
+      "ruleName": "Playwright \"networkidle\" waits should not be used",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-07T15:32:13+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9114",
+      "ruleName": "Lodash and Underscore.js debounced or throttled functions should not be recreated on every React render",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-08-07T15:31:18+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9115",
+      "ruleName": "Promises returned by Testing Library async events should be handled",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:40+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S6440",
+      "ruleName": "React Hooks should be properly called",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-29T13:38:37+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9107",
+      "ruleName": "Vue component prop types should be constructors",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:35+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9128",
+      "ruleName": "Vue component field names should not be duplicated",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:33+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9078",
+      "ruleName": "Parameterized tests should not contain duplicate test cases",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:31+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9072",
+      "ruleName": "Synchronous exception assertions should receive synchronous callbacks",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:29+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9073",
+      "ruleName": "Composite assertions should be split",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-29T13:38:29+0000",
+      "action": "UPDATED",
+      "ruleKey": "javascript:S2004",
+      "ruleName": "Functions should not be nested too deeply",
+      "cleanCodeAttribute": "FOCUSED",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "CRITICAL",
+        "max": "5"
+      }
+    },
+    {
+      "date": "2026-07-29T13:37:41+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8998",
+      "ruleName": "Parameterized tests should not have empty datasets",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:38:09+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9011",
+      "ruleName": "\"<button>\" elements should have a valid \"type\" attribute, explicitly set when associated with a \"<form>\"",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:38:04+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9012",
+      "ruleName": "Snapshots should not be generated inside Testing Library async utilities",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:38:00+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9020",
+      "ruleName": "Use \"find*\" to query Testing Library elements that may not be available yet",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:55+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9019",
+      "ruleName": "Vue refs should not be used as operands",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:50+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9025",
+      "ruleName": "Asynchronous actions should not be used in Vue computed properties",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:45+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9026",
+      "ruleName": "Promises returned by Testing Library async queries should be handled",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:40+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S9027",
+      "ruleName": "Testing Library queries should match presence assertions",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:34+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8968",
+      "ruleName": "Tests should be skipped explicitly",
+      "cleanCodeAttribute": "TESTED",
+      "cleanCodeAttributeCategory": "ADAPTABLE",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:29+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8980",
+      "ruleName": "React Testing Library calls should not be wrapped in \"act()\"",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:24+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8990",
+      "ruleName": "Promises should not be passed to \"fireEvent\"",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:20+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8985",
+      "ruleName": "Side effects should not be performed inside \"waitFor\" callbacks",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:14+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8987",
+      "ruleName": "\"v-if\" and \"v-for\" should not be used on the same element",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:09+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8988",
+      "ruleName": "Side effects should not be performed inside Vue computed properties",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:37:03+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8981",
+      "ruleName": "Regular expressions used in Testing Library queries should not have the global flag",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:36:58+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8982",
+      "ruleName": "HTML elements with v-for should have a :key attribute",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-17T12:36:13+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8984",
+      "ruleName": "Vue v-for directives should be valid",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-08T14:58:22+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8959",
+      "ruleName": "UI test debug commands should not be committed to version control",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-08T14:58:16+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8967",
+      "ruleName": "Inline snapshots should not contain interpolations",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-08T14:58:09+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8960",
+      "ruleName": "Test and hook callbacks should use a single completion style",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-08T14:57:19+0000",
+      "action": "UPDATED",
+      "ruleKey": "javascript:S6582",
+      "ruleName": "Optional chaining should be preferred",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-08T14:56:09+0000",
+      "action": "UPDATED",
+      "ruleKey": "javascript:S6582",
+      "ruleName": "Optional chaining should be preferred",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "impactChanges": [
+          {
+            "oldSoftwareQuality": "MAINTAINABILITY",
+            "newSoftwareQuality": "MAINTAINABILITY",
+            "oldSeverity": "MEDIUM",
+            "newSeverity": "LOW"
+          }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:59+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S6766",
+      "ruleName": "JSX special characters should be escaped",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-06T09:06:52+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S6774",
+      "ruleName": "React components should validate prop types",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-06T09:06:48+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S7764",
+      "ruleName": "Use \"globalThis\" instead of \"window\", \"self\", or \"global\"",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-06T09:06:44+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S7735",
+      "ruleName": "Negated conditions should be avoided when an else clause is present",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-06T09:06:39+0000",
+      "action": "DEACTIVATED",
+      "ruleKey": "javascript:S7748",
+      "ruleName": "Number literals should not have unnecessary decimal points or trailing zeros",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {}
+    },
+    {
+      "date": "2026-07-06T09:06:37+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S5976",
+      "ruleName": "Similar tests should be grouped in a single Parameterized test",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:32+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8907",
+      "ruleName": "Native APIs should be preferred over Lodash and Underscore.js methods",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:30+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8927",
+      "ruleName": "Default imports from modular utility libraries should not be used",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:26+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8932",
+      "ruleName": "Lodash and Underscore.js `memoize` calls on functions with multiple parameters should use an explicit cache key function",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "HIGH"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:23+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8957",
+      "ruleName": "Vue component props should declare a type",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:20+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8950",
+      "ruleName": "Vue props with a default value should not be required",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "params": {
+        "severity": "MINOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:17+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8951",
+      "ruleName": "Vue component props should not be mutated directly",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:12+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8961",
+      "ruleName": "Vue component events should be explicitly declared",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:08+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8784",
+      "ruleName": "Assertions should be placed inside test cases or hooks",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:06:04+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S8785",
+      "ruleName": "Tests should not be registered asynchronously in suite callbacks",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    },
+    {
+      "date": "2026-07-06T09:04:46+0000",
+      "action": "ACTIVATED",
+      "ruleKey": "javascript:S2925",
+      "ruleName": "Fixed waits should not be used in tests",
+      "cleanCodeAttribute": "COMPLETE",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "params": {
+        "severity": "MAJOR"
+      }
+    }
+  ]
+}

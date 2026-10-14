@@ -1,0 +1,714 @@
+{
+  "total": 13,
+  "p": 1,
+  "ps": 100,
+  "paging": {
+    "pageIndex": 1,
+    "pageSize": 100,
+    "total": 13
+  },
+  "effortTotal": 242,
+  "debtTotal": 242,
+  "issues": [
+    {
+      "key": "AZ9W6REgjHgpYy_ELUB4",
+      "rule": "javascript:S6853",
+      "severity": "MAJOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Categories.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 69,
+      "hash": "4d328d07aa68136df917f540d1d23618",
+      "textRange": {
+        "startLine": 69,
+        "endLine": 69,
+        "startOffset": 13,
+        "endOffset": 18
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "A form label must be associated with a control.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "accessibility",
+        "react"
+      ],
+      "creationDate": "2026-07-12T14:10:55+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6REgjHgpYy_ELUB5",
+      "rule": "javascript:S6853",
+      "severity": "MAJOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Categories.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 73,
+      "hash": "d7f28e673cc3184de2dc221cbaeb7ec5",
+      "textRange": {
+        "startLine": 73,
+        "endLine": 73,
+        "startOffset": 13,
+        "endOffset": 18
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "A form label must be associated with a control.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "accessibility",
+        "react"
+      ],
+      "creationDate": "2026-07-12T14:10:55+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "LOGICAL",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RG0jHgpYy_ELUB6",
+      "rule": "javascript:S7773",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Movements.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 59,
+      "hash": "6506480177d2fe97656a4336d2b0d521",
+      "textRange": {
+        "startLine": 59,
+        "endLine": 59,
+        "startOffset": 18,
+        "endOffset": 26
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer `Number.parseInt` over `parseInt`.",
+      "effort": "2min",
+      "debt": "2min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "convention",
+        "editable-source",
+        "es2015"
+      ],
+      "creationDate": "2026-07-10T10:53:42+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "RELIABILITY",
+          "severity": "MEDIUM"
+        },
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RHxjHgpYy_ELUB-",
+      "rule": "javascript:S7776",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/components/ProductForm.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 24,
+      "hash": "370f006e84681bfe5e36d15e63f07079",
+      "textRange": {
+        "startLine": 24,
+        "endLine": 24,
+        "startOffset": 10,
+        "endOffset": 23
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "`numericFields` should be a `Set`, and use `numericFields.has()` to check existence or non-existence.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "editable-source",
+        "es2015",
+        "optimization",
+        "performance"
+      ],
+      "creationDate": "2026-07-10T10:53:36+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RHGjHgpYy_ELUB7",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Dashboard.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 22,
+      "hash": "9dcd66fc3d98a347c205c43e822e7ebd",
+      "textRange": {
+        "startLine": 22,
+        "endLine": 24,
+        "startOffset": 8,
+        "endOffset": 7
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception, don't catch it at all, or explain in a comment why it is ignored.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-07-10T09:40:13+0000",
+      "updateDate": "2026-09-23T09:42:01+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "d232bfb7-eac9-4ac1-b723-80b0f2807ecc",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RHfjHgpYy_ELUB9",
+      "rule": "jssecurity:S8475",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/api/auth.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 5,
+      "hash": "fc492af7fcdf2295e7e82edf34dea2e4",
+      "textRange": {
+        "startLine": 5,
+        "endLine": 5,
+        "startOffset": 15,
+        "endOffset": 22
+      },
+      "flows": [
+        {
+          "locations": [
+            {
+              "component": "raulalleguesalgado_tfg-inventario:frontend/src/api/auth.js",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 15,
+                "endOffset": 22
+              },
+              "msg": "Sink: this invocation is not safe; a malicious value can be used as argument"
+            },
+            {
+              "component": "raulalleguesalgado_tfg-inventario:frontend/src/api/auth.js",
+              "textRange": {
+                "startLine": 5,
+                "endLine": 5,
+                "startOffset": 42,
+                "endOffset": 47
+              },
+              "msg": "Source: when this remote server gets compromised, this response will contain malicious data"
+            }
+          ]
+        }
+      ],
+      "status": "OPEN",
+      "message": "Browser Storage Poisoning via unsanitized user input",
+      "effort": "20min",
+      "debt": "20min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "cwe"
+      ],
+      "creationDate": "2026-07-10T09:40:03+0000",
+      "updateDate": "2026-09-23T09:42:01+0000",
+      "type": "VULNERABILITY",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "TRUSTWORTHY",
+      "cleanCodeAttributeCategory": "RESPONSIBLE",
+      "impacts": [
+        {
+          "softwareQuality": "SECURITY",
+          "severity": "HIGH"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "d232bfb7-eac9-4ac1-b723-80b0f2807ecc",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RHfjHgpYy_ELUB8",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/api/auth.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 23,
+      "hash": "550051ee6b000602ffe414172dfff76d",
+      "textRange": {
+        "startLine": 23,
+        "endLine": 25,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception, don't catch it at all, or explain in a comment why it is ignored.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-07-10T09:40:03+0000",
+      "updateDate": "2026-09-23T09:42:01+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "d232bfb7-eac9-4ac1-b723-80b0f2807ecc",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RIKjHgpYy_ELUB_",
+      "rule": "javascript:S6481",
+      "severity": "MAJOR",
+      "component": "raulalleguesalgado_tfg-inventario:frontend/src/context/AuthContext.jsx",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 35,
+      "hash": "d520e20b189acef6cedd4774707e2833",
+      "textRange": {
+        "startLine": 35,
+        "endLine": 35,
+        "startOffset": 33,
+        "endOffset": 65
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "The object passed as the value prop to the Context provider changes every render. To fix this consider wrapping it in a useMemo hook.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "jsx",
+        "performance",
+        "react"
+      ],
+      "creationDate": "2026-07-10T09:40:03+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "EFFICIENT",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RI2jHgpYy_ELUCA",
+      "rule": "javascript:S1481",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:src/services/auth.service.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 47,
+      "hash": "9ac98d55eb6a870f8f77f5fd31248dfb",
+      "textRange": {
+        "startLine": 47,
+        "endLine": 47,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the declaration of the unused '_' variable.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "editable-source",
+        "unused"
+      ],
+      "creationDate": "2026-07-10T09:38:55+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ9W6RKVjHgpYy_ELUCB",
+      "rule": "javascript:S6582",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:src/middlewares/auth.middleware.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 12,
+      "hash": "b95d92c73e979619da523a9373e89e4e",
+      "textRange": {
+        "startLine": 12,
+        "endLine": 12,
+        "startOffset": 6,
+        "endOffset": 54
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer using an optional chain expression instead, as it's more concise and easier to read.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "editable-source",
+        "type-dependent"
+      ],
+      "creationDate": "2026-07-10T09:38:38+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ1m7biSRPBJy-7n5i72",
+      "rule": "javascript:S2486",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:src/routes/category.routes.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 32,
+      "hash": "161b8313784081f5965c2da97df48970",
+      "textRange": {
+        "startLine": 32,
+        "endLine": 39,
+        "startOffset": 4,
+        "endOffset": 3
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Handle this exception, don't catch it at all, or explain in a comment why it is ignored.",
+      "effort": "1h",
+      "debt": "1h",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "cwe",
+        "error-handling",
+        "suspicious"
+      ],
+      "creationDate": "2026-04-07T07:50:19+0000",
+      "updateDate": "2026-09-23T09:42:01+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "d232bfb7-eac9-4ac1-b723-80b0f2807ecc",
+      "lastChangeSource": "ANALYSIS"
+    },
+    {
+      "key": "AZ1m7blzRPBJy-7n5i73",
+      "rule": "javascript:S1481",
+      "severity": "MINOR",
+      "component": "raulalleguesalgado_tfg-inventario:src/services/auth.service.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 22,
+      "hash": "9ac98d55eb6a870f8f77f5fd31248dfb",
+      "textRange": {
+        "startLine": 22,
+        "endLine": 22,
+        "startOffset": 24,
+        "endOffset": 25
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Remove the declaration of the unused '_' variable.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "unused"
+      ],
+      "creationDate": "2026-04-07T07:50:14+0000",
+      "updateDate": "2026-04-07T07:51:51+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CLEAR",
+      "cleanCodeAttributeCategory": "INTENTIONAL",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "LOW"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": []
+    },
+    {
+      "key": "AZ9W6RK3jHgpYy_ELUCC",
+      "rule": "javascript:S7785",
+      "severity": "MAJOR",
+      "component": "raulalleguesalgado_tfg-inventario:src/server.js",
+      "project": "raulalleguesalgado_tfg-inventario",
+      "line": 23,
+      "hash": "9b6817d3397ed323e74abeb5b7576165",
+      "textRange": {
+        "startLine": 23,
+        "endLine": 23,
+        "startOffset": 0,
+        "endOffset": 13
+      },
+      "flows": [],
+      "status": "OPEN",
+      "message": "Prefer top-level await over an async function `startServer` call.",
+      "effort": "5min",
+      "debt": "5min",
+      "author": "raul.allegue@udc.es",
+      "tags": [
+        "async",
+        "editable-source",
+        "es2022",
+        "esm-only",
+        "modernize",
+        "type-dependent"
+      ],
+      "creationDate": "2026-04-07T07:50:08+0000",
+      "updateDate": "2026-07-12T15:18:17+0000",
+      "type": "CODE_SMELL",
+      "organization": "raulalleguesalgado",
+      "cleanCodeAttribute": "CONVENTIONAL",
+      "cleanCodeAttributeCategory": "CONSISTENT",
+      "impacts": [
+        {
+          "softwareQuality": "MAINTAINABILITY",
+          "severity": "MEDIUM"
+        }
+      ],
+      "issueStatus": "OPEN",
+      "projectName": "tfg-inventario",
+      "internalTags": [],
+      "lastChangeAnalysisUuid": "173e0cac-3028-4995-8dca-03891839b84a",
+      "lastChangeSource": "ANALYSIS"
+    }
+  ],
+  "components": [
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:src/middlewares/auth.middleware.js",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUB2",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "auth.middleware.js",
+      "longName": "src/middlewares/auth.middleware.js",
+      "path": "src/middlewares/auth.middleware.js"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/api/auth.js",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBr",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "auth.js",
+      "longName": "frontend/src/api/auth.js",
+      "path": "frontend/src/api/auth.js"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:src/routes/category.routes.js",
+      "uuid": "AZ1m7bPhRPBJy-7n5i7Y",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "category.routes.js",
+      "longName": "src/routes/category.routes.js",
+      "path": "src/routes/category.routes.js"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/components/ProductForm.jsx",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBt",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "ProductForm.jsx",
+      "longName": "frontend/src/components/ProductForm.jsx",
+      "path": "frontend/src/components/ProductForm.jsx"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Categories.jsx",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBk",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Categories.jsx",
+      "longName": "frontend/src/pages/Categories.jsx",
+      "path": "frontend/src/pages/Categories.jsx"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/context/AuthContext.jsx",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBx",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "AuthContext.jsx",
+      "longName": "frontend/src/context/AuthContext.jsx",
+      "path": "frontend/src/context/AuthContext.jsx"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario",
+      "uuid": "AZ0kgaUaGo1vA0GLdxo6",
+      "enabled": true,
+      "qualifier": "TRK",
+      "name": "tfg-inventario",
+      "longName": "tfg-inventario"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:src/server.js",
+      "uuid": "AZ1m7bPhRPBJy-7n5i70",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "server.js",
+      "longName": "src/server.js",
+      "path": "src/server.js"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:src/services/auth.service.js",
+      "uuid": "AZ1m7bPhRPBJy-7n5i7p",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "auth.service.js",
+      "longName": "src/services/auth.service.js",
+      "path": "src/services/auth.service.js"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Dashboard.jsx",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBn",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Dashboard.jsx",
+      "longName": "frontend/src/pages/Dashboard.jsx",
+      "path": "frontend/src/pages/Dashboard.jsx"
+    },
+    {
+      "organization": "raulalleguesalgado",
+      "key": "raulalleguesalgado_tfg-inventario:frontend/src/pages/Movements.jsx",
+      "uuid": "AZ9W6Qs5jHgpYy_ELUBm",
+      "enabled": true,
+      "qualifier": "FIL",
+      "name": "Movements.jsx",
+      "longName": "frontend/src/pages/Movements.jsx",
+      "path": "frontend/src/pages/Movements.jsx"
+    }
+  ],
+  "organizations": [
+    {
+      "key": "raulalleguesalgado",
+      "name": "Raúl Allegue Salgado"
+    }
+  ],
+  "facets": []
+}

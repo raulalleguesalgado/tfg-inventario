@@ -61,7 +61,7 @@ errores, 2 warnings (E1 y E2), 0 reglas de seguridad, 42 ficheros.
 
 ## 3. SonarCloud — igual
 
-SonarCloud analiza en cada push, y el último análisis (sobre `8017d64`, consultado con su API)
+SonarCloud analizaba en cada push, y el último análisis (sobre `8017d64`, consultado con su API y guardado en `docs/sonarcloud/`)
 da exactamente los mismos resultados que la ronda completa: mismas métricas y los mismos 13
 issues y hotspot.
 

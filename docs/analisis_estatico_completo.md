@@ -10,7 +10,8 @@
 ## Cómo se obtuvieron los resultados
 
 Con la API REST de SonarCloud (`measures/component`, `issues/search`, `hotspots/search`,
-`qualitygates/project_status`).
+`qualitygates/project_status`). La exportación completa de la API está en `docs/sonarcloud/`
+(descargada el 2026-09-24 sobre `8017d64`, con el mismo resultado que esta ronda).
 
 ---
 

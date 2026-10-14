@@ -7,7 +7,8 @@
 
 ## Cómo se ejecutó
 
-El análisis lo lanza GitHub Actions (`.github/workflows/build.yml`) en cada push a `main`.
+El análisis lo lanzaba GitHub Actions (`.github/workflows/build.yml`) en cada push a `main`. Las cifras de esta
+ronda están también en el historial exportado de SonarCloud (`docs/sonarcloud/historial_*.json`, análisis del 2026-04-07).
 
 ---
 
