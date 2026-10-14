@@ -1,6 +1,18 @@
 # tfg-inventario
 
-Aplicación web de gestión de inventario generada mediante ingeniería de prompts con un LLM (Gemini 3.1 Pro), desarrollada como Trabajo de Fin de Grado. El foco del proyecto es la auditoría de seguridad (OWASP) y de calidad del código resultante, no la aplicación en sí.
+Código, prompts y resultados del Trabajo de Fin de Grado **"Generación y auditoría de código
+con LLMs: calidad y seguridad en una aplicación web de gestión de inventario"**.
+
+- **Autor:** Raúl Allegue Salgado
+- **Dirección:** Carlos Vázquez Regueiro y Juan Antonio Martín Pernas (SREC Solutions)
+- **Titulación:** Grado en Ingeniería Informática, mención en Tecnologías de la Información
+- **Centro:** Facultade de Informática, Universidade da Coruña, 2026
+
+La aplicación se generó módulo a módulo con un LLM (Gemini 3.1 Pro) mediante prompts
+autocontenidos, y después se auditó su seguridad (OWASP Top 10) y su calidad. El foco del
+trabajo es esa auditoría, no la aplicación en sí. Se conservó tal como la escribió el
+modelo, con solo las correcciones mínimas necesarias para que arrancase
+(`docs/correcciones_minimas.md`).
 
 ## Stack
 
@@ -20,6 +32,7 @@ frontend/       frontend React + Vite
 prisma/         schema de Prisma
 prompts/        prompt exacto, respuesta del LLM y análisis, uno por módulo generado
 docs/           informes de análisis estático, pentesting y correcciones aplicadas
+                (en docs/sonarcloud/, los resultados exportados de SonarCloud)
 ```
 
 `prompts/` y `docs/` no son documentación de apoyo: son el material empírico sobre el que se basan los resultados del TFG (comparativa prompt básico/refinado, vulnerabilidades encontradas, hallazgos de calidad).
